@@ -20,14 +20,13 @@ namespace dotnet
         [DllExport("gmod13_open", CallingConvention = CallingConvention.Cdecl)]
         public static int Open(lua_state L)
         {
-            IntPtr Tier0 = InterfaceLoader.LoadLibrary("tier0.dll");
-            VCR_t* VCR2 = (VCR_t*)(Tier0.ToInt32() + 0x00035748);
+            VCR_t* VCR = (VCR_t*)InterfaceLoader.LoadVariable<VCR_t>("tier0.dll", "g_pVCR");
 
-            OHook_recvfrom = Marshal.GetDelegateForFunctionPointer<Hook_recvfrom_func>(VCR2->Hook_recvfrom);
+            OHook_recvfrom = Marshal.GetDelegateForFunctionPointer<Hook_recvfrom_func>(VCR->Hook_recvfrom);
             Hook_recvfrom_func d = Hook_recvfrom_detour;
             GCHandle.Alloc(d);
             new_Hook_recvfrom = Marshal.GetFunctionPointerForDelegate(d);
-            VCR2->Hook_recvfrom = new_Hook_recvfrom;
+            VCR->Hook_recvfrom = new_Hook_recvfrom;
 
             Console.WriteLine("DotNet loaded");
             return 0;
@@ -44,7 +43,7 @@ namespace dotnet
             {
                 if (*challenge != -1)
                 {
-                    if(*type == 'T')
+                    if (*type == 'T')
                     {
 
                     }
