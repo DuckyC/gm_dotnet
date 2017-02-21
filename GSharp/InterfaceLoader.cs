@@ -56,5 +56,11 @@ namespace GSharp {
 			var varHandle = GetProcAddress(dllhandle, variableName);
 			return varHandle;
 		}
+
+		public static IntPtr LoadVariable<T>(string dllname, string variableName) where T : struct
+		{
+			return LoadVariable(dllname, variableName) - Marshal.SizeOf(typeof(T));
+		}
+
 	}
 }
