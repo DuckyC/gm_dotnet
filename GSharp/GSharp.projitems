@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>0f1737c4-af88-416b-85bb-02ee991d0434</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>GSharp</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\InterfaceVersionAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\ReturnOrderAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\VTableSlotAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GLuaNET\GLua.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GLuaNET\LuaType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GLuaNET\TypeMarshals\DelegateTypeMarshal.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GLuaNET\TypeMarshals\ILuaTypeMarshal.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GLuaNET\TypeMarshals\ArrayTypeMarshal.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GLuaNET\TypeMarshals\NumberTypeMarshal.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GLuaNET\TypeMarshals\CFunctionTypeMarshal.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GLuaNET\TypeMarshals\StringTypeMarshal.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)LuaLibraries\IFile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)LuaLibraries\IPlayer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)LuaLibraryClassInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)InterfaceLoader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)JIT\ClassInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)JIT\InterfaceVersions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)JIT\InteropHelp.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)JIT\JITEngine.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)LuaLibrary.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NativeClasses\CreateInterfaceFn.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NativeClasses\IFileSystem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NativeClasses\ILuaBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NativeClasses\IServerGameDLL.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NativeClasses\SockAddr.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NativeClasses\VCR_t.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemporaryClasses.cs" />
+  </ItemGroup>
+</Project>
