@@ -50,12 +50,17 @@ namespace GSharp {
 			return ret;
 		}
 
-		public static IntPtr LoadVariable(string dllname, string variableName) 
+		public static IntPtr LoadVariable(string dllname, string variableName, out IntPtr dllhandle) 
 		{
-			var handle = LoadLibrary(dllname);
-			var varHandle = GetProcAddress(handle, variableName);
+			dllhandle = LoadLibrary(dllname);
+			var varHandle = GetProcAddress(dllhandle, variableName);
 			return varHandle;
+		}
 
+		public static IntPtr LoadVariable(string dllname, string variableName)
+		{
+			IntPtr dllhandle;
+			return LoadVariable(dllname, variableName, out dllhandle);
 		}
 	}
 }

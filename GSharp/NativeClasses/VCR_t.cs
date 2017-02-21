@@ -3,10 +3,13 @@ using System.Runtime.InteropServices;
 namespace GSharp.NativeClasses
 {
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate int Hook_recvfrom(int s, IntPtr buf, int len, int flags, IntPtr from, IntPtr fromlen);
+    public delegate int Hook_recvfrom_func(int s, IntPtr buf, int len, int flags, IntPtr from, IntPtr fromlen);
 
-    [StructLayout(LayoutKind.Sequential)]
-    public struct VCR_t
+	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+	public delegate void Hook_Cmd_Exec_func(string[] Args);
+	
+	[StructLayout(LayoutKind.Sequential)]
+    public unsafe struct VCR_t
     {
         public IntPtr Start;
         public IntPtr End;
