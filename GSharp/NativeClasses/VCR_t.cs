@@ -2,10 +2,10 @@
 using System.Runtime.InteropServices;
 namespace GSharp.NativeClasses
 {
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate int Hook_recvfrom_func(int s, IntPtr buf, int len, int flags, IntPtr from, IntPtr fromlen);
 
-	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public unsafe delegate int Hook_recvfrom_func(int s, byte* buf, int len, int flags, IntPtr from, IntPtr fromlen);
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 	public delegate void Hook_Cmd_Exec_func(string[] Args);
 	
 	[StructLayout(LayoutKind.Sequential)]

@@ -16,7 +16,7 @@ namespace GSharp {
 
 		private static Dictionary<string, IntPtr> LibraryCache = new Dictionary<string, IntPtr>();
 
-		private static IntPtr LoadLibrary(string path)
+		public static IntPtr LoadLibrary(string path)
 		{
 			if (LibraryCache.ContainsKey(path)) return LibraryCache[path];
 
@@ -50,17 +50,11 @@ namespace GSharp {
 			return ret;
 		}
 
-		public static IntPtr LoadVariable(string dllname, string variableName, out IntPtr dllhandle) 
+		public static IntPtr LoadVariable(string dllname, string variableName) 
 		{
-			dllhandle = LoadLibrary(dllname);
+			var dllhandle = LoadLibrary(dllname);
 			var varHandle = GetProcAddress(dllhandle, variableName);
 			return varHandle;
-		}
-
-		public static IntPtr LoadVariable(string dllname, string variableName)
-		{
-			IntPtr dllhandle;
-			return LoadVariable(dllname, variableName, out dllhandle);
 		}
 	}
 }

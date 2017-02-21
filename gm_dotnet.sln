@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26127.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "GSharp", "GSharp\GSharp.shproj", "{0F1737C4-AF88-416B-85BB-02EE991D0434}"
 EndProject
@@ -20,10 +20,10 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A10EB464-C164-4824-8BB9-959095BA2EBE}.Debug|x86.ActiveCfg = Debug|x86
-		{A10EB464-C164-4824-8BB9-959095BA2EBE}.Debug|x86.Build.0 = Debug|x86
-		{A10EB464-C164-4824-8BB9-959095BA2EBE}.Release|x86.ActiveCfg = Release|x86
-		{A10EB464-C164-4824-8BB9-959095BA2EBE}.Release|x86.Build.0 = Release|x86
+		{A10EB464-C164-4824-8BB9-959095BA2EBE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A10EB464-C164-4824-8BB9-959095BA2EBE}.Debug|x86.Build.0 = Debug|Any CPU
+		{A10EB464-C164-4824-8BB9-959095BA2EBE}.Release|x86.ActiveCfg = Release|Any CPU
+		{A10EB464-C164-4824-8BB9-959095BA2EBE}.Release|x86.Build.0 = Release|Any CPU
 		{EE900193-9558-482B-B4C0-7FC67A22A953}.Debug|x86.ActiveCfg = Debug|x86
 		{EE900193-9558-482B-B4C0-7FC67A22A953}.Debug|x86.Build.0 = Debug|x86
 		{EE900193-9558-482B-B4C0-7FC67A22A953}.Release|x86.ActiveCfg = Release|x86
