@@ -4,12 +4,10 @@ using System.Reflection;
 using System.Reflection.Emit;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
+using GSharp.NativeClasses;
 
 namespace GSharp.JIT
 {
-    [UnmanagedFunctionPointer(CallingConvention.StdCall, CharSet = CharSet.Ansi)]
-    public delegate IntPtr CreateInterfaceFn(string name, IntPtr errorptr);
-
     class JITEngineException : Exception
     {
         public JITEngineException(string message) : base(message) { }

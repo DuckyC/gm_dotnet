@@ -35,6 +35,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)NativeClasses\IServerGameDLL.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NativeClasses\SockAddr.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NativeClasses\VCR_t.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SymbolFinder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TemporaryClasses.cs" />
   </ItemGroup>
 </Project>
