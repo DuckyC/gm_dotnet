@@ -44,11 +44,11 @@ namespace GSharp
             public UInt16 e_lfarlc;      // File address of relocation table
             public UInt16 e_ovno;    // Overlay number
             //[MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
-            public IntPtr e_res1;    // Reserved words
+            public fixed ushort e_res1[4];    // Reserved words
             public UInt16 e_oemid;       // OEM identifier (for e_oeminfo)
             public UInt16 e_oeminfo;     // OEM information; e_oemid specific
             //[MarshalAs(UnmanagedType.ByValArray, SizeConst = 10)]
-            public IntPtr e_res2;    // Reserved words
+            public fixed ushort e_res2[10];    // Reserved words
             public Int32 e_lfanew;      // File address of new exe header
         }
 
@@ -259,7 +259,13 @@ namespace GSharp
             //[MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
             public uint Signature;
 
-            [FieldOffset(4)]
+			[FieldOffset(0)]
+			public fixed byte SignatureBytes[4];
+
+			[FieldOffset(0)]
+			public fixed char SignatureChars[4];
+
+			[FieldOffset(4)]
             public IMAGE_FILE_HEADER FileHeader;
 
             [FieldOffset(24)]
@@ -278,47 +284,42 @@ namespace GSharp
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool FreeLibrary(IntPtr hModule);
 
-        public static IntPtr ResolveOnBinary(string name, string data)
+        public static IntPtr ResolveOnBinary(string name, byte[] data)
         {
             if (data.Length != 0)
             {
-                return FindPatternFromBinary(name, data.ToCharArray());
+                return FindPatternFromBinary(name, data);
             }
 
             return IntPtr.Zero;
         }
 
-        private static IntPtr FindPatternFromBinary(string name, char[] pattern)
+        private static IntPtr FindPatternFromBinary(string name, byte[] pattern)
         {
             var binary = IntPtr.Zero;
             if (GetModuleHandleEx(0, name, out binary) && binary != IntPtr.Zero)
             {
-                var symbol_pointer = FindPattern(binary, pattern);
-                FreeLibrary(binary);
-                return symbol_pointer;
+				return FindPattern(binary, pattern);
             }
-
-
 
             return IntPtr.Zero;
         }
 
-        private static IntPtr FindPattern(IntPtr handle, char[] pattern)
+        private static IntPtr FindPattern(IntPtr handle, byte[] pattern)
         {
             DynLibInfo lib;
             if (!GetLibraryInfo(handle, out lib))
                 return IntPtr.Zero;
 
-            var ptr = lib.baseAddress;
-            var end = ptr + Convert.ToInt32(lib.memorySize) - pattern.Length;
+            byte* ptr = (byte*)lib.baseAddress;
+            byte* end = ptr + lib.memorySize - pattern.Length;
 
             bool found = true;
-            while (((long)ptr) < ((long)end))
+            while (ptr < end)
             {
                 for (var i = 0; i < pattern.Length; ++i)
                 {
-                    var ptri = ((char*)ptr)[i];
-                    if (pattern[i] != '\x2A' && pattern[i] != ptri)
+                    if (pattern[i] != 0x2A && pattern[i] != ptr[i])
                     {
                         found = false;
                         break;
@@ -326,9 +327,9 @@ namespace GSharp
                 }
 
                 if (found)
-                    return ptr;
+                    return (IntPtr)ptr;
 
-                ptr = ptr + 1;//holy fuck what is this, lua?
+				ptr++;
                 found = true;
             }
 
