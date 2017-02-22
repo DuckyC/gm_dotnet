@@ -29,7 +29,8 @@ namespace dotnet
             //GCHandle.Alloc(new_Hook_recvfrom);
             //OHook_recvfrom = InterfaceLoader.OverwriteVCRHook(VCR, new_Hook_recvfrom);
 
-            SymbolFinder.ResolveOnBinary("engine.dll", net_sockets_sig);
+            var netsockptr = SymbolFinder.ResolveOnBinary("engine.dll", net_sockets_sig);
+            //netsockptr: 0x00c7d30c
 
             Console.WriteLine("DotNet loaded");
             return 0;

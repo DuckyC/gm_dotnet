@@ -29,7 +29,7 @@ namespace GSharp
         private struct IMAGE_DOS_HEADER
         {
             //[MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-            public IntPtr e_magic;       // Magic number
+            public ushort e_magic;       // Magic number
             public UInt16 e_cblp;    // Bytes on last page of file
             public UInt16 e_cp;      // Pages in file
             public UInt16 e_crlc;    // Relocations
@@ -50,16 +50,6 @@ namespace GSharp
             //[MarshalAs(UnmanagedType.ByValArray, SizeConst = 10)]
             public IntPtr e_res2;    // Reserved words
             public Int32 e_lfanew;      // File address of new exe header
-
-            private string _e_magic
-            {
-                get { return Marshal.PtrToStringAnsi(e_magic); }
-            }
-
-            public bool isValid
-            {
-                get { return _e_magic == "MZ"; }
-            }
         }
 
         private enum MagicType : ushort
@@ -267,26 +257,16 @@ namespace GSharp
         {
             [FieldOffset(0)]
             //[MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
-            public IntPtr Signature;
+            public uint Signature;
 
             [FieldOffset(4)]
             public IMAGE_FILE_HEADER FileHeader;
 
             [FieldOffset(24)]
             public IMAGE_OPTIONAL_HEADER OptionalHeader;
-
-            private string _Signature
-            {
-                get { return Marshal.PtrToStringAnsi(Signature); }
-            }
-
-            public bool isValid
-            {
-                get { return _Signature == "PE\0\0" && (OptionalHeader.Magic == MagicType.IMAGE_NT_OPTIONAL_HDR32_MAGIC || OptionalHeader.Magic == MagicType.IMAGE_NT_OPTIONAL_HDR64_MAGIC); }
-            }
         }
-        private const string IMAGE_DOS_SIGNATURE = "MZ";
-        private const string IMAGE_NT_SIGNATURE = "PE00";
+        private const ushort IMAGE_DOS_SIGNATURE = 0x5A4D;// "MZ";
+        private const uint IMAGE_NT_SIGNATURE = 0x00004550;//"PE00";
 
         [DllImport("kernel32.dll")]
         private static extern uint VirtualQuery(IntPtr lpAddress, out MEMORY_BASIC_INFORMATION lpBuffer, int dwLength);
@@ -373,7 +353,13 @@ namespace GSharp
             IMAGE_FILE_HEADER* file = &pe->FileHeader;
             IMAGE_OPTIONAL_HEADER* opt = &pe->OptionalHeader;
 
-            if (dos->e_magic.ToString() != IMAGE_DOS_SIGNATURE || pe->Signature.ToString() != IMAGE_NT_SIGNATURE || opt->Magic != MagicType.IMAGE_NT_OPTIONAL_HDR32_MAGIC)
+            if (dos->e_magic != IMAGE_DOS_SIGNATURE)
+                return false;
+
+            if (pe->Signature != IMAGE_NT_SIGNATURE)
+                return false;
+
+            if (opt->Magic != MagicType.IMAGE_NT_OPTIONAL_HDR32_MAGIC)
                 return false;
 
             if (file->Machine != 0x014c)// Intel 386.
