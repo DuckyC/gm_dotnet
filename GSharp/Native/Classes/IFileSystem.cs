@@ -1,6 +1,6 @@
 ﻿using GSharp.Attributes;
 
-namespace GSharp.NativeClasses
+namespace GSharp.Native.Classes
 {
     [InterfaceVersion("VFileSystem022")]
     public interface IFileSystem

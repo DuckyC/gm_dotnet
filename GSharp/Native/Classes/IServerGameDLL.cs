@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using GSharp.Attributes;
-namespace GSharp.NativeClasses
+namespace GSharp.Native.Classes
 {
     public class IGet { }
     public class CSaveRestoreData { }
@@ -16,13 +16,13 @@ namespace GSharp.NativeClasses
     public interface IServerGameDLL
     {
         [VTableSlot(0)]
-        void PreInit(CreateInterfaceFn param0, out IGet param1);
+        void PreInit(CreateInterfaceDelegate param0, out IGet param1);
 
         [VTableSlot(1)]
-        bool DLLInit(CreateInterfaceFn engineFactory, CreateInterfaceFn physicsFactory, CreateInterfaceFn fileSystemFactory, out CGlobalVars pGlobals);
+        bool DLLInit(CreateInterfaceDelegate engineFactory, CreateInterfaceDelegate physicsFactory, CreateInterfaceDelegate fileSystemFactory, out CGlobalVars pGlobals);
 
         [VTableSlot(2)]
-        bool ReplayInit(CreateInterfaceFn fnReplayFactory);
+        bool ReplayInit(CreateInterfaceDelegate fnReplayFactory);
 
         [VTableSlot(3)]
         bool GameInit();

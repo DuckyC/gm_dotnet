@@ -1,7 +1,7 @@
-﻿using GSharp.NativeClasses.VCR;
+﻿using GSharp.Classes.VCR;
 using System;
 using System.Runtime.InteropServices;
-namespace GSharp.NativeClasses
+namespace GSharp.Native.Classes
 {
     namespace VCR
     {

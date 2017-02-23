@@ -3,7 +3,7 @@ using GSharp.GLuaNET;
 using System;
 using System.Runtime.InteropServices;
 
-namespace GSharp.NativeClasses
+namespace GSharp.Native.Classes
 {
 
     [StructLayout(LayoutKind.Sequential)]

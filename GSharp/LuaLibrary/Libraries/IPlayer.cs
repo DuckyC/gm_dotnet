@@ -1,4 +1,4 @@
-﻿namespace GSharp.LuaLibraries
+﻿namespace GSharp.LuaLibrary.Libraries
 {
 
     public interface IEntity

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace GSharp
+namespace GSharp.Native
 {
     public unsafe class SymbolFinder
     {
@@ -259,13 +259,13 @@ namespace GSharp
             //[MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
             public uint Signature;
 
-			[FieldOffset(0)]
-			public fixed byte SignatureBytes[4];
+            [FieldOffset(0)]
+            public fixed byte SignatureBytes[4];
 
-			[FieldOffset(0)]
-			public fixed char SignatureChars[4];
+            [FieldOffset(0)]
+            public fixed char SignatureChars[4];
 
-			[FieldOffset(4)]
+            [FieldOffset(4)]
             public IMAGE_FILE_HEADER FileHeader;
 
             [FieldOffset(24)]
@@ -299,7 +299,7 @@ namespace GSharp
             var binary = IntPtr.Zero;
             if (GetModuleHandleEx(0, name, out binary) && binary != IntPtr.Zero)
             {
-				return FindPattern(binary, pattern);
+                return FindPattern(binary, pattern);
             }
 
             return IntPtr.Zero;
@@ -329,7 +329,7 @@ namespace GSharp
                 if (found)
                     return (IntPtr)ptr;
 
-				ptr++;
+                ptr++;
                 found = true;
             }
 

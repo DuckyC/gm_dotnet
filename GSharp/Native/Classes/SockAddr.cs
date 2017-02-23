@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GSharp.NativeClasses
+namespace GSharp.Native.Classes
 {
     public enum SockAddrFamily
     {

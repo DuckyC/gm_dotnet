@@ -1,7 +1,7 @@
 ﻿using System;
 using GSharp.Attributes;
 
-namespace GSharp.JIT
+namespace GSharp.Native.JIT
 {
     public class InterfaceVersions
     {

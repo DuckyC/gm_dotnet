@@ -2,10 +2,8 @@
 using System.Diagnostics;
 using System.Reflection;
 using System.Reflection.Emit;
-using GSharp.LuaLibraries;
-using GSharp.GLuaNET;
 
-namespace GSharp
+namespace GSharp.LuaLibrary
 {
     public static class LuaLibrary
     {
@@ -42,7 +40,7 @@ namespace GSharp
         //TODO: REDO THIS WITH GLUA
         //public static TClass WrapLibrary<TClass>(this GLua GLua, string luaAccessor)
         //{
-            
+
         //    var luaType = typeof(GLua);
         //    var targetInterface = typeof(TClass);
 
@@ -80,7 +78,7 @@ namespace GSharp
         //            var param = method.Args[i];
         //            ilgen.Emit(OpCodes.Ldarg_0);
         //            ilgen.Emit(OpCodes.Ldfld, luaStateField);
-        //            ilgen.EmitLoadArg(i+1);
+        //            ilgen.EmitLoadArg(i + 1);
         //            ilgen.EmitCall(OpCodes.Call, typeof(LuaAdvanced).GetMethod(nameof(LuaAdvanced.Push)), null);
         //            ilgen.Emit(OpCodes.Pop);
         //        }

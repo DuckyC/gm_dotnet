@@ -1,12 +1,13 @@
-﻿using GSharp.JIT;
-using GSharp.NativeClasses;
+﻿using GSharp.Native.JIT;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Reflection;
+using GSharp.Native.Classes;
 
-namespace GSharp {
-    public unsafe static class InterfaceLoader {
+namespace GSharp.Native
+{
+    public unsafe static class NativeInterface
+    {
         [DllImport("kernel32", EntryPoint = "LoadLibrary")]
         private static extern IntPtr LoadLibraryInternal(string path);
 
@@ -32,11 +33,11 @@ namespace GSharp {
             return handle;
         }
 
-        private static CreateInterfaceFn LoadCreateInterface(string dllPath)
+        private static CreateInterfaceDelegate LoadCreateInterface(string dllPath)
         {
             var hModule = LoadLibrary(dllPath);
             var functionAddress = GetProcAddress(hModule, "CreateInterface");
-            return (CreateInterfaceFn)Marshal.GetDelegateForFunctionPointer(functionAddress, typeof(CreateInterfaceFn));
+            return (CreateInterfaceDelegate)Marshal.GetDelegateForFunctionPointer(functionAddress, typeof(CreateInterfaceDelegate));
         }
 
         public static TClass Load<TClass>(string dllname) where TClass : class
@@ -44,7 +45,7 @@ namespace GSharp {
             return JITEngine.GetFromFactory<TClass>(LoadCreateInterface(dllname));
         }
 
-        public static IntPtr LoadVariable(string dllname, string variableName) 
+        public static IntPtr LoadVariable(string dllname, string variableName)
         {
             var dllhandle = LoadLibrary(dllname);
             var varHandle = GetProcAddress(dllhandle, variableName);
@@ -59,21 +60,21 @@ namespace GSharp {
         public static T OverwriteVCRHook<T>(IntPtr VCR, T newDelegate) where T : class
         {
             var hookName = typeof(T).Name;
-			if (typeof(VCR_t).GetField(hookName) == null)
-				throw new Exception("Could not find hook " + hookName);
-			int offset = (int)Marshal.OffsetOf<VCR_t>(hookName);
+            if (typeof(VCR_t).GetField(hookName) == null)
+                throw new Exception("Could not find hook " + hookName);
+            int offset = (int)Marshal.OffsetOf<VCR_t>(hookName);
 
-			var original = Marshal.GetDelegateForFunctionPointer<T>(Marshal.ReadIntPtr(VCR, offset));
+            var original = Marshal.GetDelegateForFunctionPointer<T>(Marshal.ReadIntPtr(VCR, offset));
             var newHookPointer = Marshal.GetFunctionPointerForDelegate(newDelegate);
 
-			Marshal.WriteIntPtr(VCR, offset, newHookPointer);
+            Marshal.WriteIntPtr(VCR, offset, newHookPointer);
             return original;
-		}
+        }
 
-		public static T OverwriteVCRHook<T>(VCR_t* VCR, T newDelegate) where T : class
-		{
-			return OverwriteVCRHook((IntPtr)VCR, newDelegate);
-		}
+        public static T OverwriteVCRHook<T>(VCR_t* VCR, T newDelegate) where T : class
+        {
+            return OverwriteVCRHook((IntPtr)VCR, newDelegate);
+        }
 
-	}
+    }
 }

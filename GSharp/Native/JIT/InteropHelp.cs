@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Reflection;
 
-namespace GSharp.JIT
+namespace GSharp.Native.JIT
 {
     public class InteropHelp
     {

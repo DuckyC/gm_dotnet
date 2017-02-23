@@ -4,9 +4,9 @@ using System.Reflection;
 using System.Reflection.Emit;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
-using GSharp.NativeClasses;
+using GSharp.Native.Classes;
 
-namespace GSharp.JIT
+namespace GSharp.Native.JIT
 {
     class JITEngineException : Exception
     {
@@ -81,7 +81,7 @@ namespace GSharp.JIT
             ilgen.Emit(OpCodes.Conv_I);
         }
 
-        public static TClass GetFromFactory<TClass>(CreateInterfaceFn factory) where TClass : class
+        public static TClass GetFromFactory<TClass>(CreateInterfaceDelegate factory) where TClass : class
         {
             if (factory == null)
             {

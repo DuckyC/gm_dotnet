@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace GSharp.NativeClasses
+namespace GSharp.Native.Classes
 {
     [UnmanagedFunctionPointer(CallingConvention.ThisCall, CharSet = CharSet.Ansi)]
-    public delegate IntPtr CreateInterfaceFn(string version, IntPtr returnCode);
+    public delegate IntPtr CreateInterfaceDelegate(string version, IntPtr returnCode);
 }

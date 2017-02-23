@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using GSharp.Attributes;
 
-namespace GSharp.JIT
+namespace GSharp.Native.JIT
 {
     class JITInfoException : Exception
     {

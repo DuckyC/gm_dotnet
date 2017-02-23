@@ -1,5 +1,4 @@
-﻿using GSharp;
-using LinqToWiki;
+﻿using LinqToWiki;
 using LinqToWiki.Generated;
 using Microsoft.CSharp;
 using System;
@@ -9,8 +8,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LuaLibraryGenerator
 {
