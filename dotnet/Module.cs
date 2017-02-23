@@ -18,30 +18,34 @@ namespace dotnet
 
     public unsafe static class Module
     {
-		//const string net_sockets_sig = "\x2A\x2A\x2A\x2A\x80\x7E\x04\x00\x0F\x84\x2A\x2A\x2A\x2A\xA1\x2A\x2A\x2A\x2A\xC7\x45\xF8\x10";
-		static byte[] net_sockets_sig = new byte[] {
-			0x2A, 0x2A, 0x2A, 0x2A, 0x80, 0x7E, 0x04, 0x00, 0x0F, 0x84, 0x2A, 0x2A, 0x2A, 0x2A, 0xA1, 0x2A, 0x2A, 0x2A, 0x2A, 0xC7, 0x45, 0xF8, 0x10
-		};
+        //const string net_sockets_sig = "\x2A\x2A\x2A\x2A\x80\x7E\x04\x00\x0F\x84\x2A\x2A\x2A\x2A\xA1\x2A\x2A\x2A\x2A\xC7\x45\xF8\x10";
+        static byte[] net_sockets_sig = new byte[] {
+            0x2A, 0x2A, 0x2A, 0x2A, 0x80, 0x7E, 0x04, 0x00, 0x0F, 0x84, 0x2A, 0x2A, 0x2A, 0x2A, 0xA1, 0x2A, 0x2A, 0x2A, 0x2A, 0xC7, 0x45, 0xF8, 0x10
+        };
 
+        [StructLayout(LayoutKind.Sequential)]
+        struct netsocket_t
+        {
+            int nPort;
+            bool bListening;
+            int hUDP;
+            int hTCP;
+        };
 
         [DllExport("gmod13_open", CallingConvention = CallingConvention.Cdecl)]
         public static int Open(lua_state L)
         {
-			//VCR_t* VCR = (VCR_t*)InterfaceLoader.LoadVariable<VCR_t>("tier0.dll", "g_pVCR");
+            VCR_t* VCR = (VCR_t*)InterfaceLoader.LoadVariable<VCR_t>("tier0.dll", "g_pVCR");
 
-			//OHook_recvfrom = InterfaceLoader.OverwriteVCRHook(VCR, new_Hook_recvfrom = Hook_recvfrom_detour);
-			//old_Hook_Cmd_Exec = InterfaceLoader.OverwriteVCRHook(VCR, new_Hook_Cmd_Exec = Hook_Cmd_Exec);
+            OHook_recvfrom = InterfaceLoader.OverwriteVCRHook(VCR, new_Hook_recvfrom = Hook_recvfrom_detour);
+            //old_Hook_Cmd_Exec = InterfaceLoader.OverwriteVCRHook(VCR, new_Hook_Cmd_Exec = Hook_Cmd_Exec);
 
-
-			IntPtr engine = InterfaceLoader.LoadLibrary("engine.dll");
             var netsockptr = SymbolFinder.ResolveOnBinary("engine.dll", net_sockets_sig);
-			//netsockptr - enginedll: 0x0017e422
-			IntPtr diff = netsockptr - (int)engine;
-
-			//SymbolFinder.ResolveOnBinary("engine.dll", net_sockets_sig);
+            var net_sockets = *((netsocket_t**)netsockptr);
+            //var netSocket = **((netsocket_t***)net_sockets)[1]; wat
 
 
-			Console.WriteLine("DotNet loaded");
+            Console.WriteLine("DotNet loaded");
             return 0;
         }
 
