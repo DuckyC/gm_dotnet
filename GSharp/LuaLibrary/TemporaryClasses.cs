@@ -1,8 +1,4 @@
-﻿using GSharp.GLuaNET;
-using GSharp.LuaLibraries;
-using System;
-
-namespace GSharp
+﻿namespace GSharp
 {
     //public interface IString
     //{

@@ -1,13 +1,12 @@
 ﻿using GSharp.Attributes;
 using GSharp.GLuaNET.TypeMarshals;
-using GSharp.JIT;
-using GSharp.Classes;
+using GSharp.Native.Classes;
+using GSharp.Native.JIT;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace GSharp.GLuaNET
 {

@@ -1,6 +1,6 @@
 ﻿using GSharp.Attributes;
 
-namespace GSharp.LuaLibraries
+namespace GSharp.LuaLibrary.Libraries
 {
 
     public class IFileFindReturnType
