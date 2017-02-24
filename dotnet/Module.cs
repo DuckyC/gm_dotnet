@@ -15,6 +15,12 @@ namespace dotnet
         Player,
         Fake,
     };
+
+	/*static class cpp_sandbox
+	{
+		[DllImport("cpp_sandbox")]
+		public static extern void cpp_test();
+	}*/
 	
     public unsafe static class Module
     {
@@ -32,22 +38,27 @@ namespace dotnet
             int hTCP;
         };
 
-        [DllExport("gmod13_open", CallingConvention = CallingConvention.Cdecl)]
-        public static int Open(lua_state L)
-        {
+		[DllExport("gmod13_open", CallingConvention = CallingConvention.Cdecl)]
+		public static int Open(lua_state L)
+		{
 			//cpp_sandbox.cpp_test();
 
-            VCR_t* VCR = (VCR_t*)NativeInterface.LoadVariable<VCR_t>("tier0.dll", "g_pVCR");
+			VCR_t* VCR = (VCR_t*)NativeInterface.LoadVariable<VCR_t>("tier0.dll", "g_pVCR");
 
-            OHook_recvfrom = NativeInterface.OverwriteVCRHook(VCR, new_Hook_recvfrom = Hook_recvfrom_detour);
-            //old_Hook_Cmd_Exec = InterfaceLoader.OverwriteVCRHook(VCR, new_Hook_Cmd_Exec = Hook_Cmd_Exec);
+			OHook_recvfrom = NativeInterface.OverwriteVCRHook(VCR, new_Hook_recvfrom = Hook_recvfrom_detour);
+			//old_Hook_Cmd_Exec = InterfaceLoader.OverwriteVCRHook(VCR, new_Hook_Cmd_Exec = Hook_Cmd_Exec);
 
-            CUtlVector netsocks = SymbolFinder.ResolveOnBinary("engine.dll", net_sockets_sig);
-			netsocket_t* first = (netsocket_t*)netsocks[0];
+			CUtlVector<netsocket_t> netsocks = SymbolFinder.ResolveOnBinary("engine.dll", net_sockets_sig);
 
-            Console.WriteLine("DotNet loaded");
-            return 0;
-        }
+			int C = netsocks.GetCount();
+			for (int i = 0; i < C; i++)
+			{
+				netsocket_t* element = (netsocket_t*)netsocks[i];
+			}
+
+			Console.WriteLine("DotNet loaded");
+			return 0;
+		}
 
         static Hook_recvfrom new_Hook_recvfrom;
         static Hook_recvfrom OHook_recvfrom;

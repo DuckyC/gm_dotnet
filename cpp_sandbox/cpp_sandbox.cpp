@@ -16,15 +16,11 @@ public:
 	int m_Size;
 };
 
-EXPORT INT32 cpp_test() {
+EXPORT void cpp_test() {
 	CUtlVector<int>* V = new CUtlVector<int>();
 
 	int Base = (int)V;
-	int m_Memory = (int)&V->m_Memory;
-	int Diff = m_Memory - Base;
 
-	int m_pMemory = (int)&V->m_Memory.m_pMemory;
-	int Diff2 = m_pMemory - Base;
-
-	return 0;
+	int m_pMemoryOffset = (int)&V->m_Memory.m_pMemory - Base;
+	int m_SizeOffset = (int)&V->m_Size - Base;
 }
