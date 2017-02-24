@@ -26,6 +26,7 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		GSharp\GSharp.projitems*{0f1737c4-af88-416b-85bb-02ee991d0434}*SharedItemsImports = 13
 		GSharp\GSharp.projitems*{5037c8c6-6f2a-4d5e-b7ae-93826c6a436a}*SharedItemsImports = 4
+		GSharp\GSharp.projitems*{7c6221c9-e425-45d6-adc7-de3892d18df8}*SharedItemsImports = 4
 		GSharp\GSharp.projitems*{a10eb464-c164-4824-8bb9-959095ba2ebe}*SharedItemsImports = 4
 		GSharp\GSharp.projitems*{ee900193-9558-482b-b4c0-7fc67a22a953}*SharedItemsImports = 4
 		GSharp\GSharp.projitems*{fd2caba6-5cf5-4102-b3a0-9098e79163ac}*SharedItemsImports = 4

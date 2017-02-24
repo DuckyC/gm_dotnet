@@ -45,6 +45,13 @@ namespace GSharp.Native
             return JITEngine.GetFromFactory<TClass>(LoadCreateInterface(dllname));
         }
 
+        public static TClass Load<TClass>(string dllname, string interfaceVersionString) where TClass : class
+        {
+            var factory = LoadCreateInterface(dllname);
+            var classptr = factory(interfaceVersionString, IntPtr.Zero);
+            return JITEngine.GenerateClass<TClass>(classptr);
+        }
+
         public static IntPtr LoadVariable(string dllname, string variableName)
         {
             var dllhandle = LoadLibrary(dllname);

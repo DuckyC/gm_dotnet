@@ -12,6 +12,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Attributes\InterfaceVersionAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Attributes\ReturnOrderAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Attributes\VTableSlotAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ClientConsole.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GLuaNET\GLua.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GLuaNET\LuaType.cs" />
@@ -26,6 +27,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)LuaLibrary\LuaLibrary.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LuaLibrary\ClassInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LuaLibrary\TemporaryClasses.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\IGameConsole.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\ILuaInterface.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\ILuaShared.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\INetworkStringTable.cs" />

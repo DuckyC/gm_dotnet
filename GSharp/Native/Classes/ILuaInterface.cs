@@ -59,14 +59,14 @@ namespace GSharp.Native.Classes
         void Push(IntPtr ILuaObject );
         [VTableSlot(21)]
         void Push(string str );
-        [VTableSlot(22)]
-        void PushVA(string str, object param1 );
+        //[VTableSlot(22)]
+        //void PushVA(string str, object param1 );
         [VTableSlot(23)]
         void Push(float f);
         [VTableSlot(24)]
         void Push(bool b);
-        [VTableSlot(25)]
-        void Push(lua_CFunction f);
+        //[VTableSlot(25)]
+        //void Push(lua_CFunction f);
 
         [VTableSlot(26)]
         void SetGlobal( string namename, IntPtr ILuaObject = default(IntPtr) );
@@ -76,8 +76,8 @@ namespace GSharp.Native.Classes
         void SetGlobal( string namename, float f );
         [VTableSlot(29)]
         void SetGlobal( string namename, string s );
-        [VTableSlot(30)]
-        void SetGlobal( string namename, lua_CFunction f );
+        //[VTableSlot(30)]
+        //void SetGlobal( string namename, lua_CFunction f );
         [VTableSlot(31)]
         void NewTable();
 
@@ -292,6 +292,6 @@ namespace GSharp.Native.Classes
         void PushDouble(double iInt);
 
         [VTableSlot(107)]
-        void RunStringEx(IntPtr _this, string filename, string path, string torun, bool run, bool showerrors, bool idk, bool idk2); // thanks to gm_roc
+        void RunStringEx(string filename, string path, string torun, bool run = true, bool showerrors = true, bool idk = true, bool idk2 = true); // thanks to gm_roc
     }
 }

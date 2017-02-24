@@ -20,7 +20,12 @@ namespace GSharp.Native.Classes
         [VTableSlot(5)]
         void CloseLuaInterface(IntPtr ILuaInterface); // takes ILuaInterface*
         [VTableSlot(6)]
-        IntPtr GetLuaInterface(byte param1); // returns ILuaInterface*
+        /// <summary>
+        /// Gets the lua interface for the specified state
+        /// </summary>
+        /// <param name="state">1: client, 2: server, 3: menu </param>
+        /// <returns>ILuaInterface*</returns>
+        IntPtr GetLuaInterface(byte state); 
         [VTableSlot(7)]
         void LoadFile(IntPtr param1, IntPtr param2, bool param3, bool param4);
         [VTableSlot(8)]

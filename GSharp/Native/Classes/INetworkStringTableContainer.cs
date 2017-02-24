@@ -6,8 +6,8 @@ namespace GSharp.Native.Classes
 {
     public static class InterfaceNameStringTable
     {
-        const string SERVER = "VEngineServerStringTable001";
-        const string CLIENT = "VEngineClientStringTable001";
+        public const string SERVER = "VEngineServerStringTable001";
+        public const string CLIENT = "VEngineClientStringTable001";
     }
 
     public interface INetworkStringTableContainer
