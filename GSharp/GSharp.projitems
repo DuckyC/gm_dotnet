@@ -25,6 +25,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)LuaLibrary\LuaLibrary.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LuaLibrary\ClassInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LuaLibrary\TemporaryClasses.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\CUtlVector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\NativeInterface.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\JIT\ClassInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\JIT\InterfaceVersions.cs" />
