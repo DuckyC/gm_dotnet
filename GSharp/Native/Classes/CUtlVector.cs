@@ -6,34 +6,43 @@ using System.Text;
 namespace GSharp.Native.Classes
 {
 	[StructLayout(LayoutKind.Sequential, Pack = 1)]
-	public struct CUtlVector
+	public unsafe struct CUtlVector<T> where T : struct
 	{
 		public IntPtr CUtlVecPtr;
+
+		bool NotNull(int Idx)
+		{
+			return Element(Idx) != IntPtr.Zero;
+		}
+
+		public int GetCount()
+		{
+			int i;
+			for (i = 0; NotNull(i); i++) ;
+			return i;
+		}
+
+		public IntPtr Element(int Idx)
+		{
+			IntPtr Mem = Marshal.ReadIntPtr(CUtlVecPtr);
+			if (Mem == IntPtr.Zero)
+				return IntPtr.Zero;
+
+			int TSize = Marshal.SizeOf(typeof(T));
+			return Marshal.ReadIntPtr(Mem, TSize * Idx);
+		}
 
 		public IntPtr this[int Idx]
 		{
 			get
 			{
-				IntPtr Mem = Marshal.ReadIntPtr(CUtlVecPtr);
-				if (Mem == IntPtr.Zero)
-					return IntPtr.Zero;
-
-				return Marshal.ReadIntPtr(Mem, IntPtr.Size * Idx);
-			}
-
-			set
-			{
-				IntPtr Mem = Marshal.ReadIntPtr(CUtlVecPtr);
-				if (Mem == IntPtr.Zero)
-					return;
-
-				Marshal.WriteIntPtr(Mem, IntPtr.Size * Idx, value);
+				return Element(Idx);
 			}
 		}
 
-		public static implicit operator CUtlVector(IntPtr Ptr)
+		public static implicit operator CUtlVector<T>(IntPtr Ptr)
 		{
-			CUtlVector Vec = new CUtlVector();
+			CUtlVector<T> Vec = new CUtlVector<T>();
 			Vec.CUtlVecPtr = Ptr;
 			return Vec;
 		}

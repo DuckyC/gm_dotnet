@@ -24,6 +24,12 @@ namespace dotnet
         Player,
         Fake,
     };
+
+    /*static class cpp_sandbox
+    {
+        [DllImport("cpp_sandbox")]
+        public static extern void cpp_test();
+    }*/
     
     public unsafe static class Module
     {
@@ -69,10 +75,8 @@ namespace dotnet
             OHook_recvfrom = NativeInterface.OverwriteVCRHook(VCR, new_Hook_recvfrom = Hook_recvfrom_detour);
             //old_Hook_Cmd_Exec = InterfaceLoader.OverwriteVCRHook(VCR, new_Hook_Cmd_Exec = Hook_Cmd_Exec);
 
-            CUtlVector netsocks = SymbolFinder.ResolveOnBinary("engine.dll", net_sockets_sig);
-            netsocket_t* first = (netsocket_t*)netsocks[0];
-            netsocket_t* second = (netsocket_t*)netsocks[1];
-
+            CUtlVector<netsocket_t> netsocks = SymbolFinder.ResolveOnBinary("engine.dll", net_sockets_sig);
+            netsocket_t* first = (netsocket_t*)netsocks[1];
             udpPort = first->hUDP;
 
             
