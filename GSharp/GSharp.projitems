@@ -25,6 +25,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)LuaLibrary\LuaLibrary.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LuaLibrary\ClassInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LuaLibrary\TemporaryClasses.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\ILuaInterface.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\ILuaShared.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\INetworkStringTable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\INetworkStringTableContainer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\NativeInterface.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\JIT\ClassInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\JIT\InterfaceVersions.cs" />
@@ -37,5 +41,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\SockAddr.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\VCR_t.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\SymbolFinder.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Wrapper.cs" />
   </ItemGroup>
 </Project>

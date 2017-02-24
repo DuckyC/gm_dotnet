@@ -12,12 +12,11 @@ namespace GSharp.Native.JIT
         public JITInfoException(string message) : base(message) { }
     }
 
-    class TypeJITInfo
+    public class TypeJITInfo
     {
         public Type Type { get; private set; }
         public Type PierceType { get; private set; }
         public Type NativeType { get; private set; }
-
         public bool IsParams { get; set; }
 
         public TypeJITInfo(Type type)
@@ -26,7 +25,7 @@ namespace GSharp.Native.JIT
             PierceType = Type.IsByRef ? Type.GetElementType() : Type;
             IsParams = false;
         }
-
+        
         public bool IsArray { get { return Type.IsArray; } }
         public bool IsStringClass { get { return Type.GetTypeCode(Type) == TypeCode.String; } }
         public bool IsAutoClass { get { return Type == typeof(StringBuilder); } }
