@@ -15,7 +15,7 @@ namespace GSharp.Native.Classes
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public unsafe delegate bool Hook_PlaybackGameMsg(IntPtr pEvent);
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public unsafe delegate int Hook_recvfrom(int s, byte* buf, int len, int flags, IntPtr from, IntPtr fromlen);
+        public unsafe delegate int Hook_recvfrom(int s, byte* buf, int len, int flags, IntPtr from, int fromlen);
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public unsafe delegate void Hook_GetCursorPos(IntPtr pt);
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]

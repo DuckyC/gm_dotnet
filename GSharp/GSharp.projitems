@@ -12,6 +12,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Attributes\InterfaceVersionAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Attributes\ReturnOrderAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Attributes\VTableSlotAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GLuaNET\GLua.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GLuaNET\LuaType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GLuaNET\TypeMarshals\DelegateTypeMarshal.cs" />
