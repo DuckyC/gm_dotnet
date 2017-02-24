@@ -29,6 +29,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\ILuaShared.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\INetworkStringTable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\INetworkStringTableContainer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\CUtlVector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\NativeInterface.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\JIT\ClassInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\JIT\InterfaceVersions.cs" />
