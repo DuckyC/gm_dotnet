@@ -15,12 +15,18 @@ namespace GSharp.Native.Classes
 			get
 			{
 				IntPtr Mem = Marshal.ReadIntPtr(CUtlVecPtr);
+				if (Mem == IntPtr.Zero)
+					return IntPtr.Zero;
+
 				return Marshal.ReadIntPtr(Mem, IntPtr.Size * Idx);
 			}
 
 			set
 			{
 				IntPtr Mem = Marshal.ReadIntPtr(CUtlVecPtr);
+				if (Mem == IntPtr.Zero)
+					return;
+
 				Marshal.WriteIntPtr(Mem, IntPtr.Size * Idx, value);
 			}
 		}
