@@ -36,7 +36,13 @@ namespace GSharp.Native
         private static CreateInterfaceDelegate LoadCreateInterface(string dllPath)
         {
             var hModule = LoadLibrary(dllPath);
+			if (hModule == IntPtr.Zero)
+				return null;
+
             var functionAddress = GetProcAddress(hModule, "CreateInterface");
+			if (functionAddress == IntPtr.Zero)
+				return null;
+
             return (CreateInterfaceDelegate)Marshal.GetDelegateForFunctionPointer(functionAddress, typeof(CreateInterfaceDelegate));
         }
 
@@ -66,6 +72,8 @@ namespace GSharp.Native
 
         public static T OverwriteVCRHook<T>(IntPtr VCR, T newDelegate) where T : class
         {
+			GCHandle.Alloc(newDelegate); // Fuck it.
+
             var hookName = typeof(T).Name;
             if (typeof(VCR_t).GetField(hookName) == null)
                 throw new Exception("Could not find hook " + hookName);
@@ -83,5 +91,9 @@ namespace GSharp.Native
             return OverwriteVCRHook((IntPtr)VCR, newDelegate);
         }
 
+		public static T OverwriteVCRHook<T>(T newDelegate) where T : class
+		{
+			return OverwriteVCRHook(LoadVariable<VCR_t>("tier0.dll", "g_pVCR"), newDelegate);
+		}
     }
 }

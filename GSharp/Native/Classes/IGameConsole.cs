@@ -27,19 +27,21 @@ namespace GSharp.Native.Classes
         [VTableSlot(5)]
         bool IsConsoleVisible();
 
-        // prints a message to the console
-        [VTableSlot(6)]
-        void Printf(string format, string first);
+		//[VTableSlot(6)]
+		//void SetParent(VPANEL parent);
 
-        // printes a debug message to the console
-        [VTableSlot(7)]
-        void DPrintf(string format, string first);
+		// prints a message to the console, existed in GameConsole003 but doesn't anymore?
+		//[VTableSlot(6)]
+		//void Printf(string format, string first);
 
-        // printes a debug message to the console
-        //[VTableSlot(8)]
-        //void ColorPrintf(Color& clr, string format, ...);
+		// printes a debug message to the console, existed in GameConsole003 but doesn't anymore?
+		//[VTableSlot(7)]
+		//void DPrintf(string format, string first);
 
-        //[VTableSlot(9)]
-        //void SetParent(VPANEL parent);
-    }
+		// printes a debug message to the console, existed in GameConsole003 but doesn't anymore?
+		//[VTableSlot(8)]
+		//void ColorPrintf(Color& clr, string format, ...);
+
+
+	}
 }

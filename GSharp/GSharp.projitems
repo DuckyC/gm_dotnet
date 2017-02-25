@@ -27,6 +27,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)LuaLibrary\LuaLibrary.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LuaLibrary\ClassInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LuaLibrary\TemporaryClasses.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\Color.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\IGameConsole.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\ILuaInterface.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\ILuaShared.cs" />
@@ -45,6 +46,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\SockAddr.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\VCR_t.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\SymbolFinder.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Native\Kernel32.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Native\Tier0.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)VTable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Wrapper.cs" />
   </ItemGroup>
 </Project>

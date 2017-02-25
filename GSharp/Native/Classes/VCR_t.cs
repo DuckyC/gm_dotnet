@@ -105,6 +105,12 @@ namespace GSharp.Native.Classes
         public IntPtr GenericValueVerify;
 
         public IntPtr Hook_WaitForMultipleObjects;
+
+		public T OverwriteHook<T>(T NewDelegate) where T : class
+		{
+			fixed (VCR_t* ThisFixed = &this)
+				return NativeInterface.OverwriteVCRHook<T>(ThisFixed, NewDelegate);
+		}
     }
 }
 
