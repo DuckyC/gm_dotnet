@@ -39,7 +39,7 @@ namespace GSharp.Native
             public bool MoveNext()
             {
                 position++;
-                return (position < table.GetNumStrings());
+                return (position < table.Count());
             }
 
             public void Reset()
@@ -50,6 +50,34 @@ namespace GSharp.Native
             public void Dispose()
             {
                 table = null;
+            }
+        }
+
+        public class StringUserDataTable
+        {
+            private INetworkStringTable table;
+
+            internal StringUserDataTable(INetworkStringTable table)
+            {
+                this.table = table;
+            }
+
+            public IntPtr GetUserData(int index, IntPtr lengthOut = default(IntPtr))
+            {
+                return table.GetStringUserData(index, lengthOut);
+            }
+
+            public int Count()
+            {
+                return table.GetNumStrings();
+            }
+
+            public IntPtr this[int index]
+            {
+                get
+                {
+                    return GetUserData(index);
+                }
             }
         }
 
@@ -88,7 +116,15 @@ namespace GSharp.Native
 
         private INetworkStringTable table;
 
-
+        private StringUserDataTable _UserData;
+        public StringUserDataTable UserData
+        {
+            get
+            {
+                if(_UserData == null) { _UserData = new StringUserDataTable(table); }
+                return _UserData;
+            }
+        }
 
         public StringTable(INetworkStringTable table)
         {
@@ -126,7 +162,7 @@ namespace GSharp.Native
             return table.GetTableId();
         }
 
-        public int GetNumStrings()
+        public int Count()
         {
             return table.GetNumStrings();
         }

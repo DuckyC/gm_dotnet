@@ -42,58 +42,52 @@ namespace gmsv_query
 
         public byte[] GetPacket()
         {
-            using (var stream = new MemoryStream())
+            using (var buffer = new ValveBuffer())
             {
-                using (var binary = new BinaryWriter(stream))
+                buffer.WriteLong(-1); // non-split packet header
+                buffer.WriteByte(Encoding.UTF8.GetBytes("I")[0]); // packet type is always 'I'
+                buffer.WriteByte(default_proto_version);
+
+                buffer.WriteString(GameName);
+                buffer.WriteString(MapName);
+                buffer.WriteString(GameDirectory);
+                buffer.WriteString(GamemodeName);
+
+                buffer.WriteShort((short)Appid);
+
+                buffer.WriteByte(AmountClients);
+                buffer.WriteByte(MaxClients);
+                buffer.WriteByte(AmountBots);
+                buffer.WriteByte((byte)Server);
+                buffer.WriteByte((byte)OS);
+                buffer.WriteByte((byte)(Passworded ? 1 : 0));
+                buffer.WriteByte((byte)(Secure ? 1 : 0));
+                buffer.WriteString(GameVersion);
+
+                if (string.IsNullOrEmpty(Tags))
                 {
-                    binary.Write((int)-1); // non-split packet header
-                    binary.Write((byte)Encoding.UTF8.GetBytes("I")[0]); // packet type is always 'I'
-                    binary.Write(default_proto_version);
-
-                    binary.WriteNullTerminatedString(GameName); //TODO: make strings null terminated
-                    binary.WriteNullTerminatedString(MapName);
-                    binary.WriteNullTerminatedString(GameDirectory);
-                    binary.WriteNullTerminatedString(GamemodeName);
-
-                    binary.Write((short)Appid);
-
-                    binary.Write(AmountClients);
-                    binary.Write(MaxClients);
-                    binary.Write(AmountBots);
-                    binary.Write((byte)Server);
-                    binary.Write((byte)OS);
-                    binary.Write((byte)(Passworded ? 1 : 0));
-
-                    // if vac protected, it activates itself some time after startup
-                    binary.Write((byte)(Secure ? 1 : 0));
-                    binary.WriteNullTerminatedString(GameVersion);
-
-                    if (string.IsNullOrEmpty(Tags))
-                    {
-                        // 0x80 - port number is present
-                        // 0x10 - server steamid is present
-                        // 0x01 - game long appid is present
-                        binary.Write((byte)(0x80 | 0x10 | 0x01));
-                        binary.Write(UDPPort);
-                        binary.Write(SteamID);
-                        binary.Write(Appid);
-                    }
-                    else
-                    {
-                        // 0x80 - port number is present
-                        // 0x10 - server steamid is present
-                        // 0x20 - tags are present
-                        // 0x01 - game long appid is present
-                        binary.Write((byte)(0x80 | 0x10 | 0x20 | 0x01));
-                        binary.Write(UDPPort);
-                        binary.Write(SteamID);
-                        binary.WriteNullTerminatedString(Tags);
-                        binary.Write(Appid);
-                    }
-
-                    stream.Position = 0;
-                    return stream.ReadFully();
+                    // 0x80 - port number is present
+                    // 0x10 - server steamid is present
+                    // 0x01 - game long appid is present
+                    buffer.WriteByte((byte)(0x80 | 0x10 | 0x01));
+                    buffer.WriteShort(UDPPort);
+                    buffer.WriteLongLong(SteamID);
+                    buffer.WriteLongLong(Appid);
                 }
+                else
+                {
+                    // 0x80 - port number is present
+                    // 0x10 - server steamid is present
+                    // 0x20 - tags are present
+                    // 0x01 - game long appid is present
+                    buffer.WriteByte((byte)(0x80 | 0x10 | 0x20 | 0x01));
+                    buffer.WriteShort(UDPPort);
+                    buffer.WriteLongLong(SteamID);
+                    buffer.WriteString(Tags);
+                    buffer.WriteLongLong(Appid);
+                }
+
+                return buffer.ToArray();
             }
         }
 
