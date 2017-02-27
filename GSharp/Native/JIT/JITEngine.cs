@@ -269,7 +269,7 @@ namespace GSharp.Native.JIT
                     state.refargLocals.Add(helper);
                     ilgen.Emit(OpCodes.Ldloca_S, localArg);
                 }
-                else if (typeInfo.NativeType != typeInfo.Type && !typeInfo.Type.IsEnum)
+                else if (typeInfo.NativeType != typeInfo.Type && !typeInfo.Type.IsEnum && !typeInfo.IsDelegate)
                 {
                     EmitPrettyLoad(ilgen, argindex);
                     ilgen.EmitCall(OpCodes.Call, typeInfo.Type.GetMethod("GetValue"), null);

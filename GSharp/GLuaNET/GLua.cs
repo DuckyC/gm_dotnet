@@ -129,9 +129,27 @@ namespace GSharp.GLuaNET
             return Get<T>();
         }
 
+        /// <summary>
+        /// Runs the action for every "next", with key at -2 and the value at -1, on the table at the top of the stack
+        /// </summary>
+        /// <param name="action"></param>
+        public void ForEach(Action action)
+        {
+            if(!IsType(-1, LuaType.Table)) { return; }
+            PushNil();
+            while (Next(-2) != 0)
+            {
+                action?.Invoke();
+                Pop(1);
+            }
+        }
         
 
         #region ILuaBase Passthrough(Some of it)
+        public void PushCFunction(lua_CFunction val)
+        {
+            LuaBase.PushCFunction(val);
+        }
         public int Top()
         {
             return LuaBase.Top();

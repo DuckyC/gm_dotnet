@@ -83,8 +83,8 @@ namespace GSharp.Native.Classes
         void PushNumber(double val);
         [VTableSlot(31)]
         void PushBool(bool val);
-        //[VTableSlot(32)]
-        //void PushCFunction(lua_CFunction val);
+        [VTableSlot(32)]
+        void PushCFunction(lua_CFunction val);
         //[VTableSlot(33)]
         //void PushCClosure(lua_CFunction val, int iVars);
         [VTableSlot(34)]

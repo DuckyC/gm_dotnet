@@ -1,8 +1,10 @@
-﻿using GSharp.Native;
+﻿using GSharp.GLuaNET;
+using GSharp.Native;
 using GSharp.Native.Classes;
 using GSharp.Native.Classes.VCR;
 using RGiesecke.DllExport;
 using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 namespace dotnet
@@ -19,10 +21,20 @@ namespace dotnet
         [DllExport("gmod13_open", CallingConvention = CallingConvention.Cdecl)]
         public static int Open(lua_state L)
         {
-            VCR_t* VCR = (VCR_t*)NativeInterface.LoadVariable<VCR_t>("tier0.dll", "g_pVCR");
-            
-            old_Hook_Cmd_Exec = NativeInterface.OverwriteVCRHook(VCR, new_Hook_Cmd_Exec = Hook_Cmd_Exec);
+            var glua = new GLua(L);
+
+            lua_CFunction d = SomeCFunction;
+            GCHandle.Alloc(d);
+            glua.PushCFunction(d);
+            glua.SetField(GLua.LUA_GLOBALSINDEX, "somecfunction");
+
             Console.WriteLine("DotNet loaded");
+            return 0;
+        }
+
+        public static int SomeCFunction(lua_state L)
+        {
+            Debug.WriteLine("ran cfunction!!");
             return 0;
         }
 
