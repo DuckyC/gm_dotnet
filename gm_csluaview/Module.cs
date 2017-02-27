@@ -4,8 +4,7 @@ using GSharp.Native.Classes;
 using GSharp.Native.JIT;
 using RGiesecke.DllExport;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace gm_csluaview
@@ -19,35 +18,13 @@ namespace gm_csluaview
             Console.WriteLine("Testing ingame console from C#!");
 
 
-            //var stringTableContainer = NativeInterface.Load<INetworkStringTableContainer>("engine.dll", InterfaceNameStringTable.SERVER);
-            //var stringTablePointer = stringTableContainer.FindTable("client_lua_files");
-            //var stringTable = JITEngine.GenerateClass<INetworkStringTable>(stringTablePointer);
-            //var luaFiles = new List<string>();
-            //for (int i = 0; i < stringTable.GetNumStrings(); i++)
-            //{
-            //    luaFiles.Add(stringTable.GetString(i) ?? "nonexistent stringtable index");
-            //}
-            byte idx = 0;
-            var luaShared = NativeInterface.Load<ILuaShared>("lua_shared.dll");
-            var luaInterfacePointer = luaShared.GetLuaInterface(idx);
-            if (luaInterfacePointer == IntPtr.Zero)
-            {
-                Debug.WriteLine($"i {idx}, is invalid");
-                return 0;
-            }
+            var stringTable = StringTable.FindTable("client_lua_files");
+            var lua_files = stringTable.Cast<string>();
 
+            var luaShared = NativeInterface.Load<ILuaShared>("lua_shared.dll");
+            var luaInterfacePointer = luaShared.GetLuaInterface(0);
             var luaInterface = JITEngine.GenerateClass<ILuaInterface>(luaInterfacePointer);
-            //var client = luaInterface.IsClient();
-            //var server = luaInterface.IsServer();
-            //Debug.WriteLine($"i {2}, client {client}, server {server}");
             luaInterface.RunStringEx("", "", "print[[HI THERE FROM RUNSTRING]]");
-            //var engineptr = NativeInterface.LoadLibrary("lua_shared.dll");
-            //var factoryptr = NativeInterface.GetProcAddress(engineptr, "CreateInterface");
-            //var factory = Marshal.GetDelegateForFunctionPointer<CreateInterfaceDelegate>(factoryptr);
-            //int successful = 0;
-            //var rtnptr = Marshal.AllocHGlobal(successful);
-            //var luainterfaceptr = factory("LUASHARED003", rtnptr);
-            //successful = Marshal.ReadInt32(rtnptr);
 
             return 0;
         }

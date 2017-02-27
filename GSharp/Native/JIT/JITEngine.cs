@@ -16,11 +16,11 @@ namespace GSharp.Native.JIT
     public static class JITEngine
     {
         private static ModuleBuilder moduleBuilder;
-		private static Dictionary<string, object> classCache;
+        private static Dictionary<string, object> classCache;
 
         static JITEngine()
         {
-			classCache = new Dictionary<string, object>();
+            classCache = new Dictionary<string, object>();
             AssemblyBuilder assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(new AssemblyName("JIT"), AssemblyBuilderAccess.RunAndSave);
 
 #if DEBUG
@@ -92,8 +92,8 @@ namespace GSharp.Native.JIT
             }
 
             IntPtr classptr = factory(InterfaceVersions.GetInterfaceIdentifier(typeof(TClass)), IntPtr.Zero);
-			if (classptr == IntPtr.Zero)
-				return null;
+            if (classptr == IntPtr.Zero)
+                return null;
 
             return GenerateClass<TClass>(classptr);
         }
@@ -106,20 +106,20 @@ namespace GSharp.Native.JIT
                 //throw new JITEngineException("GenerateClass called with NULL ptr");
             }
 
-			string uniqueID = ptr.GetHashCode().ToString() + typeof(TClass).GetHashCode().ToString();
-			if (classCache.ContainsKey(uniqueID))
-				return (TClass)classCache[uniqueID];
-			
+            string uniqueID = ptr.GetHashCode().ToString() + typeof(TClass).GetHashCode().ToString();
+            if (classCache.ContainsKey(uniqueID))
+                return (TClass)classCache[uniqueID];
+            
             IntPtr vtable_ptr = Marshal.ReadIntPtr(ptr);
 
             Type targetInterface = typeof(TClass);
 
-            TypeBuilder builder = moduleBuilder.DefineType(targetInterface.Name + "_" + (IntPtr.Size * 8).ToString(),
+            TypeBuilder builder = moduleBuilder.DefineType(targetInterface.Name + "_" + uniqueID,
                                                     TypeAttributes.Class, null, new Type[] { targetInterface });
             builder.AddInterfaceImplementation(targetInterface);
 
             FieldBuilder fbuilder = builder.DefineField("ObjectAddress", typeof(IntPtr), FieldAttributes.Public);
-			builder.DefineField(nameof(VTable), typeof(VTable), FieldAttributes.Public);
+            builder.DefineField(nameof(VTable), typeof(VTable), FieldAttributes.Public);
 
             ClassJITInfo classInfo = new ClassJITInfo(targetInterface);
 
@@ -137,7 +137,7 @@ namespace GSharp.Native.JIT
             FieldInfo addressField = implClass.GetField("ObjectAddress", BindingFlags.Public | BindingFlags.Instance);
             addressField.SetValue(instClass, ptr);
 
-			classCache.Add(uniqueID, instClass);
+            classCache.Add(uniqueID, instClass);
             return (TClass)instClass;
         }
 

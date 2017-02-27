@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using GSharp.Native.Classes;
+using GSharp.Attributes;
+using System.Linq;
 
 namespace GSharp.Native
 {
@@ -44,6 +46,23 @@ namespace GSharp.Native
 				return null;
 
             return (CreateInterfaceDelegate)Marshal.GetDelegateForFunctionPointer(functionAddress, typeof(CreateInterfaceDelegate));
+        }
+
+        /// <summary>
+        /// Gets a type that implements the native interface from the attributes
+        /// </summary>
+        /// <typeparam name="TClass"></typeparam>
+        /// <returns></returns>
+        public static TClass Load<TClass>() where TClass : class
+        {
+            var moduleName = typeof(TClass).GetCustomAttributes(typeof(ModuleNameAttribute), false).FirstOrDefault() as ModuleNameAttribute;
+
+            if(moduleName == null)
+            {
+                throw new Exception($"{typeof(TClass).Name} does not have a ModuleName attribute.");
+            }
+
+            return Load<TClass>(moduleName.ModuleName);
         }
 
         public static TClass Load<TClass>(string dllname) where TClass : class

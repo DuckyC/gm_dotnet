@@ -40,14 +40,14 @@ namespace gmsv_query
         public long Appid { get; set; }
         public long SteamID { get; set; }
 
-        public byte[] GetBytes()
+        public byte[] GetPacket()
         {
             using (var stream = new MemoryStream())
             {
                 using (var binary = new BinaryWriter(stream))
                 {
-                    binary.Write((long)-1); // connectionless packet header
-                    binary.Write(Encoding.UTF8.GetBytes("I")[0]); // packet type is always 'I'
+                    binary.Write((int)-1); // non-split packet header
+                    binary.Write((byte)Encoding.UTF8.GetBytes("I")[0]); // packet type is always 'I'
                     binary.Write(default_proto_version);
 
                     binary.WriteNullTerminatedString(GameName); //TODO: make strings null terminated
@@ -91,10 +91,15 @@ namespace gmsv_query
                         binary.Write(Appid);
                     }
 
-
+                    stream.Position = 0;
                     return stream.ReadFully();
                 }
             }
+        }
+
+        public void BuildDefaults()
+        {
+
         }
     }
 }

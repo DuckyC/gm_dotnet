@@ -38,9 +38,10 @@ namespace GSharp
         }
 
         static IGameConsoleTextWriter GameConsoleWriter;
-
+#if CLIENT
         public static IGameConsole RerouteConsole()
         {
+
             if (GameConsoleWriter == null)
             {
                 IGameConsole GameConsole = NativeInterface.Load<IGameConsole>("gameui.dll");
@@ -49,6 +50,8 @@ namespace GSharp
             }
 
             return GameConsoleWriter.GameConsole;
+
+            return null;
         }
 
         public static Color Color
@@ -66,5 +69,6 @@ namespace GSharp
                     GameConsoleWriter.Color = value;
             }
         }
+#endif
     }
 }

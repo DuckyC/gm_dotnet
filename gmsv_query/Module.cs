@@ -3,6 +3,7 @@ using GSharp.Native.Classes;
 using GSharp.Native.Classes.VCR;
 using RGiesecke.DllExport;
 using System;
+using System.Net;
 using System.Runtime.InteropServices;
 
 namespace gmsv_query
@@ -17,9 +18,13 @@ namespace gmsv_query
         {
             VCR_t* VCR = (VCR_t*)NativeInterface.LoadVariable<VCR_t>("tier0.dll", "g_pVCR");
             OHook_recvfrom = NativeInterface.OverwriteVCRHook(VCR, new_Hook_recvfrom = Hook_recvfrom_detour);
-            var netsock = NetSocket.GetNetSocket();
+            var netsock = Symbols.GetNetSocket();
+            udpSock = netsock->hUDP;
 
-            staticInfoPacket = (new ReplyInfoPacket
+            var iserver = Symbols.GetIServer();
+            
+
+            var infoPacket = new ReplyInfoPacket
             {
                 AmountBots = 10,
                 AmountClients = 5,
@@ -38,16 +43,18 @@ namespace gmsv_query
                 SteamID = 0,
                 Tags = "ayyy"
 
-            }).GetBytes();
+            };
+            staticInfoPacket = infoPacket.GetPacket();
 
-            Console.WriteLine("DotNet loaded");
+            Console.WriteLine("DotNet Query loaded");
             return 0;
         }
 
         static Hook_recvfrom new_Hook_recvfrom;
         static Hook_recvfrom OHook_recvfrom;
-        public static int Hook_recvfrom_detour(int s, byte* buf, int len, int flags, IntPtr from, int fromlen)
+        public static int Hook_recvfrom_detour(int s, byte* buf, int len, int flags, IntPtr from, IntPtr fromlenptr)
         {
+            var olen = OHook_recvfrom(s, buf, len, flags, from, fromlenptr);
             var channel = (int*)buf;
             var challenge = (int*)(buf + 5);
             var type = (byte*)(buf + 4);
@@ -57,13 +64,23 @@ namespace gmsv_query
                 {
                     if (*type == 'T')
                     {
-                        NativeSocket.SendTo(udpSock, staticInfoPacket, staticInfoPacket.Length, 0, from, fromlen);
+                        var addr = (SockAddrIn*)from;
+                        var IP = new IPAddress(addr->Addr);
+                        var sentlen = NativeSocket.SendTo(udpSock, staticInfoPacket, staticInfoPacket.Length, 0, from, *((int*)fromlenptr));
+                        if (sentlen == -1)
+                        {
+                            var err = NativeSocket.WSAGetLastError();
+                            if(err != 0) //wat
+                            {
+
+                            }
+                        }
                         return -1;
                     }
                 }
             }
 
-            return OHook_recvfrom(s, buf, len, flags, from, fromlen);
+            return olen;
         }
 
         [DllExport("gmod13_close", CallingConvention = CallingConvention.Cdecl)]

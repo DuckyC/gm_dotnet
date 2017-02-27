@@ -12,6 +12,7 @@ namespace GSharp.Native.Classes
     public partial struct QueryCvarCookie_t { }
     public partial struct typedescription_t { }
 
+    [ModuleName("server")]
     [InterfaceVersion("ServerGameDLL009")]
     public interface IServerGameDLL
     {

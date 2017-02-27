@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using GSharp.Attributes;
+using System.Linq;
 
 namespace GSharp.Native.JIT
 {
@@ -128,17 +129,45 @@ namespace GSharp.Native.JIT
     {
         public List<MethodJITInfo> Methods { get; private set; }
 
-        public ClassJITInfo(Type classType)
+
+        private void AddMethods(Type classType, ref int vtableOffset)
         {
+            var interfaces = classType.GetInterfaces();
+            if (interfaces.Length > 1)
+            {
+                throw new NotImplementedException("Bug cartman about it");
+            }
+            Methods = new List<MethodJITInfo>();
+
+            if (interfaces.Length == 1)
+            {
+                AddMethods(interfaces[0], ref vtableOffset);
+            }
+
             MethodInfo[] methods = classType.GetMethods();
-
-            Methods = new List<MethodJITInfo>(methods.Length);
-
             for (int i = 0; i < methods.Length; i++)
             {
-                VTableSlotAttribute[] slotAttribs = (VTableSlotAttribute[])methods[i].GetCustomAttributes(typeof(VTableSlotAttribute), false);
-                Methods.Add(new MethodJITInfo(slotAttribs[0].Slot, methods[i]));
+                var offsetAttribute = methods[i].GetCustomAttributes(typeof(VTableOffsetAttribute), false).FirstOrDefault() as VTableOffsetAttribute;
+                if (offsetAttribute != null)
+                {
+                    vtableOffset += offsetAttribute.Offset;
+                }
+
+                var slotAttribute = methods[i].GetCustomAttributes(typeof(VTableSlotAttribute), false).FirstOrDefault() as VTableSlotAttribute;
+                if (slotAttribute != null)
+                {
+                    vtableOffset = slotAttribute.Slot;
+                }
+
+                Methods.Add(new MethodJITInfo(vtableOffset, methods[i]));
+                vtableOffset++;
             }
+        }
+
+        public ClassJITInfo(Type classType)
+        {
+            int vtableOffset = 0;
+            AddMethods(classType, ref vtableOffset);
         }
     }
 }

@@ -9,8 +9,10 @@
     <Import_RootNamespace>GSharp</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\ModuleNameAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Attributes\InterfaceVersionAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Attributes\ReturnOrderAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\VTableOffsetAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Attributes\VTableSlotAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ClientConsole.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions.cs" />
@@ -28,12 +30,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)LuaLibrary\ClassInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LuaLibrary\TemporaryClasses.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\Color.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\IConnectionlessPacketHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\IGameConsole.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\ILuaInterface.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\ILuaShared.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\INetworkStringTable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\INetworkStringTableContainer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\CUtlVector.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\IServer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\NativeInterface.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\JIT\ClassInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\JIT\InterfaceVersions.cs" />
@@ -43,8 +47,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\IFileSystem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\ILuaBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\IServerGameDLL.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\SockAddr.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\VCR_t.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Native\StringTable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\SymbolFinder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\Kernel32.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\Tier0.cs" />

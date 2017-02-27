@@ -1,5 +1,4 @@
-﻿using GSharp;
-using GSharp.GLuaNET;
+﻿using GSharp.GLuaNET;
 using GSharp.Native;
 using GSharp.Native.Classes;
 using GSharp.Native.Classes.VCR;
@@ -7,7 +6,6 @@ using RGiesecke.DllExport;
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-
 namespace dotnet
 {
     /*static class cpp_sandbox
@@ -24,8 +22,7 @@ namespace dotnet
         [DllExport("gmod13_open", CallingConvention = CallingConvention.Cdecl)]
         public static int Open(lua_state L)
         {
-            ClientConsole.RerouteConsole();
-            ClientConsole.Color = new Color(255, 192, 203); // Make it pink, baby <3
+            
             var glua = new GLua(L);
 
             lua_CFunction d = SomeCFunction;
@@ -33,6 +30,11 @@ namespace dotnet
             glua.PushCFunction(d);
             glua.SetField(GLua.LUA_GLOBALSINDEX, "somecfunction");
 
+
+
+#if CLIENT
+            ClientConsole.RerouteConsole();
+            ClientConsole.Color = new Color(255, 192, 203); // Make it pink, baby <3
             IGameConsole GameConsole = NativeInterface.Load<IGameConsole>("gameui.dll");
 
             VirtualAction ActivateOld = null;
@@ -41,7 +43,7 @@ namespace dotnet
                 Console.WriteLine("The console has been activated!");
                 ActivateOld(This);
             });
-
+#endif
             Hook_Cmd_Exec Hook_Cmd_Exec_old = null;
             Hook_Cmd_Exec_old = NativeInterface.OverwriteVCRHook<Hook_Cmd_Exec>((Args) =>
             {

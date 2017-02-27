@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GSharp.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -11,6 +12,7 @@ namespace GSharp.Native.Classes
 
     public interface INetworkStringTable
     {
+        [VTableOffset(1)]
         // Table Info
         string GetTableName();
         int GetTableId();
