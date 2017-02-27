@@ -1,4 +1,5 @@
-﻿using GSharp.GLuaNET;
+﻿using GSharp;
+using GSharp.GLuaNET;
 using GSharp.Native;
 using GSharp.Native.Classes;
 using GSharp.Native.Classes.VCR;
@@ -17,10 +18,14 @@ namespace dotnet
 
     public unsafe static class Module
     {
-        
+        [UnmanagedFunctionPointer(CallingConvention.ThisCall)]
+        delegate void VirtualAction(IntPtr This);
+
         [DllExport("gmod13_open", CallingConvention = CallingConvention.Cdecl)]
         public static int Open(lua_state L)
         {
+            ClientConsole.RerouteConsole();
+            ClientConsole.Color = new Color(255, 192, 203); // Make it pink, baby <3
             var glua = new GLua(L);
 
             lua_CFunction d = SomeCFunction;
@@ -28,10 +33,25 @@ namespace dotnet
             glua.PushCFunction(d);
             glua.SetField(GLua.LUA_GLOBALSINDEX, "somecfunction");
 
+            IGameConsole GameConsole = NativeInterface.Load<IGameConsole>("gameui.dll");
+
+            VirtualAction ActivateOld = null;
+            ActivateOld = VTable.GetVTable(GameConsole).Hook<VirtualAction>(nameof(IGameConsole.Activate), (This) =>
+            {
+                Console.WriteLine("The console has been activated!");
+                ActivateOld(This);
+            });
+
+            Hook_Cmd_Exec Hook_Cmd_Exec_old = null;
+            Hook_Cmd_Exec_old = NativeInterface.OverwriteVCRHook<Hook_Cmd_Exec>((Args) =>
+            {
+                Console.WriteLine("Cmd_Exec:\n{0}", string.Join("\n", Args));
+                Hook_Cmd_Exec_old(Args);
+            });
+
             Console.WriteLine("DotNet loaded");
             return 0;
         }
-
         public static int SomeCFunction(lua_state L)
         {
             Debug.WriteLine("ran cfunction!!");
@@ -45,13 +65,12 @@ namespace dotnet
             old_Hook_Cmd_Exec(Args);
         }
 
+
+
         [DllExport("gmod13_close", CallingConvention = CallingConvention.Cdecl)]
         public static int Close(IntPtr L)
         {
             return 0;
         }
     }
-
-
-    
 }

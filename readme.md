@@ -6,7 +6,7 @@ GSharp is a C# Shared project that makes it easy to interact with the C side of 
 
   1. Clone this repo
   2. Create a new dll in visual studio
-  3. Go to project properties>Build and set Platform target to x86
+  3. Go to project properties>Build and set Platform target to x86, and tick Allow unsafe code
   4. Install the nuget package [UnmanagedExports](https://www.nuget.org/packages/UnmanagedExports)
   5. Add the GSharp shared project as a reference
   6. Make a class like the following:
