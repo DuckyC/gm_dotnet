@@ -54,9 +54,10 @@ namespace dotnet
             Console.WriteLine("DotNet loaded");
             return 0;
         }
-        public static int SomeCFunction(lua_state L)
+      
+        public static int SomeCFunction(IntPtr L)
         {
-            Debug.WriteLine("ran cfunction!!");
+            Debug.WriteLine($"woop!");
             return 0;
         }
 

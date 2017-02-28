@@ -4,83 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Collections;
+using System.Runtime.InteropServices;
 
-namespace GSharp.Native
+namespace GSharp.Native.StringTable
 {
-    public class StringTable : IEnumerable<string>
+    public class StringTable
     {
-
-        private class StringTableEnumerator : IEnumerator<string>, IEnumerator
-        {
-            private StringTable table;
-            public StringTableEnumerator(StringTable table)
-            {
-                this.table = table;
-            }
-
-
-            private int position = -1;
-            public object Current
-            {
-                get
-                {
-                    return table[position];
-                }
-            }
-
-            string IEnumerator<string>.Current
-            {
-                get
-                {
-                    return table[position];
-                }
-            }
-
-            public bool MoveNext()
-            {
-                position++;
-                return (position < table.Count());
-            }
-
-            public void Reset()
-            {
-                position = -1;
-            }
-
-            public void Dispose()
-            {
-                table = null;
-            }
-        }
-
-        public class StringUserDataTable
-        {
-            private INetworkStringTable table;
-
-            internal StringUserDataTable(INetworkStringTable table)
-            {
-                this.table = table;
-            }
-
-            public IntPtr GetUserData(int index, IntPtr lengthOut = default(IntPtr))
-            {
-                return table.GetStringUserData(index, lengthOut);
-            }
-
-            public int Count()
-            {
-                return table.GetNumStrings();
-            }
-
-            public IntPtr this[int index]
-            {
-                get
-                {
-                    return GetUserData(index);
-                }
-            }
-        }
-
         static private INetworkStringTableContainer container;
         static StringTable()
         {
@@ -95,61 +24,61 @@ namespace GSharp.Native
 
         public static StringTable GetTable(int index)
         {
+            var table = GetTableInternal(index);
+            return new StringTableBare(table);
+        }
+
+        public static StringTable FindTable(string name)
+        {
+            var table = FindTableInternal(name);
+            return new StringTableBare(table);
+        }
+
+        public static StringTable<TClass> GetTable<TClass>(int index)
+        {
+            var table = GetTableInternal(index);
+            return new StringTable<TClass>(table);
+        }
+
+        public static StringTable<TClass> FindTable<TClass>(string name)
+        {
+            var table = FindTableInternal(name);
+            return new StringTable<TClass>(table);
+        }
+
+        private static INetworkStringTable GetTableInternal(int index)
+        {
             if (container == null) return null;
             var stringTablePointer = container.GetTable(index);
             if (stringTablePointer == IntPtr.Zero) return null;
             var stringTable = JITEngine.GenerateClass<INetworkStringTable>(stringTablePointer);
-            if (stringTable == null) return null;
-            return new StringTable(stringTable);
+            return stringTable;
         }
 
-        public static StringTable FindTable(string name)
+        private static INetworkStringTable FindTableInternal(string name)
         {
             if (container == null) return null;
             var stringTablePointer = container.FindTable(name);
             if (stringTablePointer == IntPtr.Zero) return null;
             var stringTable = JITEngine.GenerateClass<INetworkStringTable>(stringTablePointer);
-            if (stringTable == null) return null;
-            return new StringTable(stringTable);
+            return stringTable;
         }
 
 
-        private INetworkStringTable table;
+        protected INetworkStringTable table;
 
-        private StringUserDataTable _UserData;
-        public StringUserDataTable UserData
-        {
-            get
-            {
-                if(_UserData == null) { _UserData = new StringUserDataTable(table); }
-                return _UserData;
-            }
-        }
-
-        public StringTable(INetworkStringTable table)
+        internal StringTable(INetworkStringTable table)
         {
             this.table = table;
         }
 
-        public string this[int index]
+        public virtual string this[int index]
         {
             get
             {
                 return GetString(index);
             }
         }
-
-        public IEnumerator<string> GetEnumerator()
-        {
-            return new StringTableEnumerator(this);
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return new StringTableEnumerator(this);
-        }
-
-
 
         #region INetworkStringTable Passthrough
         public string GetTableName()
@@ -217,6 +146,55 @@ namespace GSharp.Native
             table.SetStringChangedCallback(obj, changeFunc);
         }
         #endregion
+    }
+
+    public class StringTableBare : StringTable, IEnumerable<string>
+    {
+        public StringTableBare(INetworkStringTable table) : base(table)
+        {
+        }
+
+        public IEnumerator<string> GetEnumerator()
+        {
+            return new StringTableEnumerator(this);
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return new StringTableEnumerator(this);
+        }
+    }
+
+    public struct Entry<TClass>
+    {
+        public string String;
+        public TClass UserData;
+        public Entry(string str, TClass udata)
+        {
+            String = str;
+            UserData = udata;
+        }
+    }
+
+    public class StringTable<TClass> : StringTable, IEnumerable<Entry<TClass>>
+    {
+        public StringUserDataTable<TClass> UserData { get; protected set; }
+
+        public StringTable(INetworkStringTable table) : base(table)
+        {
+            UserData = new StringUserDataTable<TClass>(table);
+        }
+
+        public IEnumerator<Entry<TClass>> GetEnumerator()
+        {
+            return new StringTableUserDataEnumerator<TClass>(this);
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return (this as IEnumerable<Entry<TClass>>).GetEnumerator();
+        }
+
     }
 
 }

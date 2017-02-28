@@ -21,7 +21,7 @@ namespace GSharp.GLuaNET.TypeMarshals
             return null;
         }
 
-        public void Set(GLua GLua, object obj)
+        public void Push(GLua GLua, object obj)
         {
             GLua.LuaBase.PushNumber(Convert.ToDouble(obj));
         }

@@ -13,7 +13,7 @@
             return null;
         }
 
-        public void Set(GLua GLua, object obj)
+        public void Push(GLua GLua, object obj)
         {
             GLua.SetArray<T>(obj as T[]);
         }

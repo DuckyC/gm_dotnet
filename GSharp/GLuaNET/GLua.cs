@@ -7,14 +7,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Linq.Expressions;
 
 namespace GSharp.GLuaNET
 {
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    public delegate int lua_CFunction(lua_state State);
+    public delegate int lua_CFunction(IntPtr State);
 
     public class GLua
     {
+        static List<GCHandle> DelegateHandles;
+
         public const int LUA_REGISTRYINDEX = -10000;
         public const int LUA_ENVIRONINDEX = -10001;
         public const int LUA_GLOBALSINDEX = -10002;
@@ -25,7 +28,6 @@ namespace GSharp.GLuaNET
         {
             Marshals.Add(t, marshal);
         }
-
 
         public lua_state State { get; protected set; }
 
@@ -42,9 +44,9 @@ namespace GSharp.GLuaNET
             return (T)Get(typeof(T));
         }
 
-        public void Set<T>(T obj)
+        public void Push<T>(T obj)
         {
-            Set(obj, typeof(T));
+            Push(obj, typeof(T));
         }
 
         public object Get(Type type)
@@ -57,12 +59,12 @@ namespace GSharp.GLuaNET
             return null;
         }
 
-        public void Set(object obj, Type type)
+        public void Push(object obj, Type type)
         {
             if (Marshals.ContainsKey(type))
             {
                 var marshal = Marshals[type] as ILuaTypeMarshal;
-                marshal.Set(this, obj);
+                marshal.Push(this, obj);
             }
         }
 
@@ -71,8 +73,8 @@ namespace GSharp.GLuaNET
             CreateTable();
             for (int i = 0; i < array.Length; i++)
             {
-                Set(array[i]);
-                Set(i);
+                Push(array[i]);
+                Push<int>(i);
                 RawSet(-3);
                 Pop(2);
             }
@@ -84,7 +86,7 @@ namespace GSharp.GLuaNET
             var newArray = new T[count];
             for (int i = 1; i <= count; i++)
             {
-                Set(i);
+                Push<int>(i);
                 RawGet(-2);
                 newArray[i - 1] = Get<T>();
                 Pop(2);
@@ -119,7 +121,7 @@ namespace GSharp.GLuaNET
 
         public void SetGlobal<T>(string Name, T Obj)
         {
-            Set(Obj);
+            Push(Obj);
             SetField(LUA_GLOBALSINDEX, Name);
         }
 
@@ -143,13 +145,18 @@ namespace GSharp.GLuaNET
                 Pop(1);
             }
         }
-        
 
         #region ILuaBase Passthrough(Some of it)
         public void PushCFunction(lua_CFunction val)
         {
+            var ptr = Marshal.GetFunctionPointerForDelegate(val);
+            LuaBase.PushCFunction(ptr);
+        }
+        public void PushCFunction(IntPtr val)
+        {
             LuaBase.PushCFunction(val);
         }
+
         public int Top()
         {
             return LuaBase.Top();

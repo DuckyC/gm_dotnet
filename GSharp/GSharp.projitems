@@ -63,7 +63,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\ILuaBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\IServerGameDLL.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\VCR_t.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Native\StringTable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Native\StringTable\StringTable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Native\StringTable\StringTableUserDataEnumerator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Native\StringTable\StringTableEnumerator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Native\StringTable\StringUserDataTable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\SymbolFinder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\Kernel32.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\Tier0.cs" />

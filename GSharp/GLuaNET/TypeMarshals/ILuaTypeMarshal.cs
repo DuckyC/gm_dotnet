@@ -3,6 +3,6 @@
     public interface ILuaTypeMarshal
     {
         object Get(GLua GLua);
-        void Set(GLua GLua, object obj);
+        void Push(GLua GLua, object obj);
     }
 }

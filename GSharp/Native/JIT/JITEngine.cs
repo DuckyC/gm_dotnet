@@ -5,6 +5,7 @@ using System.Reflection.Emit;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 using GSharp.Native.Classes;
+using System.Linq;
 
 namespace GSharp.Native.JIT
 {
@@ -26,8 +27,8 @@ namespace GSharp.Native.JIT
 #if DEBUG
             Type daType = typeof(DebuggableAttribute);
             ConstructorInfo daCtor = daType.GetConstructor(new Type[] { typeof(DebuggableAttribute.DebuggingModes) });
-            CustomAttributeBuilder daBuilder = new CustomAttributeBuilder(daCtor, new object[] { 
-            DebuggableAttribute.DebuggingModes.DisableOptimizations | 
+            CustomAttributeBuilder daBuilder = new CustomAttributeBuilder(daCtor, new object[] {
+            DebuggableAttribute.DebuggingModes.DisableOptimizations |
             DebuggableAttribute.DebuggingModes.Default });
             assemblyBuilder.SetCustomAttribute(daBuilder);
 #endif
@@ -109,7 +110,7 @@ namespace GSharp.Native.JIT
             string uniqueID = ptr.GetHashCode().ToString() + typeof(TClass).GetHashCode().ToString();
             if (classCache.ContainsKey(uniqueID))
                 return (TClass)classCache[uniqueID];
-            
+
             IntPtr vtable_ptr = Marshal.ReadIntPtr(ptr);
 
             Type targetInterface = typeof(TClass);
@@ -280,7 +281,17 @@ namespace GSharp.Native.JIT
                     state.refargLocals.Add(helper);
                     ilgen.Emit(OpCodes.Ldloca_S, localArg);
                 }
-                else if (typeInfo.NativeType != typeInfo.Type && !typeInfo.Type.IsEnum && !typeInfo.IsDelegate)
+                else if (typeInfo.IsDelegate)
+                {
+                    throw new Exception("CARTMAN FIX");
+                    //EmitPrettyLoad(ilgen, argindex);
+
+                    //var met = typeof(Marshal).GetMethods().Where(m => m.Name == nameof(Marshal.GetFunctionPointerForDelegate) && m.IsGenericMethod).FirstOrDefault();
+                    //var genMet = met.MakeGenericMethod(typeInfo.Type);
+
+                    //ilgen.EmitCall(OpCodes.Call, genMet, null);
+                }
+                else if (typeInfo.NativeType != typeInfo.Type && !typeInfo.Type.IsEnum)
                 {
                     EmitPrettyLoad(ilgen, argindex);
                     ilgen.EmitCall(OpCodes.Call, typeInfo.Type.GetMethod("GetValue"), null);
