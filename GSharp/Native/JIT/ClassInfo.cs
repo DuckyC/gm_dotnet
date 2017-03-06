@@ -135,6 +135,13 @@ namespace GSharp.Native.JIT
             var interfaces = classType.GetInterfaces();
             Methods = new List<MethodJITInfo>();
 
+			if (interfaces.Length > 2)
+				throw new NotImplementedException();
+			for (int i = 0; i < interfaces.Length; i++)
+			{
+				AddMethods(interfaces[i], ref vtableOffset);
+			}
+
 			if (interfaces.Length == 1)
 			{
 				AddMethods(interfaces[0], ref vtableOffset);
@@ -144,8 +151,6 @@ namespace GSharp.Native.JIT
 				AddMethods(interfaces[0], ref vtableOffset);
 				AddMethods(interfaces[1], ref vtableOffset);
 			}
-			else
-				throw new NotImplementedException();
 
             MethodInfo[] methods = classType.GetMethods();
             for (int i = 0; i < methods.Length; i++)

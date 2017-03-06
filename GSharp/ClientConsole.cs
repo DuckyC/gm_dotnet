@@ -50,8 +50,6 @@ namespace GSharp
             }
 
             return GameConsoleWriter.GameConsole;
-
-            return null;
         }
 
         public static Color Color

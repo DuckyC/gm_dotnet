@@ -17,6 +17,10 @@ namespace csharp_sandbox
 		[DllExport("gmod13_open", CallingConvention = CallingConvention.Cdecl)]
 		public static int Open(lua_state L)
 		{
+			ClientConsole.RerouteConsole();
+
+			ClientConsole.Color = ConsoleColor.Green;
+			Console.WriteLine("Hello World!");
 			return 0;
 		}
 
