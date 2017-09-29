@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.15
+VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "GSharp", "GSharp\GSharp.shproj", "{0F1737C4-AF88-416B-85BB-02EE991D0434}"
 EndProject
@@ -101,6 +101,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {3C5C7F5A-70FD-4CB1-933F-2F4AF36B479A}
+		SolutionGuid = {A6EEBE7D-DF08-49EE-818A-D3152F727789}
 	EndGlobalSection
 EndGlobal

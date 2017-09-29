@@ -3,7 +3,7 @@ using GSharp.Native.Classes;
 using GSharp.Native.JIT;
 using System.Runtime.InteropServices;
 
-namespace gmsv_query
+namespace GSharp
 {
     public unsafe static class Symbols
     {
@@ -27,9 +27,9 @@ namespace gmsv_query
 
         public static IServer GetIServer()
         {
-            var ptr = SymbolFinder.ResolveOnBinary("engine", IServer_sig);
-
-            return JITEngine.GenerateClass<IServer>(ptr);//wrong because this is IServer**
+            var ptrptr = SymbolFinder.ResolveOnBinary("engine.dll", IServer_sig);//this is IServer**
+            var ptr = Marshal.ReadIntPtr(ptrptr);
+            return JITEngine.GenerateClass<IServer>(ptr); 
 
             
         }

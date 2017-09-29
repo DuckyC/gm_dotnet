@@ -53,6 +53,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\INetworkStringTableContainer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\CUtlVector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\IServer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\IVEngineServer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\NativeInterface.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\JIT\ClassInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\JIT\InterfaceVersions.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Native\SymbolFinder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\Kernel32.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\Tier0.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Symbols.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ValveBuffer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)VTable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Wrapper.cs" />
