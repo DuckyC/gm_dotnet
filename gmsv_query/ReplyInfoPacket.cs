@@ -90,10 +90,5 @@ namespace gmsv_query
                 return buffer.ToArray();
             }
         }
-
-        public void BuildDefaults()
-        {
-
-        }
     }
 }
