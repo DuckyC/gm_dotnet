@@ -48,7 +48,6 @@
   <ItemGroup>
     <Compile Include="Module.cs" />
     <Compile Include="NativeSocket.cs" />
-    <Compile Include="Symbols.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReplyInfoPacket.cs" />
     <Compile Include="SockAddr.cs" />

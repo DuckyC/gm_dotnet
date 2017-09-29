@@ -1,4 +1,5 @@
-﻿using GSharp.Native;
+﻿using GSharp;
+using GSharp.Native;
 using GSharp.Native.Classes;
 using GSharp.Native.Classes.VCR;
 using RGiesecke.DllExport;
@@ -22,25 +23,30 @@ namespace gmsv_query
             udpSock = netsock->hUDP;
 
             var iserver = Symbols.GetIServer();
+            var gamedll = NativeInterface.Load<IServerGameDLL>();
+            var filesystem = NativeInterface.Load<IFileSystem>();
+            var engineServer = NativeInterface.Load<IVEngineServer>();
+
+            var description = gamedll.GetGameDescription();
             
 
             var infoPacket = new ReplyInfoPacket
             {
-                AmountBots = 10,
-                AmountClients = 5,
-                Appid = 4020,
+                AmountBots = 0,
+                AmountClients = 50,
+                Appid = engineServer.GetAppID(),
                 GameDirectory = "garrysmod",
                 GamemodeName = "infinite wars",
                 GameName = "this is my server name?",
                 GameVersion = ReplyInfoPacket.default_game_version,
                 MapName = "gm_fuckmynuts",
-                MaxClients = 120,
+                MaxClients = 60,
                 OS = ReplyInfoPacket.OSType.Windows,
                 Passworded = false,
                 Secure = false,
                 Server = ReplyInfoPacket.ServerType.Dedicated,
                 UDPPort = (short)netsock->nPort,
-                SteamID = 0,
+                SteamID = engineServer.GetGameServerSteamID(),
                 Tags = "ayyy"
 
             };
