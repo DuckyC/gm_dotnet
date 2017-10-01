@@ -25,13 +25,6 @@ namespace dotnet
             
             var glua = new GLua(L);
 
-            lua_CFunction d = SomeCFunction;
-            GCHandle.Alloc(d);
-            glua.PushCFunction(d);
-            glua.SetField(GLua.LUA_GLOBALSINDEX, "somecfunction");
-
-
-
 #if CLIENT
             ClientConsole.RerouteConsole();
             ClientConsole.Color = new Color(255, 192, 203); // Make it pink, baby <3
@@ -44,31 +37,10 @@ namespace dotnet
                 ActivateOld(This);
             });
 #endif
-            Hook_Cmd_Exec Hook_Cmd_Exec_old = null;
-            Hook_Cmd_Exec_old = NativeInterface.OverwriteVCRHook<Hook_Cmd_Exec>((Args) =>
-            {
-                Console.WriteLine("Cmd_Exec:\n{0}", string.Join("\n", Args));
-                Hook_Cmd_Exec_old(Args);
-            });
 
             Console.WriteLine("DotNet loaded");
             return 0;
         }
-      
-        public static int SomeCFunction(IntPtr L)
-        {
-            Debug.WriteLine($"woop!");
-            return 0;
-        }
-
-        static Hook_Cmd_Exec new_Hook_Cmd_Exec;
-        static Hook_Cmd_Exec old_Hook_Cmd_Exec;
-        public static void Hook_Cmd_Exec(string[] Args)
-        {
-            old_Hook_Cmd_Exec(Args);
-        }
-
-
 
         [DllExport("gmod13_close", CallingConvention = CallingConvention.Cdecl)]
         public static int Close(IntPtr L)

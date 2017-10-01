@@ -3,27 +3,18 @@ using System.Runtime.InteropServices;
 using GSharp.Attributes;
 namespace GSharp.Native.Classes
 {
-    public class IGet { }
-    public class CSaveRestoreData { }
-    public class CGlobalVars { }
-    public class EQueryCvarValueStatus { }
-    public partial struct edict_t { }
-    public partial struct datamap_t { }
-    public partial struct QueryCvarCookie_t { }
-    public partial struct typedescription_t { }
-
     [ModuleName("server")]
     [InterfaceVersion("ServerGameDLL009")]
     public interface IServerGameDLL
     {
         [VTableSlot(0)]
-        void PreInit(CreateInterfaceDelegate param0, out IGet param1);
+        void PreInit(IntPtr param0, IntPtr param1);
 
         [VTableSlot(1)]
-        bool DLLInit(CreateInterfaceDelegate engineFactory, CreateInterfaceDelegate physicsFactory, CreateInterfaceDelegate fileSystemFactory, out CGlobalVars pGlobals);
+        bool DLLInit(IntPtr engineFactory, IntPtr physicsFactory, IntPtr fileSystemFactory, IntPtr pGlobals);
 
         [VTableSlot(2)]
-        bool ReplayInit(CreateInterfaceDelegate fnReplayFactory);
+        bool ReplayInit(IntPtr fnReplayFactory);
 
         [VTableSlot(3)]
         bool GameInit();
@@ -32,7 +23,7 @@ namespace GSharp.Native.Classes
         bool LevelInit([MarshalAs(UnmanagedType.LPStr)] string pMapName, [MarshalAs(UnmanagedType.LPStr)] string pMapEntities, [MarshalAs(UnmanagedType.LPStr)] string pOldLevel, [MarshalAs(UnmanagedType.LPStr)] string pLandmarkName, bool loadGame, bool background);
 
         [VTableSlot(5)]
-        void ServerActivate(out edict_t pEdictList, int edictCount, int clientMax);
+        void ServerActivate(IntPtr pEdictList, int edictCount, int clientMax);
 
         [VTableSlot(6)]
         void GameFrame(bool simulating);
@@ -65,40 +56,40 @@ namespace GSharp.Native.Classes
         IntPtr SaveInit(int size);
 
         [VTableSlot(16)]
-        void SaveWriteFields(out CSaveRestoreData param0, [MarshalAs(UnmanagedType.LPStr)] string param1, IntPtr param2, out datamap_t param3, out typedescription_t param4, int param5);
+        void SaveWriteFields(IntPtr param0, [MarshalAs(UnmanagedType.LPStr)] string param1, IntPtr param2, IntPtr param3, IntPtr param4, int param5);
 
         [VTableSlot(17)]
-        void SaveReadFields(out CSaveRestoreData param0, [MarshalAs(UnmanagedType.LPStr)] string param1, IntPtr param2, out datamap_t param3, out typedescription_t param4, int param5);
+        void SaveReadFields(IntPtr param0, [MarshalAs(UnmanagedType.LPStr)] string param1, IntPtr param2, IntPtr param3, IntPtr param4, int param5);
 
         [VTableSlot(18)]
-        void SaveGlobalState(out CSaveRestoreData param0);
+        void SaveGlobalState(IntPtr param0);
 
         [VTableSlot(19)]
-        void RestoreGlobalState(out CSaveRestoreData param0);
+        void RestoreGlobalState(IntPtr param0);
 
         [VTableSlot(20)]
-        void PreSave(out CSaveRestoreData param0);
+        void PreSave(IntPtr param0);
 
         [VTableSlot(21)]
-        void Save(out CSaveRestoreData param0);
+        void Save(IntPtr param0);
 
         [VTableSlot(22)]
         void GetSaveComment(IntPtr comment, int maxlength, float flMinutes, float flSeconds, bool bNoTime);
 
         [VTableSlot(23)]
-        void WriteSaveHeaders(out CSaveRestoreData param0);
+        void WriteSaveHeaders(IntPtr param0);
 
         [VTableSlot(24)]
-        void ReadRestoreHeaders(out CSaveRestoreData param0);
+        void ReadRestoreHeaders(IntPtr param0);
 
         [VTableSlot(25)]
-        void Restore(out CSaveRestoreData param0, bool param1);
+        void Restore(IntPtr param0, bool param1);
 
         [VTableSlot(26)]
         bool IsRestoring();
 
         [VTableSlot(27)]
-        int CreateEntityTransitionList(out CSaveRestoreData param0, int param1);
+        int CreateEntityTransitionList(IntPtr param0, int param1);
 
         [VTableSlot(28)]
         void BuildAdjacentMapList();
@@ -125,7 +116,7 @@ namespace GSharp.Native.Classes
         void InvalidateMdlCache();
 
         [VTableSlot(36)]
-        void OnQueryCvarValueFinished(QueryCvarCookie_t iCookie, out edict_t pPlayerEntity, EQueryCvarValueStatus eStatus, [MarshalAs(UnmanagedType.LPStr)] string pCvarName, [MarshalAs(UnmanagedType.LPStr)] string pCvarValue);
+        void OnQueryCvarValueFinished(IntPtr iCookie, IntPtr pPlayerEntity, IntPtr eStatus, [MarshalAs(UnmanagedType.LPStr)] string pCvarName, [MarshalAs(UnmanagedType.LPStr)] string pCvarValue);
 
         [VTableSlot(37)]
         void GameServerSteamAPIActivated();

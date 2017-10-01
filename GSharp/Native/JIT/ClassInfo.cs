@@ -135,39 +135,29 @@ namespace GSharp.Native.JIT
             var interfaces = classType.GetInterfaces();
             Methods = new List<MethodJITInfo>();
 
-			if (interfaces.Length > 2)
+			if (interfaces.Length > 1)
 				throw new NotImplementedException();
 			for (int i = 0; i < interfaces.Length; i++)
 			{
 				AddMethods(interfaces[i], ref vtableOffset);
 			}
 
-			if (interfaces.Length == 1)
-			{
-				AddMethods(interfaces[0], ref vtableOffset);
-			}
-			else if (interfaces.Length == 2)
-			{
-				AddMethods(interfaces[0], ref vtableOffset);
-				AddMethods(interfaces[1], ref vtableOffset);
-			}
-
             MethodInfo[] methods = classType.GetMethods();
-            for (int i = 0; i < methods.Length; i++)
+            foreach (var method in methods)
             {
-                var offsetAttribute = methods[i].GetCustomAttributes(typeof(VTableOffsetAttribute), false).FirstOrDefault() as VTableOffsetAttribute;
+                var offsetAttribute = method.GetCustomAttributes(typeof(VTableOffsetAttribute), false).FirstOrDefault() as VTableOffsetAttribute;
                 if (offsetAttribute != null)
                 {
                     vtableOffset += offsetAttribute.Offset;
                 }
 
-                var slotAttribute = methods[i].GetCustomAttributes(typeof(VTableSlotAttribute), false).FirstOrDefault() as VTableSlotAttribute;
+                var slotAttribute = method.GetCustomAttributes(typeof(VTableSlotAttribute), false).FirstOrDefault() as VTableSlotAttribute;
                 if (slotAttribute != null)
                 {
                     vtableOffset = slotAttribute.Slot;
                 }
 
-                Methods.Add(new MethodJITInfo(vtableOffset, methods[i]));
+                Methods.Add(new MethodJITInfo(vtableOffset, method));
                 vtableOffset++;
             }
         }

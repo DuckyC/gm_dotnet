@@ -289,7 +289,7 @@ namespace GSharp.Native.Classes
         //
         // Store the return value if you want to match this specific query to the OnQueryCvarValueFinished call.
         // Returns InvalidQueryCvarCookie if the entity is invalid.
-        QueryCvarCookie_t StartQueryCvarValue(IntPtr edict_pPlayerEntity, string pName);
+        IntPtr StartQueryCvarValue(IntPtr edict_pPlayerEntity, string pName);
 
         void InsertServerCommand(string str);
         // Fill in the player info structure for the specified player index (name, model, etc.)
