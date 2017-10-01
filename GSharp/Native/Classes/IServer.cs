@@ -5,13 +5,6 @@ using System.Text;
 
 namespace GSharp.Native.Classes
 {
-    public interface IServerSafe
-    {
-        [VTableSlot(6)]
-        int GetMaxClients(); // returns current client limit
-
-    }
-
     public interface IServer : IConnectionlessPacketHandler
     {
 
@@ -20,6 +13,7 @@ namespace GSharp.Native.Classes
         int GetNumClients(); // returns current number of clients
         int GetNumProxies(); // returns number of attached HLTV proxies
         int GetNumFakeClients(); // returns number of fake clients/bots
+        int GetMaxClients(); // returns current client limit
         IntPtr GetClient(int index); // returns interface to client IClient
         int GetClientCount(); // returns number of clients slots (used & unused)
         int GetUDPPort(); // returns current used UDP port
