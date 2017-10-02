@@ -146,6 +146,8 @@ namespace GSharp.GLuaNET
             }
         }
 
+
+
         #region ILuaBase Passthrough(Some of it)
         public void PushCFunction(lua_CFunction val)
         {
