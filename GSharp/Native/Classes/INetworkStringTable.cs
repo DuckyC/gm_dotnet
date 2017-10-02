@@ -33,6 +33,6 @@ namespace GSharp.Native.Classes
         int FindStringIndex(string str); // returns INVALID_STRING_INDEX if not found
 
         // Callbacks
-        void SetStringChangedCallback(IntPtr obj, pfnStringChanged changeFunc);
+        void SetStringChangedCallback(IntPtr obj, IntPtr changeFunc);
     }
 }

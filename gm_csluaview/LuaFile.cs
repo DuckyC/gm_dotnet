@@ -9,21 +9,15 @@ namespace gm_csluaview
     {
         public string Path { get; set; }
         public int CRC { get; set; }
+        public bool FailedRead { get; private set; }
         private string _Content;
-        public string Content
+        public string GetContent()
         {
-            get
-            {
-                if (string.IsNullOrWhiteSpace(_Content)) { _Content = GetContent(); }
-                return _Content;
-            }
-        }
+            if (!string.IsNullOrWhiteSpace(_Content)) { return _Content; }
 
-        private string GetContent()
-        {
             try
             {
-                var path = Extensions.AbsolutePath(PATH.Combine("garrysmod/cache/lua", CRC.ToString() + ".lua"));
+                var path = Extensions.AbsolutePath(PATH.Combine("garrysmod\\cache\\lua", CRC.ToString() + ".lua"));
                 var fs = new FileStream(path, FileMode.Open);
                 fs.Seek(4, SeekOrigin.Begin); // skip crc
 
@@ -43,10 +37,14 @@ namespace gm_csluaview
 
                 outStream.Position = 0;
                 var reader = new StreamReader(outStream);
-                return reader.ReadToEnd();
+                var content = reader.ReadToEnd();
+                FailedRead = false;
+                _Content = content;
+                return content;
             }
             catch (Exception e)
             {
+                FailedRead = true;
                 return "ERROR: " + e.ToString();
             }
 

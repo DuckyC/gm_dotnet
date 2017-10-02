@@ -141,7 +141,7 @@ namespace GSharp.Native.StringTable
             return table.FindStringIndex(str);
         }
 
-        public void SetStringChangedCallback(IntPtr obj, pfnStringChanged changeFunc)
+        public void SetStringChangedCallback(IntPtr obj, IntPtr changeFunc)
         {
             table.SetStringChangedCallback(obj, changeFunc);
         }
