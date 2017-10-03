@@ -1,199 +1,102 @@
-﻿using LuaLibraryGenerator.WikiDefinitions;
-using RestSharp;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Xml;
 
 namespace LuaLibraryGenerator
 {
-    public class Wiki
+    public class WikiArticle
     {
-
-        public Uri ApiPath { get; set; }
-        public RestClient API;
-
-        public Wiki(Uri apiPath)
+        public static readonly Dictionary<string, string> WikiDictionary = new Dictionary<string, string>
         {
-            ApiPath = apiPath;
-            API = new RestClient(ApiPath);
+            {@"{{Type\|(.*)}}", "<a href=\"http://wiki.garrysmod.com/page/Category:{0}\">{0}</a>"}
+        };
+
+        public string Raw { get; set; }
+
+        public WikiArticle(string raw)
+        {
+            Raw = raw;
         }
 
-        public XRoot FetchPage(int pageid)
+        public List<Arg> GetArgs()
         {
-            var request = new RestRequest("api.php");
-            request.AddParameter("action", "query");
-            request.AddParameter("prop", "revisions");
-            request.AddParameter("rvprop", "content");
-            request.AddParameter("rvgeneratexml", "1");
-            request.AddParameter("rvparse", "1");
-            request.AddParameter("format", "xml");
-            request.AddParameter("pageids", pageid);
+            MatchCollection matches = Regex.Matches(Raw, @"{{Arg([\s\S]*?)\n}}");
+            List<Arg> args = (from Match m in matches where m.Success select new Arg(m.Groups[1].Value)).ToList();
 
-            var response = API.Execute(request);
-
-            var xml = new XmlDocument();
-            xml.LoadXml(response.Content);
-            var rootXML = xml.SelectSingleNode("//api/query/pages/page/revisions/rev/@parsetree").Value;
-            return WikiParse.ParseXML(Regex.Replace(rootXML, @"\t|\n|\r", ""));
+            return args.Count > 0 ? args : null;
         }
 
-        public Dictionary<int, XRoot> FetchPages(int[] pageids)
+        public List<Ret> GetReturnValues()
         {
-            var request = new RestRequest("api.php");
-            request.AddParameter("action", "query");
-            request.AddParameter("prop", "revisions");
-            request.AddParameter("rvprop", "content");
-            request.AddParameter("rvgeneratexml", "1");
-            request.AddParameter("rvparse", "1");
-            request.AddParameter("format", "xml");
-            request.AddParameter("pageids", String.Join("|", pageids));
+            MatchCollection matches = Regex.Matches(Raw, @"{{Ret([\s\S]*?)\n}}");
+            List<Ret> rets = (from Match m in matches where m.Success select new Ret(m.Groups[1].Value)).ToList();
 
-            var response = API.Execute(request);
-            var xml = new XmlDocument();
-            xml.LoadXml(response.Content);
+            return rets.Count > 0 ? rets : null;
+        }
 
-            var dict = new Dictionary<int, XRoot>();
-            foreach (XmlNode page in xml.SelectNodes("//api/query/pages/page"))
+        public static string GetValue(string str, string selector)
+        {
+            Match match = Regex.Match(str, @"\|" + selector + "=(.*)");
+            return match.Success ? match.Groups[1].Value : "";
+        }
+
+        public static string ParseDescription(string str)
+        {
+            foreach (string key in WikiDictionary.Keys)
             {
-                var pageid = int.Parse(page.Attributes["pageid"].Value);
-                var rootXML = page.SelectSingleNode("revisions/rev/@parsetree").Value;
-                dict.Add(pageid, WikiParse.ParseXML(Regex.Replace(rootXML, @"\t|\n|\r", "")));
+                Match m = Regex.Match(str, key);
+                if (m.Success)
+                    str = str.Replace(m.Groups[0].Value, string.Format(WikiDictionary[key], m.Groups[1].Value));
             }
-
-            return dict;
-        }
-
-        public LuaFunctionInfo FetchFunctionInfo(int pageid, string name)
-        {
-            Console.WriteLine($"    Fetching function: {name} - {pageid}");
-
-            var root = FetchPage(pageid);
-            var info = LuaFunctionInfo.ConvertRoot(root);
-            if (info != null) { info.Name = name; }
-            return info;
-        }
-
-        public List<LuaFunctionInfo> FetchFunctionInfo(Dictionary<int, string> dict)
-        {
-            Console.WriteLine("    Fetching functions - " + String.Join(", ", dict.Values));
-            var pages = FetchPages(dict.Keys.ToArray());
-            var infos = new List<LuaFunctionInfo>();
-            foreach (var entry in pages)
-            {
-                var info = LuaFunctionInfo.ConvertRoot(entry.Value);
-                if (info != null)
-                {
-                    info.Name = dict[entry.Key];
-                    infos.Add(info);
-                }
-            }
-            return infos;
-        }
-
-
-        public string FetchCategoryDescription(string categoryName)
-        {
-            Console.WriteLine("  Fetching description");
-            var request = new RestRequest("api.php");
-            request.AddParameter("action", "query");
-            request.AddParameter("prop", "revisions");
-            request.AddParameter("rvprop", "content");
-            request.AddParameter("rvgeneratexml", "1");
-            request.AddParameter("rvparse", "1");
-            request.AddParameter("format", "xml");
-            request.AddParameter("titles", "Category:" + categoryName);
-
-            var response = API.Execute(request);
-
-            var xml = new XmlDocument();
-            xml.LoadXml(response.Content);
-            var rootXMLString = xml.SelectSingleNode("//api/query/pages/page/revisions/rev/@parsetree").Value;
-
-            var rootXml = new XmlDocument();
-            rootXml.LoadXml(rootXMLString);
-            var description = rootXml.FirstChild.InnerText;
-
-            return description;
-        }
-
-        public LuaLibraryInfo FetchLibraryInfo(string categoryName)
-        {
-            Console.WriteLine($"Fetching library: {categoryName}");
-            var info = new LuaLibraryInfo { Name = categoryName };
-            info.Description = FetchCategoryDescription(categoryName);
-
-            var request = new RestRequest("api.php");
-            request.AddParameter("action", "query");
-            request.AddParameter("format", "xml");
-            request.AddParameter("list", "categorymembers");
-            request.AddParameter("cmlimit", 500);
-            request.AddParameter("cmtitle", "Category:" + categoryName);
-
-            var response = API.Execute(request);
-
-            var xml = new XmlDocument();
-            xml.LoadXml(response.Content);
-
-            var members = xml.SelectNodes("//api/query/categorymembers/cm");
-            var dict = new Dictionary<int, string>();
-            foreach (XmlNode member in members)
-            {
-                var pageid = int.Parse(member.Attributes["pageid"].Value);
-                var name = member.Attributes["title"].Value.Replace(categoryName + "/", "");
-                dict.Add(pageid, name);
-            }
-            info.Methods = FetchFunctionInfo(dict);
-            return info;
-        }
-
-    }
-
-    public class LuaFunctionInfo
-    {
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public List<RetTemplate> Returns { get; set; } = new List<RetTemplate>();
-        public List<ArgTemplate> Args { get; set; } = new List<ArgTemplate>();
-        public List<ExampleTemplate> Examples { get; set; } = new List<ExampleTemplate>();
-
-        public static LuaFunctionInfo ConvertRoot(XRoot root)
-        {
-            bool isFunction = false;
-            var info = new LuaFunctionInfo();
-
-            foreach (var template in root.Templates)
-            {
-                var translated = TranslateTemplate.Translate(template);
-                if (translated is FuncTemplate func)
-                {
-                    isFunction = true;
-                    info.Description = func.Description;
-                }
-                else if (translated is ArgTemplate arg)
-                {
-                    info.Args.Add(arg);
-                }
-                else if (translated is RetTemplate ret)
-                {
-                    info.Returns.Add(ret);
-                }
-                else if (translated is ExampleTemplate example)
-                {
-                    info.Examples.Add(example);
-                }
-            }
-            if (!isFunction) { return null; }
-            return info;
+            return str;
         }
     }
 
-    public class LuaLibraryInfo
+    public class Arg
     {
-        public string Description { get; set; }
+        public Arg(string raw)
+        {
+            Type = WikiArticle.GetValue(raw, "type");
+            Name = WikiArticle.GetValue(raw, "name");
+            Desc = WikiArticle.GetValue(raw, "desc");
+            Default = ConvertDefaultValue(WikiArticle.GetValue(raw, "default"));
+        }
+
+        public string Type { get; set; }
         public string Name { get; set; }
-        public string Location { get; set; }
-        public List<LuaFunctionInfo> Methods { get; set; } = new List<LuaFunctionInfo>();
+        public string Desc { get; set; }
+        public string Default { get; set; }
+
+        private string ConvertDefaultValue(string defaultValue)
+        {
+            Match m = Regex.Match(defaultValue, @"\{\{(.*)\|(.*)\}\}\(\)");
+            if (m.Success)
+            {
+                switch (m.Groups[1].Value)
+                {
+                    case "GlobalFunction":
+                        return $"{m.Groups[2].Value}()";
+                    // TODO Add more cases if necessary
+                    default:
+                        return defaultValue;
+                }
+            }
+            return defaultValue;
+        }
+    }
+
+    public class Ret
+    {
+        public string Type { get; set; }
+
+        public Ret()
+        {
+
+        }
+
+        public Ret(string raw)
+        {
+            Type = WikiArticle.GetValue(raw, "type");
+        }
     }
 }
