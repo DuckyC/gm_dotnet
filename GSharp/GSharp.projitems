@@ -24,6 +24,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)7zip\Compress\RangeCoder\RangeCoderBit.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)7zip\Compress\RangeCoder\RangeCoderBitTree.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)7zip\ICoder.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\LuaLibraryLocationAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Attributes\ModuleNameAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Attributes\InterfaceVersionAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Attributes\ReturnOrderAttribute.cs" />
