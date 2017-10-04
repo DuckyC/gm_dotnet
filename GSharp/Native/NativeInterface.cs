@@ -48,6 +48,21 @@ namespace GSharp.Native
             return (CreateInterfaceDelegate)Marshal.GetDelegateForFunctionPointer(functionAddress, typeof(CreateInterfaceDelegate));
         }
 
+        public static TClass GetFromFactory<TClass>(CreateInterfaceDelegate factory) where TClass : class
+        {
+            if (factory == null)
+            {
+                return null;
+                //throw new JITEngineException("GetFromFactory called with NULL factory");
+            }
+
+            IntPtr classptr = factory(InterfaceVersions.GetInterfaceIdentifier(typeof(TClass)), IntPtr.Zero);
+            if (classptr == IntPtr.Zero)
+                return null;
+
+            return JITEngine.GenerateClass<TClass>(classptr);
+        }
+
         /// <summary>
         /// Gets a type that implements the native interface from the attributes
         /// </summary>
@@ -67,7 +82,7 @@ namespace GSharp.Native
 
         public static TClass Load<TClass>(string dllname) where TClass : class
         {
-            return JITEngine.GetFromFactory<TClass>(LoadCreateInterface(dllname));
+            return GetFromFactory<TClass>(LoadCreateInterface(dllname));
         }
 
         public static TClass Load<TClass>(string dllname, string interfaceVersionString) where TClass : class
@@ -75,6 +90,20 @@ namespace GSharp.Native
             var factory = LoadCreateInterface(dllname);
             var classptr = factory(interfaceVersionString, IntPtr.Zero);
             return JITEngine.GenerateClass<TClass>(classptr);
+        }
+
+        public static IntPtr GetClassPointer<TClass>() where TClass : class
+        {
+            var moduleName = typeof(TClass).GetCustomAttributes(typeof(ModuleNameAttribute), false).FirstOrDefault() as ModuleNameAttribute;
+
+            if (moduleName == null)
+            {
+                throw new Exception($"{typeof(TClass).Name} does not have a ModuleName attribute.");
+            }
+
+            var factory = LoadCreateInterface(moduleName.ModuleName);
+
+            return factory(InterfaceVersions.GetInterfaceIdentifier(typeof(TClass)), IntPtr.Zero);
         }
 
         public static IntPtr LoadVariable(string dllname, string variableName)

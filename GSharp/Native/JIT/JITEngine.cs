@@ -84,21 +84,6 @@ namespace GSharp.Native.JIT
             ilgen.Emit(OpCodes.Conv_I);
         }
 
-        public static TClass GetFromFactory<TClass>(CreateInterfaceDelegate factory) where TClass : class
-        {
-            if (factory == null)
-            {
-                return null;
-                //throw new JITEngineException("GetFromFactory called with NULL factory");
-            }
-
-            IntPtr classptr = factory(InterfaceVersions.GetInterfaceIdentifier(typeof(TClass)), IntPtr.Zero);
-            if (classptr == IntPtr.Zero)
-                return null;
-
-            return GenerateClass<TClass>(classptr);
-        }
-
         public static TClass GenerateClass<TClass>(IntPtr ptr) where TClass : class
         {
             if (ptr == IntPtr.Zero)
@@ -124,12 +109,10 @@ namespace GSharp.Native.JIT
 
             ClassJITInfo classInfo = new ClassJITInfo(targetInterface);
 
-            for (int i = 0; i < classInfo.Methods.Count; i++)
+            foreach (var methodInfo in classInfo.Methods)
             {
-                IntPtr vtableMethod = Marshal.ReadIntPtr(vtable_ptr, IntPtr.Size * classInfo.Methods[i].VTableSlot);
-                MethodJITInfo methodInfo = classInfo.Methods[i];
 
-                EmitClassMethod(methodInfo, ptr, vtableMethod, builder, fbuilder);
+                //EmitClassMethod(methodInfo, ptr, vtableMethod, builder, fbuilder);
             }
 
             Type implClass = builder.CreateType();

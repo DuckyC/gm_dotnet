@@ -74,7 +74,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Native\Tier0.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Symbols.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ValveBuffer.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)VTable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Native\VTable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Wrapper.cs" />
   </ItemGroup>
 </Project>

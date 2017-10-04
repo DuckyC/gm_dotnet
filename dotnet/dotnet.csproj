@@ -45,7 +45,7 @@
   <Import Project="..\GSharp\GSharp.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy /Y "$(TargetPath)" "D:\Servers\SteamCMD\steamapps\common\GarrysModDS\garrysmod\lua\bin\gmsv_dotnet_win32.dll"</PostBuildEvent>
+    <PostBuildEvent>copy /Y "$(TargetPath)" "C:\Servers\SteamCMD\steamapps\common\GarrysModDS\garrysmod\lua\bin\gmsv_dotnet_win32.dll"</PostBuildEvent>
   </PropertyGroup>
   <Import Project="../packages/UnmanagedExports.1.2.7/tools/RGiesecke.DllExport.targets" Condition="Exists('../packages/UnmanagedExports.1.2.7/tools/RGiesecke.DllExport.targets')" />
 </Project>
