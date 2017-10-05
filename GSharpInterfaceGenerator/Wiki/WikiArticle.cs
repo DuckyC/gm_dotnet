@@ -1,4 +1,4 @@
-﻿using LuaLibraryGenerator.WikiDefinitions;
+﻿using GSharpInterfaceGenerator.Models;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -6,11 +6,31 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml;
 
-namespace LuaLibraryGenerator
+namespace GSharpInterfaceGenerator.Wiki
 {
+
+    public class LuaLibraryList : IDescribeInterfaceList
+    {
+        public IList<IDescribeInterface> Interfaces { get; set; }
+
+        public TypeSource Source => TypeSource.Wiki;
+
+        public IList<string> Namespaces => new List<string> { "System" };
+    }
+
+    public class LuaLibraryInfo : IDescribeInterface
+    {
+        public string Description { get; set; }
+        public string Name { get; set; }
+        public string Location { get; set; }
+
+        public List<LuaFunctionInfo> Methods { get; set; } = new List<LuaFunctionInfo>();
+        public IList<string> Parents => new List<string>();
+        IList<IDescribeMethod> IDescribeInterface.Methods => Methods.Cast<IDescribeMethod>().ToList();
+    }
+
     public class Wiki
     {
-
         public Uri ApiPath { get; set; }
         public RestClient API;
 
@@ -150,13 +170,16 @@ namespace LuaLibraryGenerator
 
     }
 
-    public class LuaFunctionInfo
+    public class LuaFunctionInfo : IDescribeMethod
     {
         public string Name { get; set; }
         public string Description { get; set; }
         public List<RetTemplate> Returns { get; set; } = new List<RetTemplate>();
         public List<ArgTemplate> Args { get; set; } = new List<ArgTemplate>();
         public List<ExampleTemplate> Examples { get; set; } = new List<ExampleTemplate>();
+
+        public IList<IDescribeArgument> Arguments => Args.Cast<IDescribeArgument>().ToList();
+        IList<IDescribeReturn> IDescribeMethod.Returns => Returns.Cast<IDescribeReturn>().ToList();
 
         public static LuaFunctionInfo ConvertRoot(XRoot root)
         {
@@ -187,13 +210,5 @@ namespace LuaLibraryGenerator
             if (!isFunction) { return null; }
             return info;
         }
-    }
-
-    public class LuaLibraryInfo
-    {
-        public string Description { get; set; }
-        public string Name { get; set; }
-        public string Location { get; set; }
-        public List<LuaFunctionInfo> Methods { get; set; } = new List<LuaFunctionInfo>();
     }
 }

@@ -1,13 +1,9 @@
-﻿using LuaLibraryGenerator.WikiDefinitions;
+﻿using GSharpInterfaceGenerator.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace LuaLibraryGenerator
+namespace GSharpInterfaceGenerator.Wiki
 {
-
     public abstract class Template
     {
         public static string Title { get; }
@@ -21,20 +17,24 @@ namespace LuaLibraryGenerator
         public string IsClass { get; set; }
     }
 
-    public class ArgTemplate : Template
+    public class ArgTemplate : Template, IDescribeArgument
     {
         public static new string Title { get; } = "Arg";
         public string Type { get; set; }
         public string Name { get; set; }
         public string Desc { get; set; }
         public string Default { get; set; }
+
+        public string Description => Desc;
     }
 
-    public class RetTemplate : Template
+    public class RetTemplate : Template, IDescribeReturn
     {
         public static new string Title { get; } = "Ret";
         public string Type { get; set; }
         public string Desc { get; set; }
+
+        public string Description => Desc;
     }
 
     public class ExampleTemplate : Template

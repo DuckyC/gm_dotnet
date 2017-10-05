@@ -7,8 +7,6 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "GSharp", "GSharp\GSharp.shp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotnet", "dotnet\dotnet.csproj", "{A10EB464-C164-4824-8BB9-959095BA2EBE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LuaLibraryGenerator", "LuaLibraryGenerator\LuaLibraryGenerator.csproj", "{EE900193-9558-482B-B4C0-7FC67A22A953}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2A40DB69-DC41-4006-9C7D-557AD8D7064E}"
 	ProjectSection(SolutionItems) = preProject
 		Rebracer.xml = Rebracer.xml
@@ -24,7 +22,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "csharp_sandbox", "csharp_sa
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Require", "Require\Require.vcxproj", "{B06FAD8D-5C03-492C-A549-B58A3B54FFA4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeClassGenerator", "NativeClassGenerator\NativeClassGenerator.csproj", "{BFDAF405-F3A9-4546-8FB2-FB67F9C39F0C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GSharpInterfaceGenerator", "NativeClassGenerator\GSharpInterfaceGenerator.csproj", "{BFDAF405-F3A9-4546-8FB2-FB67F9C39F0C}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -32,7 +30,6 @@ Global
 		GSharp\GSharp.projitems*{7c6221c9-e425-45d6-adc7-de3892d18df8}*SharedItemsImports = 4
 		GSharp\GSharp.projitems*{a107bdfc-7ae9-423a-8c53-7b23a59217e7}*SharedItemsImports = 4
 		GSharp\GSharp.projitems*{a10eb464-c164-4824-8bb9-959095ba2ebe}*SharedItemsImports = 4
-		GSharp\GSharp.projitems*{ee900193-9558-482b-b4c0-7fc67a22a953}*SharedItemsImports = 4
 		GSharp\GSharp.projitems*{fd2caba6-5cf5-4102-b3a0-9098e79163ac}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,20 +62,6 @@ Global
 		{A10EB464-C164-4824-8BB9-959095BA2EBE}.Release|x64.Build.0 = Debug|Any CPU
 		{A10EB464-C164-4824-8BB9-959095BA2EBE}.Release|x86.ActiveCfg = Debug|Any CPU
 		{A10EB464-C164-4824-8BB9-959095BA2EBE}.Release|x86.Build.0 = Debug|Any CPU
-		{EE900193-9558-482B-B4C0-7FC67A22A953}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{EE900193-9558-482B-B4C0-7FC67A22A953}.Debug|x64.ActiveCfg = Debug|x86
-		{EE900193-9558-482B-B4C0-7FC67A22A953}.Debug|x86.ActiveCfg = Debug|x86
-		{EE900193-9558-482B-B4C0-7FC67A22A953}.Debug|x86.Build.0 = Debug|x86
-		{EE900193-9558-482B-B4C0-7FC67A22A953}.Debug64|Any CPU.ActiveCfg = Release|x86
-		{EE900193-9558-482B-B4C0-7FC67A22A953}.Debug64|Any CPU.Build.0 = Release|x86
-		{EE900193-9558-482B-B4C0-7FC67A22A953}.Debug64|x64.ActiveCfg = Release|x86
-		{EE900193-9558-482B-B4C0-7FC67A22A953}.Debug64|x64.Build.0 = Release|x86
-		{EE900193-9558-482B-B4C0-7FC67A22A953}.Debug64|x86.ActiveCfg = Debug|x86
-		{EE900193-9558-482B-B4C0-7FC67A22A953}.Debug64|x86.Build.0 = Debug|x86
-		{EE900193-9558-482B-B4C0-7FC67A22A953}.Release|Any CPU.ActiveCfg = Release|x86
-		{EE900193-9558-482B-B4C0-7FC67A22A953}.Release|x64.ActiveCfg = Release|x86
-		{EE900193-9558-482B-B4C0-7FC67A22A953}.Release|x86.ActiveCfg = Release|x86
-		{EE900193-9558-482B-B4C0-7FC67A22A953}.Release|x86.Build.0 = Release|x86
 		{7C6221C9-E425-45D6-ADC7-DE3892D18DF8}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{7C6221C9-E425-45D6-ADC7-DE3892D18DF8}.Debug|x64.ActiveCfg = Debug|x86
 		{7C6221C9-E425-45D6-ADC7-DE3892D18DF8}.Debug|x86.ActiveCfg = Debug|x86

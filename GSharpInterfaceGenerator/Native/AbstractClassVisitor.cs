@@ -1,12 +1,8 @@
 ﻿using ClangSharp;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace NativeClassGenerator
+namespace GSharpInterfaceGenerator.Native
 {
     public class AbstractClassVisitor
     {
@@ -41,9 +37,9 @@ namespace NativeClassGenerator
             }
         }
 
-        public static TypeInfo ArgumentHelper(CXType functionType, CXCursor paramCursor, uint index)
+        public static VirtualArgumentInfo ArgumentHelper(CXType functionType, CXCursor paramCursor, uint index)
         {
-            var info = new TypeInfo();
+            var info = new VirtualArgumentInfo();
             var type = clang.getArgType(functionType, index);
             var cursorType = clang.getCursorType(paramCursor);
 
@@ -96,7 +92,7 @@ namespace NativeClassGenerator
                             var methodInfo = new VirtualMethodInfo
                             {
                                 Name = methodName,
-                                Return = new TypeInfo { Type = translatedResultType }
+                                Returns = { new VirtualReturnInfo { Type = translatedResultType } }
                             };
 
 
@@ -112,7 +108,7 @@ namespace NativeClassGenerator
                         {
                             classInfo.Methods.Add(new VirtualMethodInfo
                             {
-                                Return = new TypeInfo { Type = "void" },
+                                Returns = { new VirtualReturnInfo { Type = "void" } },
                                 Name = methodName+"NONVIRTUALINLINE",
                             });
                         }
