@@ -1,8 +1,22 @@
 <?xml version="1.0"?>
 <Configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <OutputFolder>./NativeClasses</OutputFolder>
-  <AlwaysOverwrite>false</AlwaysOverwrite>
-  <WantedType Name="NameOfVirtualClass" Source="Wiki" HeaderFile="PathToFile/WhereVirtualClassIs.h" InterfaceVersion="INTERFACEVERSION001" ModuleName="server" />
-  <WantedType Name="file" Source="Wiki" LuaLibraryLocation="file" />
+  <OutputFolder>./Generated</OutputFolder>
+  <WikiUrl>http://wiki.garrysmod.com/</WikiUrl>
+  <AlwaysOverwrite>true</AlwaysOverwrite>
+  <WantedType Name="IFileSystem" HeaderFile="./sourcesdk-minimal/public/filesystem.h" InterfaceVersion="VFileSystem022" ModuleName="FileSystem_Stdio" />
+  <WantedType Name="IServerGameDLL" HeaderFile="./sourcesdk-minimal/public/eiface.h" InterfaceVersion="ServerGameDLL008" ModuleName="server" />
+  <WantedType Name="IVEngineServer" HeaderFile="./sourcesdk-minimal/public/eiface.h" InterfaceVersion="VEngineServer021" ModuleName="engine" />
+  <WantedType Name="IServer" HeaderFile="./sourcesdk-minimal/public/IServer.h" />
+  <WantedType Name="file" LuaLibraryLocation="file" />
+  <WantedType Name="math" LuaLibraryLocation="math" />
+  <WantedType Name="string" LuaLibraryLocation="string" />
+  <WantedType Name="Global" LuaLibraryLocation="_G" />
+  <Include>./sourcesdk-minimal/common</Include>
+  <Include>./sourcesdk-minimal/game</Include>
+  <Include>./sourcesdk-minimal/lib</Include>
+  <Include>./sourcesdk-minimal/mathlib</Include>
   <Include>./sourcesdk-minimal/public</Include>
+  <Include>./sourcesdk-minimal/raytrace</Include>
+  <Include>./sourcesdk-minimal/tier1</Include>
+  <Include>./sourcesdk-minimal/utils</Include>
 </Configuration>
