@@ -76,8 +76,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <LibraryPath>$(LibraryPath)</LibraryPath>
-    <IncludePath>C:\Users\me\Desktop\coreclr\src\coreclr\hosts\inc;C:\Users\me\Desktop\coreclr\src\pal\prebuilt\inc;C:\Users\me\Desktop\coreclr\src\inc;$(IncludePath)</IncludePath>
-    <TargetName>gmsv_require_win32</TargetName>
+    <IncludePath>.\coreclr\src\coreclr\hosts\inc;.\coreclr\src\pal\prebuilt\inc;.\coreclr\src\inc;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>

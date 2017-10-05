@@ -15,10 +15,20 @@ GMOD_MODULE_OPEN() {
 	wchar_t targetAppPath[MAX_PATH];
 	GetFullPathNameW(L"./gmsv_dotnet_win32.dll", MAX_PATH, targetAppPath, NULL);
 
-	wchar_t coreRoot[MAX_PATH];
-	GetFullPathNameW(L"%programfiles%\dotnet\shared\Microsoft.NETCore.App\2.0.0\coreclr.dll", MAX_PATH, coreRoot, NULL);
+	wchar_t* coreRootEnv = _wgetenv(L"CORECLR_PATH");
 
-	HINSTANCE coreCLRModule = LoadLibraryExW(coreRoot, NULL, 0);
+	wchar_t coreRoot[MAX_PATH];
+	GetFullPathNameW(coreRootEnv, MAX_PATH, coreRoot, NULL);
+
+	wchar_t coreClrPath[MAX_PATH];
+	wcsncat(coreClrPath, coreRoot, MAX_PATH);
+	wcsncat(coreClrPath, L"/coreclr.dll", MAX_PATH);
+
+	wchar_t coreClrPathAbs[MAX_PATH];
+	GetFullPathNameW(coreClrPath, MAX_PATH, coreClrPathAbs, NULL);
+
+
+	HINSTANCE coreCLRModule = LoadLibraryW(coreClrPathAbs);
 
 	ICLRRuntimeHost2* runtimeHost;
 
@@ -216,9 +226,7 @@ GMOD_MODULE_OPEN() {
 		L"CallOpen",                            // Target entry point (static method)
 		(INT_PTR*)&pfnDelegate);
 
-	((GMOD_MODULE_FUNCTION*)pfnDelegate)(state);
-
-	return 0;
+	return ((GMOD_MODULE_FUNCTION*)pfnDelegate)(state);
 }
 
 GMOD_MODULE_CLOSE() {
