@@ -1,0 +1,3 @@
+[submodule "Libraria"]
+	path = Libraria
+	url = https://github.com/cartman300/Libraria.git
