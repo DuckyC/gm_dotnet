@@ -7,7 +7,8 @@ using RGiesecke.DllExport;
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-namespace dotnet
+
+namespace sv_sandbox
 {
     public unsafe static class Module
     {

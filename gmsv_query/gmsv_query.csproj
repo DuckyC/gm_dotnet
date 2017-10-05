@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>gmsv_query</RootNamespace>
-    <AssemblyName>gmsv_query</AssemblyName>
+    <AssemblyName>gmsv_query_win32</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -59,7 +59,7 @@
   <Import Project="..\GSharp\GSharp.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy /Y "$(TargetPath)" "D:\Servers\SteamCMD\steamapps\common\GarrysModDS\garrysmod\lua\bin\gmsv_query_win32.dll"</PostBuildEvent>
+    <PostBuildEvent>copy /Y "$(TargetPath)" "%25GarrysModDS%25\garrysmod\lua\bin\$(TargetFileName)"</PostBuildEvent>
   </PropertyGroup>
   <Import Project="../packages/UnmanagedExports.1.2.7/tools/RGiesecke.DllExport.targets" Condition="Exists('../packages/UnmanagedExports.1.2.7/tools/RGiesecke.DllExport.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "GSharp", "GSharp\GSharp.shproj", "{0F1737C4-AF88-416B-85BB-02EE991D0434}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotnet", "dotnet\dotnet.csproj", "{A10EB464-C164-4824-8BB9-959095BA2EBE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sv_sandbox", "sv_sandbox\sv_sandbox.csproj", "{A10EB464-C164-4824-8BB9-959095BA2EBE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2A40DB69-DC41-4006-9C7D-557AD8D7064E}"
 	ProjectSection(SolutionItems) = preProject
@@ -18,7 +18,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cpp_sandbox", "cpp_sandbox\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gmsv_query", "gmsv_query\gmsv_query.csproj", "{FD2CABA6-5CF5-4102-B3A0-9098E79163AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "csharp_sandbox", "csharp_sandbox\csharp_sandbox.csproj", "{A107BDFC-7AE9-423A-8C53-7B23A59217E7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cl_sandbox", "cl_sandbox\cl_sandbox.csproj", "{A107BDFC-7AE9-423A-8C53-7B23A59217E7}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Require", "Require\Require.vcxproj", "{B06FAD8D-5C03-492C-A549-B58A3B54FFA4}"
 EndProject
