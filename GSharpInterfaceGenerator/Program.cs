@@ -12,7 +12,7 @@ namespace GSharpInterfaceGenerator
         static void Main(string[] args)
         {
             Configuration config;
-            var configPath = string.IsNullOrWhiteSpace(args[0]) ? "config.xml" : args[0];
+            var configPath = args.Length == 0 ? "config.xml" : args[0];
             try
             {
                 var serializer = new XmlSerializer(typeof(Configuration));

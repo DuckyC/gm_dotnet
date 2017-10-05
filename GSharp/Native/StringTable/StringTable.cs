@@ -1,5 +1,4 @@
 ﻿using GSharp.Native.Classes;
-using GSharp.Native.JIT;
 using System;
 using System.Collections.Generic;
 using System.Text;

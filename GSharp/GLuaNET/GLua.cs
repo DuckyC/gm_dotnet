@@ -1,7 +1,6 @@
 ﻿using GSharp.Attributes;
 using GSharp.GLuaNET.TypeMarshals;
 using GSharp.Native.Classes;
-using GSharp.Native.JIT;
 using System;
 using System.Collections.Generic;
 using System.Linq;

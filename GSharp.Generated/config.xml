@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<Configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <OutputFolder>./NativeClasses</OutputFolder>
+  <AlwaysOverwrite>false</AlwaysOverwrite>
+  <WantedType Name="NameOfVirtualClass" Source="Wiki" HeaderFile="PathToFile/WhereVirtualClassIs.h" InterfaceVersion="INTERFACEVERSION001" ModuleName="server" />
+  <WantedType Name="file" Source="Wiki" LuaLibraryLocation="file" />
+  <Include>./sourcesdk-minimal/public</Include>
+</Configuration>

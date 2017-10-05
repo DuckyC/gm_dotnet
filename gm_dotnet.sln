@@ -24,12 +24,23 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Require", "Require\Require.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GSharpInterfaceGenerator", "GSharpInterfaceGenerator\GSharpInterfaceGenerator.csproj", "{BFDAF405-F3A9-4546-8FB2-FB67F9C39F0C}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Libraria.Native", "Libraria\Libraria.Native\Libraria.Native.shproj", "{1F023340-8CE2-4BEC-B2AE-290901E35C32}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Libraria.Collections", "Libraria\Libraria.Collections\Libraria.Collections.shproj", "{B107CDAA-7365-446A-A369-00715F6D8C4B}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "GSharp.Generated", "GSharp.Generated\GSharp.Generated.shproj", "{6B480DEA-846A-4528-91D5-B7D538BEE95A}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		GSharp\GSharp.projitems*{0f1737c4-af88-416b-85bb-02ee991d0434}*SharedItemsImports = 13
+		Libraria\Libraria.Native\Libraria.Native.projitems*{1f023340-8ce2-4bec-b2ae-290901e35c32}*SharedItemsImports = 13
+		GSharp.Generated\GSharp.Generated.projitems*{6b480dea-846a-4528-91d5-b7d538bee95a}*SharedItemsImports = 13
 		GSharp\GSharp.projitems*{7c6221c9-e425-45d6-adc7-de3892d18df8}*SharedItemsImports = 4
 		GSharp\GSharp.projitems*{a107bdfc-7ae9-423a-8c53-7b23a59217e7}*SharedItemsImports = 4
 		GSharp\GSharp.projitems*{a10eb464-c164-4824-8bb9-959095ba2ebe}*SharedItemsImports = 4
+		Libraria\Libraria.Collections\Libraria.Collections.projitems*{a10eb464-c164-4824-8bb9-959095ba2ebe}*SharedItemsImports = 4
+		Libraria\Libraria.Native\Libraria.Native.projitems*{a10eb464-c164-4824-8bb9-959095ba2ebe}*SharedItemsImports = 4
+		Libraria\Libraria.Collections\Libraria.Collections.projitems*{b107cdaa-7365-446a-a369-00715f6d8c4b}*SharedItemsImports = 13
 		GSharp\GSharp.projitems*{fd2caba6-5cf5-4102-b3a0-9098e79163ac}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

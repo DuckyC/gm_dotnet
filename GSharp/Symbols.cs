@@ -1,6 +1,5 @@
 ﻿using GSharp.Native;
 using GSharp.Native.Classes;
-using GSharp.Native.JIT;
 using System.Runtime.InteropServices;
 
 namespace GSharp

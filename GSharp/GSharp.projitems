@@ -56,10 +56,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\IServer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\IVEngineServer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\NativeInterface.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Native\JIT\ClassInfo.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Native\JIT\InterfaceVersions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Native\JIT\InteropHelp.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Native\JIT\JITEngine.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\CreateInterfaceFn.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\IFileSystem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\ILuaBase.cs" />
@@ -74,7 +70,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Native\Tier0.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Symbols.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ValveBuffer.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Native\VTable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Wrapper.cs" />
   </ItemGroup>
 </Project>

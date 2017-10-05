@@ -1,7 +1,6 @@
 ﻿using GSharp;
 using GSharp.Native;
 using GSharp.Native.Classes;
-using GSharp.Native.JIT;
 using GSharp.Native.StringTable;
 using RGiesecke.DllExport;
 using System;
