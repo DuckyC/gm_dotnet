@@ -1,0 +1,3 @@
+[submodule "Require/coreclr"]
+	path = Require/coreclr
+	url = https://github.com/dotnet/coreclr
