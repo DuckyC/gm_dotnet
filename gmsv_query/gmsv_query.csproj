@@ -57,6 +57,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="..\GSharp\GSharp.projitems" Label="Shared" />
+  <Import Project="..\Libraria\Libraria.Native\Libraria.Native.projitems" Label="Shared" />
+  <Import Project="..\Libraria\Libraria.Collections\Libraria.Collections.projitems" Label="Shared" />
+  <Import Project="..\GSharp.Generated\GSharp.Generated.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy /Y "$(TargetPath)" "%25GarrysModDS%25\garrysmod\lua\bin\$(TargetFileName)"</PostBuildEvent>

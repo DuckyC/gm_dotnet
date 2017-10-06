@@ -1,4 +1,5 @@
-﻿using GSharp.Native;
+﻿using GSharp.Generated.NativeClasses;
+using GSharp.Native;
 using GSharp.Native.Classes;
 using System.Runtime.InteropServices;
 

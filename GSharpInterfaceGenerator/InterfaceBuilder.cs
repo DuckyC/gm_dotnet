@@ -32,9 +32,10 @@ namespace GSharpInterfaceGenerator
                 var provider = new CSharpCodeProvider();
                 var compileUnit = new CodeCompileUnit();
 
-                var Classes = new CodeNamespace(Enum.GetName(typeof(TypeSource), interfaceList.Source));
+                var Classes = new CodeNamespace($"GSharp.Generated.{Configuration.GetSubFolder(interfaceList.Source)}");
                 compileUnit.Namespaces.Add(Classes);
 
+                Classes.Imports.Add(new CodeNamespaceImport("System.ComponentModel"));
                 foreach (var name in interfaceList.Namespaces) { Classes.Imports.Add(new CodeNamespaceImport(name)); }
 
                 var classInterface = Generate(interfaceDecl, interfaceList.Source);
@@ -102,14 +103,23 @@ namespace GSharpInterfaceGenerator
                     var param = new CodeParameterDeclarationExpression(provider.TranslateType(arg.Type), arg.Name);
                     if (!string.IsNullOrWhiteSpace(arg.Default))
                     {
-                        param.CustomAttributes.Add(new CodeAttributeDeclaration(nameof(DefaultValueAttribute), new CodeAttributeArgument(new CodeSnippetExpression(arg.Default))));
+                        param.CustomAttributes.Add(new CodeAttributeDeclaration(nameof(DefaultValueAttribute), new CodeAttributeArgument(new CodePrimitiveExpression(null))));
                     }
                     newMethod.Parameters.Add(param);
 
+                    var comment = "";
+
                     if (!string.IsNullOrWhiteSpace(arg.Description))
                     {
-                        newMethod.Comments.Add(new CodeCommentStatement($"<param name='{arg.Name}'>{arg.Description}</param>", true));
+                        comment += arg.Description;
                     }
+
+                    if (!string.IsNullOrWhiteSpace(arg.Default))
+                    {
+                        if(comment.Length != 0 ) { comment += " - "; }
+                        comment += "Default: " + arg.Default;
+                    }
+                    newMethod.Comments.Add(new CodeCommentStatement($"<param name='{arg.Name}'>{comment}</param>", true));
                 }
 
                 //TODO: Attributes

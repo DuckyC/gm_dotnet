@@ -11,4 +11,8 @@
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)config.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)NativeClasses\*.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)LuaLibraries\*.cs" />
+  </ItemGroup>
 </Project>
