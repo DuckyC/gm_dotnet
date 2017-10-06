@@ -37,8 +37,8 @@ namespace GSharp
             }
         }
 
-        static IGameConsoleTextWriter GameConsoleWriter;
 #if CLIENT
+        static IGameConsoleTextWriter GameConsoleWriter;
         public static IGameConsole RerouteConsole()
         {
 

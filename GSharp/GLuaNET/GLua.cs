@@ -35,7 +35,7 @@ namespace GSharp.GLuaNET
         public GLua(lua_state luaState)
         {
             State = luaState;
-            LuaBase = JITEngine.GenerateClass<ILuaBase>(luaState.luabase);
+            LuaBase = JIT.ConvertInstance<ILuaBase>(luaState.luabase);
         }
 
         public T Get<T>()

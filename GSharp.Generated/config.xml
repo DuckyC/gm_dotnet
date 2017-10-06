@@ -3,6 +3,7 @@
   <OutputFolder>./</OutputFolder>
   <WikiUrl>http://wiki.garrysmod.com/</WikiUrl>
   <AlwaysOverwrite>true</AlwaysOverwrite>
+  
   <WantedType Name="IFileSystem" HeaderFile="./sourcesdk-minimal/public/filesystem.h" InterfaceVersion="VFileSystem022" ModuleName="FileSystem_Stdio" />
   <WantedType Name="IServerGameDLL" HeaderFile="./sourcesdk-minimal/public/eiface.h" InterfaceVersion="ServerGameDLL008" ModuleName="server" />
   <WantedType Name="IVEngineServer" HeaderFile="./sourcesdk-minimal/public/eiface.h" InterfaceVersion="VEngineServer021" ModuleName="engine" />
@@ -22,4 +23,5 @@
   <Include>./sourcesdk-minimal/raytrace</Include>
   <Include>./sourcesdk-minimal/tier1</Include>
   <Include>./sourcesdk-minimal/utils</Include>
+  <Include>./garrysmod-common/include</Include>
 </Configuration>

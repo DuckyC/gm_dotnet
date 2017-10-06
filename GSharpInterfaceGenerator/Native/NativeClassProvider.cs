@@ -53,10 +53,7 @@ namespace GSharpInterfaceGenerator.Native
             var abstractClassVisitor = new AbstractClassVisitor(ref classList, WantedClassesHashSet);
             foreach (var tu in translationUnits)
             {
-                if (WantedClassesHashSet.Count > classList.Count)
-                {
-                    clang.visitChildren(clang.getTranslationUnitCursor(tu), abstractClassVisitor.VisitClass, new CXClientData(IntPtr.Zero));
-                }
+                clang.visitChildren(clang.getTranslationUnitCursor(tu), abstractClassVisitor.VisitClass, new CXClientData(IntPtr.Zero));
             }
             var classListInfo = new VirtualClassListInfo();
             classListInfo.Interfaces = classList.Cast<IDescribeInterface>().ToList();

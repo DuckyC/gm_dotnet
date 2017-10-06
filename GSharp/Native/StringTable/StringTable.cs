@@ -50,7 +50,7 @@ namespace GSharp.Native.StringTable
             if (container == null) return null;
             var stringTablePointer = container.GetTable(index);
             if (stringTablePointer == IntPtr.Zero) return null;
-            var stringTable = JITEngine.GenerateClass<INetworkStringTable>(stringTablePointer);
+            var stringTable = JIT.ConvertInstance<INetworkStringTable>(stringTablePointer);
             return stringTable;
         }
 
@@ -59,7 +59,7 @@ namespace GSharp.Native.StringTable
             if (container == null) return null;
             var stringTablePointer = container.FindTable(name);
             if (stringTablePointer == IntPtr.Zero) return null;
-            var stringTable = JITEngine.GenerateClass<INetworkStringTable>(stringTablePointer);
+            var stringTable = JIT.ConvertInstance<INetworkStringTable>(stringTablePointer);
             return stringTable;
         }
 

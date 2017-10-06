@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using GSharp.Native.Classes;
 using GSharp.Attributes;
 using System.Linq;
+using Libraria.Native;
 
 namespace GSharp.Native
 {
@@ -59,7 +60,7 @@ namespace GSharp.Native
             if (classptr == IntPtr.Zero)
                 return null;
 
-            return JITEngine.GenerateClass<TClass>(classptr);
+            return JIT.ConvertInstance<TClass>(classptr);
         }
 
         /// <summary>
@@ -88,7 +89,7 @@ namespace GSharp.Native
         {
             var factory = LoadCreateInterface(dllname);
             var classptr = factory(interfaceVersionString, IntPtr.Zero);
-            return JITEngine.GenerateClass<TClass>(classptr);
+            return JIT.ConvertInstance<TClass>(classptr);
         }
 
         public static IntPtr GetClassPointer<TClass>() where TClass : class

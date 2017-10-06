@@ -61,11 +61,10 @@ namespace GSharpInterfaceGenerator.Native
 
             if (curKind == CXCursorKind.CXCursor_ClassDecl)
             {
-                var spelling = clang.getCursorSpelling(cursor).ToString();
-
+                var spelling = cursor.ToString();
                 if (!this.wantedClasses.Contains(spelling))
                 {
-                    return CXChildVisitResult.CXChildVisit_Continue;
+                    return CXChildVisitResult.CXChildVisit_Recurse;
                 }
 
                 var classInfo = new VirtualClassInfo();
@@ -122,12 +121,12 @@ namespace GSharpInterfaceGenerator.Native
                         this.VisitClass(baseCursor, cursor, IntPtr.Zero);
                         classInfo.Parents.Add(baseSpelling);
                     }
-                    return CXChildVisitResult.CXChildVisit_Continue;
+                    return CXChildVisitResult.CXChildVisit_Recurse;
                 };
 
                 clang.visitChildren(cursor, visitMethod, new CXClientData(IntPtr.Zero));
                 this.classes.Add(classInfo);
-                return CXChildVisitResult.CXChildVisit_Continue;
+                return CXChildVisitResult.CXChildVisit_Recurse;
             }
 
             return CXChildVisitResult.CXChildVisit_Recurse;

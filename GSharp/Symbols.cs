@@ -29,7 +29,7 @@ namespace GSharp
         {
             var ptrptr = SymbolFinder.ResolveOnBinary("engine.dll", IServer_sig);//this is IServer**
             var ptr = Marshal.ReadIntPtr(ptrptr);
-            return JITEngine.GenerateClass<IServer>(ptr); 
+            return JIT.ConvertInstance<IServer>(ptr); 
 
             
         }

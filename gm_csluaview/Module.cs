@@ -16,9 +16,9 @@ namespace gm_csluaview
     {
         public static void RunString(string code)
         {
-            var luaShared = NativeInterface.Load<ILuaShared>("lua_shared.dll");
+            var luaShared = NativeInterface.Load<ILuaShared>();
             var luaInterfacePointer = luaShared.GetLuaInterface(0);
-            var luaInterface = JITEngine.GenerateClass<ILuaInterface>(luaInterfacePointer);
+            var luaInterface = JIT.ConvertInstance<ILuaInterface>(luaInterfacePointer);
             luaInterface.RunStringEx("", "", code);
         }
 

@@ -1,4 +1,5 @@
 ﻿using GSharp;
+using GSharp.Generated.NativeClasses;
 using GSharp.Native;
 using GSharp.Native.Classes;
 using GSharp.Native.Classes.VCR;
