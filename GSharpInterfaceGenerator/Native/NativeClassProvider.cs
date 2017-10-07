@@ -1,5 +1,6 @@
 ﻿using ClangSharp;
 using GSharpInterfaceGenerator.Models;
+using GSharpInterfaceGenerator.Native.Visitors;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,22 +8,29 @@ using System.Linq;
 
 namespace GSharpInterfaceGenerator.Native
 {
+
+    public class VirtualClassListInfo : IDescribeInterfaceList
+    {
+        public override TypeSource Source => TypeSource.CPPHeader;
+        public override List<string> Namespaces { get; set; } = new List<string> { "System" };
+    }
+
     public class NativeClassProvider : IProvideInterfaces
     {
         public IDescribeInterfaceList MakeInterfaces(Configuration config)
         {
             var files = new List<string>();
-            var WantedClassesHashSet = new HashSet<string> { };
-
-            foreach (var type in config.WantedTypes)
+           
+            foreach (var file in config.NativeFiles)
             {
-                if (string.IsNullOrWhiteSpace(type.HeaderFile)) { continue; }
-                files.Add(type.HeaderFile);
-                WantedClassesHashSet.Add(type.Name);
+                if (string.IsNullOrWhiteSpace(file.Path)) { continue; }
+                var fullpath = Path.GetFullPath(file.Path);
+                if (!File.Exists(fullpath)) { Console.WriteLine("File does not exist: " + file.Path); continue; }
+                files.Add(fullpath);
             }
 
             string[] arr = { "-x", "c++" };
-            arr = arr.Concat(config.Includes?.Select(x => "-I" + x)).ToArray();
+            arr = arr.Concat(config.Includes?.Select(x => "-I" + Path.GetFullPath(x))).ToArray();
 
             var createIndex = clang.createIndex(0, 0);
             List<CXTranslationUnit> translationUnits = new List<CXTranslationUnit>();
@@ -46,17 +54,36 @@ namespace GSharpInterfaceGenerator.Native
                         clang.disposeDiagnostic(diagnostic);
                     }
                 }
+                else
+                {
+                    translationUnits.Add(translationUnit);
+                }
 
-                translationUnits.Add(translationUnit);
-            }
-            var classList = new List<VirtualClassInfo>();
-            var abstractClassVisitor = new AbstractClassVisitor(ref classList, WantedClassesHashSet);
-            foreach (var tu in translationUnits)
-            {
-                clang.visitChildren(clang.getTranslationUnitCursor(tu), abstractClassVisitor.VisitClass, new CXClientData(IntPtr.Zero));
             }
             var classListInfo = new VirtualClassListInfo();
-            classListInfo.Interfaces = classList.Cast<IDescribeInterface>().ToList();
+
+            var baseVisitor = new DependencyVisitor(classListInfo, config);
+            foreach (var tu in translationUnits)
+            {
+                clang.visitChildren(clang.getTranslationUnitCursor(tu), baseVisitor.Visit, new CXClientData(IntPtr.Zero));
+            }
+
+            var visitors = new List<Visitor> {
+                new DependencyVisitor(classListInfo, config),
+                new AbstractClassVisitor(classListInfo, config),
+                new StructVisitor(classListInfo, config),
+                new EnumVisitor(classListInfo, config),
+                new DelegateVisitor(classListInfo, config),
+            };
+
+            foreach (var visitor in visitors)
+            {
+                foreach (var tu in translationUnits)
+                {
+                    clang.visitChildren(clang.getTranslationUnitCursor(tu), visitor.Visit, new CXClientData(IntPtr.Zero));
+                }
+            }
+
             return classListInfo;
         }
 

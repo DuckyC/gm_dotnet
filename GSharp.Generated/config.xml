@@ -4,17 +4,27 @@
   <WikiUrl>http://wiki.garrysmod.com/</WikiUrl>
   <AlwaysOverwrite>true</AlwaysOverwrite>
   
-  <WantedType Name="IFileSystem" HeaderFile="./sourcesdk-minimal/public/filesystem.h" InterfaceVersion="VFileSystem022" ModuleName="FileSystem_Stdio" />
-  <WantedType Name="IServerGameDLL" HeaderFile="./sourcesdk-minimal/public/eiface.h" InterfaceVersion="ServerGameDLL008" ModuleName="server" />
-  <WantedType Name="IVEngineServer" HeaderFile="./sourcesdk-minimal/public/eiface.h" InterfaceVersion="VEngineServer021" ModuleName="engine" />
-  <WantedType Name="IServer" HeaderFile="./sourcesdk-minimal/public/IServer.h" />
+  <NativeFile Path="sourcesdk-minimal/public/filesystem.h"/>
+  <NativeFile Path="sourcesdk-minimal/public/eiface.h"/>
+  <NativeFile Path="sourcesdk-minimal/public/IServer.h"/>
+  <NativeFile Path="sourcesdk-minimal/public/tier1/interface.h"/>
+  <NativeFile Path="garrysmod_common/include/GarrysMod/Lua/LuaInterface.h"/>
+  <NativeFile Path="garrysmod_common/include/GarrysMod/Lua/LuaShared.h"/>
+  <NativeFile Path="garrysmod_common/include/GarrysMod/Lua/Interface.h"/>
+  
+  <NativeInterface Name="IFileSystem" InterfaceVersion="VFileSystem022" ModuleName="FileSystem_Stdio" />
+  <NativeInterface Name="IServerGameDLL" InterfaceVersion="ServerGameDLL008" ModuleName="server" />
+  <NativeInterface Name="IVEngineServer" InterfaceVersion="VEngineServer021" ModuleName="engine" />
+  <NativeInterface Name="IServer" />
+  <NativeDelegate Name="CreateInterfaceFn" />
+  
+  <NativeInterface Name="ILuaInterface" />
+  <NativeInterface Name="ILuaShared" InterfaceVersion="LUASHARED003" ModuleName="lua_shared" />
+  <NativeStruct Name="lua_State"/>
+  <NativeEnum Name="GarrysMod::Lua::State"/>
 
-  <WantedType Name="ILuaInterface" HeaderFile="./garrysmod_common/include/GarrysMod/Lua/LuaInterface.h" />
-  <WantedType Name="ILuaShared" HeaderFile="./garrysmod_common/include/GarrysMod/Lua/LuaShared.h" InterfaceVersion="LUASHARED003" ModuleName="lua_shared" />
-
-  <WantedType Name="file" LuaLibraryLocation="file" />
-  <WantedType Name="math" LuaLibraryLocation="math" />
-  <WantedType Name="string" LuaLibraryLocation="string" />
+  
+  
   <Include>./sourcesdk-minimal/common</Include>
   <Include>./sourcesdk-minimal/game</Include>
   <Include>./sourcesdk-minimal/lib</Include>
@@ -24,4 +34,8 @@
   <Include>./sourcesdk-minimal/tier1</Include>
   <Include>./sourcesdk-minimal/utils</Include>
   <Include>./garrysmod-common/include</Include>
+  
+  <WikiInterface Category="file" LuaLibraryLocation="file" />
+  <WikiInterface Category="math" LuaLibraryLocation="math" />
+  <WikiInterface Category="string" LuaLibraryLocation="string" />
 </Configuration>

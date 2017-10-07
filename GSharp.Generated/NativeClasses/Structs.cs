@@ -10,14 +10,15 @@
 
 namespace GSharp.Generated.NativeClasses {
     using System.ComponentModel;
+    using System.Runtime.InteropServices;
     using System;
     
     
-    public interface IConnectionlessPacketHandler {
+    public struct lua_State {
         
-        void dtorIConnectionlessPacketHandler();
+        [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.ByValArray, SizeConst=69)]
+        public byte[] _ignore_this_common_lua_header_;
         
-        /// <param name='packet'></param>
-        bool ProcessConnectionlessPacket(System.IntPtr packet);
+        public System.IntPtr luabase;
     }
 }

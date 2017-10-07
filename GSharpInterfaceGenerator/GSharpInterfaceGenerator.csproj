@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{BFDAF405-F3A9-4546-8FB2-FB67F9C39F0C}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>NativeClassGenerator</RootNamespace>
-    <AssemblyName>NativeClassGenerator</AssemblyName>
+    <RootNamespace>GSharpInterfaceGenerator</RootNamespace>
+    <AssemblyName>GSharpInterfaceGenerator</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -73,13 +73,17 @@
     <Compile Include="InterfaceBuilder.cs" />
     <Compile Include="Models\IProvideInterfaces.cs" />
     <Compile Include="Models\InterfaceDescriptions.cs" />
-    <Compile Include="Native\AbstractClassVisitor.cs" />
+    <Compile Include="Native\Visitors\DelegateVisitor.cs" />
+    <Compile Include="Native\Visitors\BaseVisitor.cs" />
+    <Compile Include="Native\Visitors\EnumVisitor.cs" />
+    <Compile Include="Native\Visitors\StructVisitor.cs" />
+    <Compile Include="Native\Visitors\AbstractClassVisitor.cs" />
     <Compile Include="Models\Configuration.cs" />
-    <Compile Include="Extensions.cs" />
+    <Compile Include="Native\Extensions.cs" />
     <Compile Include="Native\NativeClassProvider.cs" />
+    <Compile Include="Native\Visitors\Visitor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Native\VirtualClassInfo.cs" />
     <Compile Include="Wiki\WikiClassProvider.cs" />
     <Compile Include="Wiki\TranslateTemplate.cs" />
     <Compile Include="Wiki\WikiArticle.cs" />

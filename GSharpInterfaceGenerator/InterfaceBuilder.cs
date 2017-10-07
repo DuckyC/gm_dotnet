@@ -27,70 +27,184 @@ namespace GSharpInterfaceGenerator
         public void BuildInterfaces()
         {
             var subFolder = Configuration.GetSubFolder(interfaceList.Source);
+
             foreach (var interfaceDecl in interfaceList.Interfaces)
             {
-                var provider = new CSharpCodeProvider();
-                var compileUnit = new CodeCompileUnit();
-
-                var Classes = new CodeNamespace($"GSharp.Generated.{Configuration.GetSubFolder(interfaceList.Source)}");
-                compileUnit.Namespaces.Add(Classes);
-
-                Classes.Imports.Add(new CodeNamespaceImport("System.ComponentModel"));
-                foreach (var name in interfaceList.Namespaces) { Classes.Imports.Add(new CodeNamespaceImport(name)); }
-
-                var classInterface = Generate(interfaceDecl, interfaceList.Source);
-                Classes.Types.Add(classInterface);
-
                 var sourceOutput = Path.Combine(config.OutputFolder, subFolder, $"{CleanInterfaceName(interfaceDecl.Name)}.cs");
-                using (StreamWriter sw = new StreamWriter(sourceOutput, false))
-                {
-                    IndentedTextWriter tw = new IndentedTextWriter(sw, "    ");
-                    provider.GenerateCodeFromCompileUnit(compileUnit, tw, new CodeGeneratorOptions());
-                    tw.Close();
-                }
+                WriteCodeFile(sourceOutput, (nspace) => {
+                    nspace.Types.Add(GenerateInterface(interfaceDecl));
+                });
+
+            }
+
+            if (interfaceList.Structs.Count > 0)
+            {
+                var sourceOutput = Path.Combine(config.OutputFolder, subFolder, "Structs.cs");
+                WriteCodeFile(sourceOutput, (nspace) => {
+                    foreach (var declaration in interfaceList.Structs)
+                    {
+                        nspace.Types.Add(GenerateStruct(declaration));
+                    }
+                });
+            }
+
+            if (interfaceList.Enums.Count > 0)
+            {
+                var sourceOutput = Path.Combine(config.OutputFolder, subFolder, "Enums.cs");
+                WriteCodeFile(sourceOutput, (nspace) => {
+                    foreach (var declaration in interfaceList.Enums)
+                    {
+                        nspace.Types.Add(GenerateEnum(declaration));
+                    }
+                });
+            }
+
+            if (interfaceList.Delegates.Count > 0)
+            {
+                var sourceOutput = Path.Combine(config.OutputFolder, subFolder, "Delegates.cs");
+                WriteCodeFile(sourceOutput, (nspace) => {
+                    foreach (var declaration in interfaceList.Delegates)
+                    {
+                        nspace.Types.Add(GenerateDelegate(declaration));
+                    }
+                });
             }
         }
 
-        private CodeTypeDeclaration Generate(IDescribeInterface interfaceDecl, TypeSource source)
+        private delegate void AddClasses(CodeNamespace nspace);
+
+        private void WriteCodeFile(string filePath, AddClasses addClasses)
         {
-            var interf = new CodeTypeDeclaration(CleanInterfaceName(interfaceDecl.Name));
-            interf.IsInterface = true;
-            interf.TypeAttributes = TypeAttributes.Interface | TypeAttributes.Public;
-            //TODO: Attributes
-            if (!string.IsNullOrWhiteSpace(interfaceDecl.Description))
+            var provider = new CSharpCodeProvider();
+            var compileUnit = new CodeCompileUnit();
+
+            var Classes = new CodeNamespace($"GSharp.Generated.{Configuration.GetSubFolder(interfaceList.Source)}");
+            compileUnit.Namespaces.Add(Classes);
+
+            Classes.Imports.Add(new CodeNamespaceImport("System.ComponentModel"));
+            Classes.Imports.Add(new CodeNamespaceImport("System.Runtime.InteropServices"));
+
+            foreach (var name in interfaceList.Namespaces) { Classes.Imports.Add(new CodeNamespaceImport(name)); }
+
+            addClasses(Classes);          
+
+            using (StreamWriter sw = new StreamWriter(filePath, false))
             {
-                interf.Comments.Add(new CodeCommentStatement("<summary>", true));
-                var desc = BuildDescription(interfaceDecl.Description);
+                IndentedTextWriter tw = new IndentedTextWriter(sw, "    ");
+                provider.GenerateCodeFromCompileUnit(compileUnit, tw, new CodeGeneratorOptions());
+                tw.Close();
+            }
+        }
+
+        private CodeTypeDeclaration GenerateDelegate(IDescribeMethod declaration)
+        {
+            var newType = new CodeTypeDelegate
+            {
+                Name = declaration.Name,
+            };
+            newType.CustomAttributes.AddRange(declaration.Attributes.ToArray());
+
+            if (declaration.Returns.Count == 1)
+            {
+                newType.ReturnType = new CodeTypeReference(declaration.Returns[0].Type);
+            }
+
+            foreach (var argumentDeclaration in declaration.Arguments)
+            {
+                var param = new CodeParameterDeclarationExpression(argumentDeclaration.Type, argumentDeclaration.Name);
+                newType.Parameters.Add(param);
+            }
+
+            return newType;
+
+        }
+
+        private CodeTypeDeclaration GenerateEnum(IDescribeEnum declaration)
+        {
+            var newType = new CodeTypeDeclaration
+            {
+                Name = declaration.Name.Replace("::", "_"),
+                IsEnum = true,
+                TypeAttributes = TypeAttributes.Public
+            };
+            //TODO: Comments, we have none yet
+            newType.CustomAttributes.AddRange(declaration.Attributes.ToArray());
+
+            foreach (var valueDecl in declaration.Values)
+            {
+                var value = new CodeMemberField
+                {
+                    Name = valueDecl.Name,
+                    InitExpression = new CodePrimitiveExpression(valueDecl.Value),
+                    Attributes = MemberAttributes.Public,
+                };
+                value.CustomAttributes.AddRange(valueDecl.Attributes.ToArray());
+                newType.Members.Add(value);
+            }
+
+            return newType;
+        }
+
+        private CodeTypeDeclaration GenerateStruct(IDescribeStruct declaration)
+        {
+            var newType = new CodeTypeDeclaration(declaration.Name);
+            newType.IsStruct = true;
+            newType.TypeAttributes = TypeAttributes.SequentialLayout | TypeAttributes.Public;
+            //TODO: Comments, we have none yet
+            newType.CustomAttributes.AddRange(declaration.Attributes.ToArray());
+
+            foreach (var fldDecl in declaration.Fields)
+            {
+                var fld = new CodeMemberField(fldDecl.Type, fldDecl.Name);
+                fld.CustomAttributes.AddRange(fldDecl.Attributes.ToArray());
+                fld.Attributes = MemberAttributes.Public;
+                newType.Members.Add(fld);
+            }
+
+            return newType;
+        }
+
+
+        private CodeTypeDeclaration GenerateInterface(IDescribeInterface declaration)
+        {
+            var newType = new CodeTypeDeclaration(CleanInterfaceName(declaration.Name));
+            newType.IsInterface = true;
+            newType.TypeAttributes = TypeAttributes.Interface | TypeAttributes.Public;
+            //TODO: Attributes
+            if (!string.IsNullOrWhiteSpace(declaration.Description))
+            {
+                newType.Comments.Add(new CodeCommentStatement("<summary>", true));
+                var desc = BuildDescription(declaration.Description);
                 if (desc != null)
                 {
-                    interf.Comments.AddRange(desc.ToArray());
+                    newType.Comments.AddRange(desc.ToArray());
                 }
                 else
                 {
-                    interf.Comments.Add(new CodeCommentStatement(interfaceDecl.Description, true));
+                    newType.Comments.Add(new CodeCommentStatement(declaration.Description, true));
                 }
-                interf.Comments.Add(new CodeCommentStatement("</summary>", true));
+                newType.Comments.Add(new CodeCommentStatement("</summary>", true));
             }
 
 
-            foreach (var methodInfo in interfaceDecl.Methods)
+            foreach (var methodDeclaration in declaration.Methods)
             {
                 var newMethod = new CodeMemberMethod();
-                newMethod.Name = methodInfo.Name;
+                newMethod.Name = methodDeclaration.Name;
 
-                if (!string.IsNullOrWhiteSpace(methodInfo.Description))
+                if (!string.IsNullOrWhiteSpace(methodDeclaration.Description))
                 {
                     newMethod.Comments.Add(new CodeCommentStatement("<summary>", true));
-                    newMethod.Comments.Add(new CodeCommentStatement(methodInfo.Description, true));
+                    newMethod.Comments.Add(new CodeCommentStatement(methodDeclaration.Description, true));
                     newMethod.Comments.Add(new CodeCommentStatement("</summary>", true));
                 }
 
-                if (methodInfo.Returns.Count == 1)
+                if (methodDeclaration.Returns.Count == 1)
                 {
-                    newMethod.ReturnType = new CodeTypeReference(provider.TranslateType(methodInfo.Returns[0].Type));
-                    if (!string.IsNullOrWhiteSpace(methodInfo.Returns[0].Description))
+                    newMethod.ReturnType = new CodeTypeReference(methodDeclaration.Returns[0].Type);
+                    if (!string.IsNullOrWhiteSpace(methodDeclaration.Returns[0].Description))
                     {
-                        newMethod.Comments.Add(new CodeCommentStatement($"<returns>Type: {methodInfo.Returns[0].Type} - {methodInfo.Returns[0].Description}</returns>", true));
+                        newMethod.Comments.Add(new CodeCommentStatement($"<returns>Type: {methodDeclaration.Returns[0].Type} - {methodDeclaration.Returns[0].Description}</returns>", true));
                     }
                 }
                 else
@@ -98,9 +212,9 @@ namespace GSharpInterfaceGenerator
                     //fucking fix it m8
                 }
 
-                foreach (var arg in methodInfo.Arguments)
+                foreach (var arg in methodDeclaration.Arguments)
                 {
-                    var param = new CodeParameterDeclarationExpression(provider.TranslateType(arg.Type), arg.Name);
+                    var param = new CodeParameterDeclarationExpression(arg.Type, arg.Name);
                     if (!string.IsNullOrWhiteSpace(arg.Default))
                     {
                         param.CustomAttributes.Add(new CodeAttributeDeclaration(nameof(DefaultValueAttribute), new CodeAttributeArgument(new CodePrimitiveExpression(null))));
@@ -116,16 +230,16 @@ namespace GSharpInterfaceGenerator
 
                     if (!string.IsNullOrWhiteSpace(arg.Default))
                     {
-                        if(comment.Length != 0 ) { comment += " - "; }
+                        if (comment.Length != 0) { comment += " - "; }
                         comment += "Default: " + arg.Default;
                     }
                     newMethod.Comments.Add(new CodeCommentStatement($"<param name='{arg.Name}'>{comment}</param>", true));
                 }
 
                 //TODO: Attributes
-                interf.Members.Add(newMethod);
+                newType.Members.Add(newMethod);
             }
-            return interf;
+            return newType;
         }
 
         private string CleanInterfaceName(string name)

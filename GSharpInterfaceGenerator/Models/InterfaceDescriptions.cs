@@ -1,41 +1,82 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.CodeDom;
+using System.Collections.Generic;
 
 namespace GSharpInterfaceGenerator.Models
 {
-    public interface IDescribeInterfaceList
+    public class IDescribeInterfaceList
     {
-        IList<IDescribeInterface> Interfaces { get; }
-        TypeSource Source { get; }
-        IList<string> Namespaces { get; }
+        public virtual List<IDescribeInterface> Interfaces { get; set; } = new List<IDescribeInterface>();
+        public virtual List<IDescribeMethod> Delegates { get; set; } = new List<IDescribeMethod>();
+        public virtual List<IDescribeStruct> Structs { get; set; } = new List<IDescribeStruct>();
+        public virtual List<IDescribeEnum> Enums { get; set; } = new List<IDescribeEnum>();
+        public virtual List<string> Namespaces { get; set; } = new List<string>();
+        public virtual TypeSource Source { get; set; }
     }
 
-    public interface IDescribeInterface
+
+    public class IDescribeStruct
     {
-        string Name { get; }
-        IList<string> Parents { get; }
-        IList<IDescribeMethod> Methods { get; }
-        string Description { get; }   
+        public virtual string Name { get; set; }
+        public virtual List<IDescribeField> Fields { get; set; } = new List<IDescribeField>();
+        public virtual List<CodeAttributeDeclaration> Attributes { get; set; } = new List<CodeAttributeDeclaration>();
     }
 
-    public interface IDescribeMethod
+    public class IDescribeField
     {
-        string Name { get; }
-        IList<IDescribeReturn> Returns { get; }
-        IList<IDescribeArgument> Arguments { get; }
-        string Description { get; }
+        public virtual string Name { get; set; }
+        public virtual Type Type { get; set; }
+        public virtual List<CodeAttributeDeclaration> Attributes { get; set; } = new List<CodeAttributeDeclaration>();
+
     }
 
-    public interface IDescribeReturn
+    public class IDescribeEnum
     {
-        string Type { get; }
-        string Description { get; }
+        public virtual string Name { get; set; }
+        public virtual Type Type { get; set; }
+        public virtual List<IDescribeEnumValue> Values { get; set; } = new List<IDescribeEnumValue>();
+        public virtual List<CodeAttributeDeclaration> Attributes { get; set; } = new List<CodeAttributeDeclaration>();
     }
 
-    public interface IDescribeArgument
+    public class IDescribeEnumValue
     {
-        string Name { get; }
-        string Type { get; }
-        string Default { get; }
-        string Description { get; }
+        public virtual string Name { get; set; }
+        public virtual long Value { get; set; }
+        public virtual List<CodeAttributeDeclaration> Attributes { get; set; } = new List<CodeAttributeDeclaration>();
+    }
+    
+
+    public class IDescribeInterface
+    {
+        public virtual string Name { get; set; }
+        public virtual string Description { get; set; }
+        public virtual List<string> Parents { get; set; } = new List<string>();
+        public virtual List<IDescribeMethod> Methods { get; set; } = new List<IDescribeMethod>();
+        public virtual List<CodeAttributeDeclaration> Attributes { get; set; } = new List<CodeAttributeDeclaration>();
+    }
+
+    public class IDescribeMethod
+    {
+        public virtual string Name { get; set; }
+        public virtual string Description { get; set; }
+        public virtual List<IDescribeReturn> Returns { get; set; } = new List<IDescribeReturn>();
+        public virtual List<IDescribeArgument> Arguments { get; set; } = new List<IDescribeArgument>();
+        public virtual List<CodeAttributeDeclaration> Attributes { get; set; } = new List<CodeAttributeDeclaration>();
+    }
+
+    public class IDescribeReturn
+    {
+        public virtual Type Type { get; set; }
+        public virtual string Description { get; set; }
+        public virtual List<CodeAttributeDeclaration> Attributes { get; set; } = new List<CodeAttributeDeclaration>();
+    }
+
+    public class IDescribeArgument
+    {
+        public virtual string Name { get; set; }
+        public virtual Type Type { get; set; }
+        public virtual string Default { get; set; } //TODO: Use attributes directly instead
+        public virtual string Description { get; set; }
+        public virtual List<CodeAttributeDeclaration> Attributes { get; set; } = new List<CodeAttributeDeclaration>();
     }
 }

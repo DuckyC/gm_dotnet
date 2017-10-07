@@ -10,9 +10,267 @@
 
 namespace GSharp.Generated.NativeClasses {
     using System.ComponentModel;
+    using System.Runtime.InteropServices;
     using System;
     
     
     public interface ILuaInterface {
+        
+        /// <param name='param0'></param>
+        /// <param name='param1'></param>
+        bool Init(System.IntPtr param0, bool param1);
+        
+        void Shutdown();
+        
+        void Cycle();
+        
+        System.IntPtr Global();
+        
+        /// <param name='index'></param>
+        System.IntPtr GetObject(int index);
+        
+        /// <param name='obj'></param>
+        void PushLuaObject(System.IntPtr obj);
+        
+        /// <param name='func'></param>
+        void PushLuaFunction(System.IntPtr func);
+        
+        /// <param name='err'></param>
+        /// <param name='index'></param>
+        void LuaError(string err, int index);
+        
+        /// <param name='name'></param>
+        /// <param name='index'></param>
+        void TypeError(string name, int index);
+        
+        /// <param name='args'></param>
+        /// <param name='rets'></param>
+        void CallInternal(int args, int rets);
+        
+        /// <param name='args'></param>
+        void CallInternalNoReturns(int args);
+        
+        /// <param name='args'></param>
+        bool CallInternalGetBool(int args);
+        
+        /// <param name='args'></param>
+        string CallInternalGetString(int args);
+        
+        /// <param name='args'></param>
+        /// <param name='obj'></param>
+        bool CallInternalGet(int args, System.IntPtr obj);
+        
+        /// <param name='name'></param>
+        void NewGlobalTable(string name);
+        
+        System.IntPtr NewTemporaryObject();
+        
+        /// <param name='index'></param>
+        bool isUserData(int index);
+        
+        /// <param name='name'></param>
+        /// <param name='type'></param>
+        System.IntPtr GetMetaTableObject(string name, int type);
+        
+        /// <param name='index'></param>
+        System.IntPtr GetMetaTableObject(int index);
+        
+        /// <param name='index'></param>
+        System.IntPtr GetReturn(int index);
+        
+        bool IsServer();
+        
+        bool IsClient();
+        
+        bool IsMenu();
+        
+        /// <param name='obj'></param>
+        void DestroyObject(System.IntPtr obj);
+        
+        System.IntPtr CreateObject();
+        
+        /// <param name='table'></param>
+        /// <param name='key'></param>
+        /// <param name='value'></param>
+        void SetMember(System.IntPtr table, System.IntPtr key, System.IntPtr value);
+        
+        void GetNewTable();
+        
+        /// <param name='table'></param>
+        /// <param name='key'></param>
+        void SetMember(System.IntPtr table, float key);
+        
+        /// <param name='table'></param>
+        /// <param name='key'></param>
+        /// <param name='value'></param>
+        void SetMember(System.IntPtr table, float key, System.IntPtr value);
+        
+        /// <param name='table'></param>
+        /// <param name='key'></param>
+        void SetMember(System.IntPtr table, string key);
+        
+        /// <param name='table'></param>
+        /// <param name='key'></param>
+        /// <param name='value'></param>
+        void SetMember(System.IntPtr table, string key, System.IntPtr value);
+        
+        /// <param name='param0'></param>
+        void SetType(byte param0);
+        
+        /// <param name='num'></param>
+        void PushLong(int num);
+        
+        /// <param name='index'></param>
+        int GetFlags(int index);
+        
+        /// <param name='objIndex'></param>
+        /// <param name='keyIndex'></param>
+        bool FindOnObjectsMetaTable(int objIndex, int keyIndex);
+        
+        /// <param name='tableIndex'></param>
+        /// <param name='keyIndex'></param>
+        bool FindObjectOnTable(int tableIndex, int keyIndex);
+        
+        /// <param name='table'></param>
+        /// <param name='keyIndex'></param>
+        /// <param name='valueIndex'></param>
+        void SetMemberFast(System.IntPtr table, int keyIndex, int valueIndex);
+        
+        /// <param name='filename'></param>
+        /// <param name='path'></param>
+        /// <param name='stringToRun'></param>
+        /// <param name='run'></param>
+        /// <param name='showErrors'></param>
+        bool RunString(string filename, string path, string stringToRun, bool run, bool showErrors);
+        
+        /// <param name='objA'></param>
+        /// <param name='objB'></param>
+        bool IsEqual(System.IntPtr objA, System.IntPtr objB);
+        
+        /// <param name='err'></param>
+        void Error(string err);
+        
+        /// <param name='index'></param>
+        string GetStringOrError(int index);
+        
+        /// <param name='name'></param>
+        bool RunLuaModule(string name);
+        
+        /// <param name='filename'></param>
+        /// <param name='run'></param>
+        /// <param name='showErrors'></param>
+        /// <param name='param3'></param>
+        /// <param name='param4'></param>
+        bool FindAndRunScript(string filename, bool run, bool showErrors, string param3, bool param4);
+        
+        /// <param name='pathID'></param>
+        void SetPathID(string pathID);
+        
+        string GetPathID();
+        
+        /// <param name='fmt'></param>
+        void ErrorNoHalt(string fmt);
+        
+        /// <param name='fmt'></param>
+        void Msg(string fmt);
+        
+        /// <param name='path'></param>
+        void PushPath(string path);
+        
+        void PopPath();
+        
+        string GetPath();
+        
+        /// <param name='index'></param>
+        int GetColor(int index);
+        
+        /// <param name='color'></param>
+        void PushColor(System.IntPtr color);
+        
+        /// <param name='level'></param>
+        /// <param name='dbg'></param>
+        int GetStack(int level, System.IntPtr dbg);
+        
+        /// <param name='what'></param>
+        /// <param name='dbg'></param>
+        int GetInfo(string what, System.IntPtr dbg);
+        
+        /// <param name='dbg'></param>
+        /// <param name='n'></param>
+        string GetLocal(System.IntPtr dbg, int n);
+        
+        /// <param name='funcIndex'></param>
+        /// <param name='n'></param>
+        string GetUpvalue(int funcIndex, int n);
+        
+        /// <param name='filename'></param>
+        /// <param name='path'></param>
+        /// <param name='stringToRun'></param>
+        /// <param name='run'></param>
+        /// <param name='printErrors'></param>
+        /// <param name='dontPushErrors'></param>
+        /// <param name='noReturns'></param>
+        bool RunStringEx(string filename, string path, string stringToRun, bool run, bool printErrors, bool dontPushErrors, bool noReturns);
+        
+        /// <param name='index'></param>
+        /// <param name='str'></param>
+        System.IntPtr GetDataString(int index, System.IntPtr str);
+        
+        /// <param name='fmt'></param>
+        void ErrorFromLua(string fmt);
+        
+        System.IntPtr GetCurrentLocation();
+        
+        /// <param name='col'></param>
+        /// <param name='fmt'></param>
+        void MsgColour(System.IntPtr col, string fmt);
+        
+        /// <param name='outStr'></param>
+        void GetCurrentFile(System.IntPtr outStr);
+        
+        /// <param name='dumper'></param>
+        /// <param name='stringToCompile'></param>
+        void CompileString(System.IntPtr dumper, System.IntPtr stringToCompile);
+        
+        /// <param name='param0'></param>
+        /// <param name='param1'></param>
+        /// <param name='param2'></param>
+        bool CallFunctionProtected(int param0, int param1, bool param2);
+        
+        /// <param name='name'></param>
+        void Require(string name);
+        
+        /// <param name='type'></param>
+        string GetActualTypeName(int type);
+        
+        /// <param name='arrelems'></param>
+        /// <param name='nonarrelems'></param>
+        void PreCreateTable(int arrelems, int nonarrelems);
+        
+        /// <param name='index'></param>
+        void PushPooledString(int index);
+        
+        /// <param name='index'></param>
+        string GetPooledString(int index);
+        
+        /// <param name='param0'></param>
+        System.IntPtr AddThreadedCall(System.IntPtr param0);
+        
+        /// <param name='param0'></param>
+        /// <param name='param1'></param>
+        void AppendStackTrace(System.IntPtr param0, int param1);
+        
+        /// <param name='param0'></param>
+        /// <param name='param1'></param>
+        /// <param name='param2'></param>
+        /// <param name='param3'></param>
+        System.IntPtr CreateConVar(string param0, string param1, string param2, int param3);
+        
+        /// <param name='param0'></param>
+        /// <param name='param1'></param>
+        /// <param name='param2'></param>
+        /// <param name='param3'></param>
+        /// <param name='param4'></param>
+        System.IntPtr CreateConCommand(string param0, string param1, int param2, System.IntPtr param3, System.IntPtr param4);
     }
 }

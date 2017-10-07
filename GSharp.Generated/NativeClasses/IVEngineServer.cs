@@ -10,6 +10,7 @@
 
 namespace GSharp.Generated.NativeClasses {
     using System.ComponentModel;
+    using System.Runtime.InteropServices;
     using System;
     
     
@@ -101,7 +102,7 @@ namespace GSharp.Generated.NativeClasses {
         
         /// <param name='num'></param>
         /// <param name='size'></param>
-        System.IntPtr SaveAllocMemory(uint num, uint size);
+        System.IntPtr SaveAllocMemory(System.IntPtr num, System.IntPtr size);
         
         /// <param name='pSaveMem'></param>
         void SaveFreeMemory(System.IntPtr pSaveMem);
@@ -388,7 +389,7 @@ namespace GSharp.Generated.NativeClasses {
         
         /// <param name='pPlayerEntity'></param>
         /// <param name='pName'></param>
-        int StartQueryCvarValue(System.IntPtr pPlayerEntity, string pName);
+        System.IntPtr StartQueryCvarValue(System.IntPtr pPlayerEntity, string pName);
         
         /// <param name='str'></param>
         void InsertServerCommand(string str);

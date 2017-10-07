@@ -17,24 +17,20 @@ namespace GSharpInterfaceGenerator.Wiki
         public string IsClass { get; set; }
     }
 
-    public class ArgTemplate : Template, IDescribeArgument
+    public class ArgTemplate : Template
     {
         public static new string Title { get; } = "Arg";
         public string Type { get; set; }
         public string Name { get; set; }
         public string Desc { get; set; }
         public string Default { get; set; }
-
-        public string Description => Desc;
     }
 
-    public class RetTemplate : Template, IDescribeReturn
+    public class RetTemplate : Template
     {
         public static new string Title { get; } = "Ret";
         public string Type { get; set; }
         public string Desc { get; set; }
-
-        public string Description => Desc;
     }
 
     public class ExampleTemplate : Template

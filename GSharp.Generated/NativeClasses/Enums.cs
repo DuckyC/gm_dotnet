@@ -10,9 +10,16 @@
 
 namespace GSharp.Generated.NativeClasses {
     using System.ComponentModel;
+    using System.Runtime.InteropServices;
     using System;
     
     
-    public interface IBaseFileSystem {
+    public enum GarrysMod_Lua_State {
+        
+        CLIENT = 0,
+        
+        SERVER = 1,
+        
+        MENU = 2,
     }
 }

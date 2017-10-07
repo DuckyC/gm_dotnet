@@ -30,11 +30,6 @@ namespace GSharpInterfaceGenerator
                 {
                     throw new Exception("No output folder");
                 }
-                if (config.WantedTypes?.Count == 0)
-                {
-                    throw new Exception("No wanted types");
-                }
-
             }
             catch (Exception e)
             {

@@ -11,22 +11,9 @@ namespace GSharpInterfaceGenerator.Wiki
 
     public class LuaLibraryList : IDescribeInterfaceList
     {
-        public IList<IDescribeInterface> Interfaces { get; set; }
+        public override TypeSource Source => TypeSource.Wiki;
+        public override List<string> Namespaces { get; set; } =  new List<string> { "System" };
 
-        public TypeSource Source => TypeSource.Wiki;
-
-        public IList<string> Namespaces => new List<string> { "System" };
-    }
-
-    public class LuaLibraryInfo : IDescribeInterface
-    {
-        public string Description { get; set; }
-        public string Name { get; set; }
-        public string Location { get; set; }
-
-        public List<LuaFunctionInfo> Methods { get; set; } = new List<LuaFunctionInfo>();
-        public IList<string> Parents => new List<string>();
-        IList<IDescribeMethod> IDescribeInterface.Methods => Methods.Cast<IDescribeMethod>().ToList();
     }
 
     public class Wiki
@@ -138,10 +125,10 @@ namespace GSharpInterfaceGenerator.Wiki
             return description;
         }
 
-        public LuaLibraryInfo FetchLibraryInfo(string categoryName)
+        public IDescribeInterface FetchLibraryInfo(string categoryName)
         {
             Console.WriteLine($"Fetching library: {categoryName}");
-            var info = new LuaLibraryInfo { Name = categoryName };
+            var info = new IDescribeInterface { Name = categoryName };
             info.Description = FetchCategoryDescription(categoryName);
 
             var request = new RestRequest("api.php");
@@ -164,7 +151,7 @@ namespace GSharpInterfaceGenerator.Wiki
                 var name = member.Attributes["title"].Value.Replace(categoryName + "/", "");
                 dict.Add(pageid, name);
             }
-            info.Methods = FetchFunctionInfo(dict);
+            info.Methods = FetchFunctionInfo(dict).Cast<IDescribeMethod>().ToList();
             return info;
         }
 
@@ -172,14 +159,24 @@ namespace GSharpInterfaceGenerator.Wiki
 
     public class LuaFunctionInfo : IDescribeMethod
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public List<RetTemplate> Returns { get; set; } = new List<RetTemplate>();
-        public List<ArgTemplate> Args { get; set; } = new List<ArgTemplate>();
         public List<ExampleTemplate> Examples { get; set; } = new List<ExampleTemplate>();
 
-        public IList<IDescribeArgument> Arguments => Args.Cast<IDescribeArgument>().ToList();
-        IList<IDescribeReturn> IDescribeMethod.Returns => Returns.Cast<IDescribeReturn>().ToList();
+        public static Type TranslateType(string luaName)
+        {
+            switch (luaName)
+            {
+                case "table":
+                    return typeof(object[]);
+                case "boolean":
+                    return typeof(bool);
+                case "number":
+                    return typeof(double);
+                case "string":
+                    return typeof(string);
+                default:
+                    return typeof(object);
+            }
+        }
 
         public static LuaFunctionInfo ConvertRoot(XRoot root)
         {
@@ -196,11 +193,11 @@ namespace GSharpInterfaceGenerator.Wiki
                 }
                 else if (translated is ArgTemplate arg)
                 {
-                    info.Args.Add(arg);
+                    info.Arguments.Add(new IDescribeArgument { Name = arg.Name, Type = TranslateType(arg.Type), Default = arg.Default, Description = arg.Desc });
                 }
                 else if (translated is RetTemplate ret)
                 {
-                    info.Returns.Add(ret);
+                    info.Returns.Add(new IDescribeReturn { Type = TranslateType(ret.Type), Description = ret.Desc });
                 }
                 else if (translated is ExampleTemplate example)
                 {

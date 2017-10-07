@@ -10,6 +10,7 @@
 
 namespace GSharp.Generated.LuaLibraries {
     using System.ComponentModel;
+    using System.Runtime.InteropServices;
     using System;
     
     
@@ -51,7 +52,7 @@ namespace GSharp.Generated.LuaLibraries {
         /// <summary>
         /// Returns a boolean of whether the file or directory exists or not.
         /// </summary>
-        /// <returns>Type: boolean - Returns true if the file exists and false if it is not.</returns>
+        /// <returns>Type: System.Boolean - Returns true if the file exists and false if it is not.</returns>
         /// <param name='name'>The file or directory's name.</param>
         /// <param name='path'>The path of where to look for the file.* "GAME" Structured like base folder (garrysmod/), searches all the mounted content (main folder, addons, mounted games etc)* "LUA" or "lsv" - All Lua folders (lua/) including gamesmodes and addons* "DATA" Data folder (garrysmod/data)* "MOD" Strictly the game folder (garrysmod/), ignores mounting.</param>
         bool Exists(string name, string path);
@@ -67,7 +68,7 @@ namespace GSharp.Generated.LuaLibraries {
         /// <summary>
         /// Returns if the given file is a directory.
         /// </summary>
-        /// <returns>Type: boolean -  isDir</returns>
+        /// <returns>Type: System.Boolean -  isDir</returns>
         /// <param name='fileName'>The file or directory's name.</param>
         /// <param name='path'>The path type.</param>
         bool IsDir(string fileName, string path);
@@ -82,7 +83,7 @@ namespace GSharp.Generated.LuaLibraries {
         /// <summary>
         /// Attempts to open a file with the given mode.
         /// </summary>
-        /// <returns>Type: File - The opened file</returns>
+        /// <returns>Type: System.Object - The opened file</returns>
         /// <param name='fileName'>The files name. See LibraryFunctionfileWrite for details on filename restrictions when writing to files.</param>
         /// <param name='fileMode'>The mode to open the file in. Possible values are:* '''r''' - read mode* '''w''' - write mode* '''a''' - append mode* '''rb''' - binary read mode* '''wb''' - binary write mode* '''ab''' - binary append mode</param>
         /// <param name='path'>The path type.* "GAME" Structured like base folder (garrysmod/), searches all the mounted content (main folder, addons, mounted games etc)* "LUA" or "lsv" - All Lua folders (lua/) including gamesmodes and addons* "DATA" Data folder (garrysmod/data)* "MOD" Strictly the game folder (garrysmod/), ignores mounting.</param>
@@ -91,7 +92,7 @@ namespace GSharp.Generated.LuaLibraries {
         /// <summary>
         /// Returns the content of a file.Beware of casing -- some filesystems are case-sensitive. SRCDS on Linux seems to force file/directory creation to lowercase, but will not modify read operations.
         /// </summary>
-        /// <returns>Type: string - The data from the file as a string, or nil if the file isn't found</returns>
+        /// <returns>Type: System.String - The data from the file as a string, or nil if the file isn't found</returns>
         /// <param name='fileName'>The name of the file.</param>
         /// <param name='path'>The path used to look up the file.* "GAME" Structured like base folder (garrysmod/), searches all the mounted content (main folder, addons, mounted games etc)* "LUA" or "lsv" - All Lua folders (lua/) including gamesmodes and addons* "DATA" Data folder (garrysmod/data)* "MOD" Strictly the game folder (garrysmod/), ignores mounting.It can also be a boolean:* true = "GAME"* false = "DATA" - Default: "DATA"</param>
         string Read(string fileName, [DefaultValueAttribute(null)] string path);
@@ -99,7 +100,7 @@ namespace GSharp.Generated.LuaLibraries {
         /// <summary>
         /// Returns when the file or folder was lasted modified in Unix time.
         /// </summary>
-        /// <returns>Type: number - Seconds passed since Unix epoch.</returns>
+        /// <returns>Type: System.Double - Seconds passed since Unix epoch.</returns>
         /// <param name='path'>The '''file''' or '''folder''' path.</param>
         /// <param name='gamePath'>The game path to be used.* "GAME" Structured like base folder (garrysmod/), searches all the mounted content (main folder, addons, mounted games etc)* "LUA" or "lsv" - All Lua folders (lua/) including gamesmodes and addons* "DATA" Data folder (garrysmod/data)* "MOD" Strictly the game folder (garrysmod/), ignores mounting.</param>
         double Time(string path, string gamePath);

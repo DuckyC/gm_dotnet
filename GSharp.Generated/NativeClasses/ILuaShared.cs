@@ -10,6 +10,7 @@
 
 namespace GSharp.Generated.NativeClasses {
     using System.ComponentModel;
+    using System.Runtime.InteropServices;
     using System;
     
     
@@ -29,13 +30,13 @@ namespace GSharp.Generated.NativeClasses {
         
         /// <param name='param0'></param>
         /// <param name='param1'></param>
-        System.IntPtr CreateLuaInterface(System.IntPtr param0, bool param1);
+        System.IntPtr CreateLuaInterface(byte param0, bool param1);
         
         /// <param name='param0'></param>
         void CloseLuaInterface(System.IntPtr param0);
         
         /// <param name='param0'></param>
-        System.IntPtr GetLuaInterface(System.IntPtr param0);
+        System.IntPtr GetLuaInterface(byte param0);
         
         /// <param name='param0'></param>
         /// <param name='param1'></param>

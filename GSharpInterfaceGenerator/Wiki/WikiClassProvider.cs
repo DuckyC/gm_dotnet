@@ -12,36 +12,21 @@ namespace GSharpInterfaceGenerator.Wiki
     {
         public IDescribeInterfaceList MakeInterfaces(Configuration config)
         {
-            var wiki = new Wiki(new Uri(config.WikiUrl));
             var interfaceList = new LuaLibraryList();
+            if (string.IsNullOrWhiteSpace(config.WikiUrl)) { return interfaceList; }
+            var wiki = new Wiki(new Uri(config.WikiUrl));
             interfaceList.Interfaces = new List<IDescribeInterface>();
-            foreach (var type in config.WantedTypes)
+            foreach (var type in config.WikiInterfaces)
             {
                 if (string.IsNullOrWhiteSpace(type.LuaLibraryLocation)) { continue; }
 
-                var LibraryInfo = wiki.FetchLibraryInfo(type.Name);
-                LibraryInfo.Location = type.LuaLibraryLocation;
+                var LibraryInfo = wiki.FetchLibraryInfo(type.Category);
+
+                //LibraryInfo.Location = type.LuaLibraryLocation; //TODO: do attribute
                 interfaceList.Interfaces.Add(LibraryInfo);
             }
 
             return interfaceList;
-        }
-
-        public Type TranslateType(string luaName)
-        {
-            switch (luaName)
-            {
-                case "table":
-                    return typeof(object[]);
-                case "boolean":
-                    return typeof(bool);
-                case "number":
-                    return typeof(double);
-                case "string":
-                    return typeof(string);
-                default:
-                    return typeof(object);
-            }
         }
     }
 }

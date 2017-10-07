@@ -10,6 +10,7 @@
 
 namespace GSharp.Generated.NativeClasses {
     using System.ComponentModel;
+    using System.Runtime.InteropServices;
     using System;
     
     
@@ -110,13 +111,13 @@ namespace GSharp.Generated.NativeClasses {
         string FindFirst(string pWildCard, System.IntPtr pHandle);
         
         /// <param name='handle'></param>
-        string FindNext(int handle);
+        string FindNext(System.IntPtr handle);
         
         /// <param name='handle'></param>
-        bool FindIsDirectory(int handle);
+        bool FindIsDirectory(System.IntPtr handle);
         
         /// <param name='handle'></param>
-        void FindClose(int handle);
+        void FindClose(System.IntPtr handle);
         
         /// <param name='pWildCard'></param>
         /// <param name='pPathID'></param>
@@ -144,8 +145,6 @@ namespace GSharp.Generated.NativeClasses {
         /// <param name='buf'></param>
         /// <param name='buflen'></param>
         bool String(System.IntPtr handle, System.IntPtr buf, int buflen);
-        
-        void AsyncReadNONVIRTUALINLINE();
         
         /// <param name='pRequests'></param>
         /// <param name='nRequests'></param>
@@ -214,15 +213,15 @@ namespace GSharp.Generated.NativeClasses {
         void AsyncRelease(System.IntPtr hControl);
         
         /// <param name='resourcelist'></param>
-        int WaitForResources(string resourcelist);
+        System.IntPtr WaitForResources(string resourcelist);
         
         /// <param name='handle'></param>
         /// <param name='progress'></param>
         /// <param name='complete'></param>
-        bool GetWaitForResourcesProgress(int handle, System.IntPtr progress, System.IntPtr complete);
+        bool GetWaitForResourcesProgress(System.IntPtr handle, System.IntPtr progress, System.IntPtr complete);
         
         /// <param name='handle'></param>
-        void CancelWaitForResources(int handle);
+        void CancelWaitForResources(System.IntPtr handle);
         
         /// <param name='hintlist'></param>
         /// <param name='forgetEverything'></param>
@@ -302,7 +301,7 @@ namespace GSharp.Generated.NativeClasses {
         /// <param name='bufsize'></param>
         /// <param name='filename'></param>
         /// <param name='pPathID'></param>
-        bool ExtractRootKeyName(System.IntPtr type, System.IntPtr outbuf, uint bufsize, string filename, string pPathID);
+        bool ExtractRootKeyName(System.IntPtr type, System.IntPtr outbuf, System.IntPtr bufsize, string filename, string pPathID);
         
         /// <param name='pFileName'></param>
         /// <param name='pSrc'></param>
@@ -320,8 +319,6 @@ namespace GSharp.Generated.NativeClasses {
         /// <param name='pControl'></param>
         System.IntPtr AsyncWriteFile(string pFileName, System.IntPtr pSrc, int nSrcBytes, bool bFreeMemory, bool bAppend, System.IntPtr pControl);
         
-        void AsyncReadCreditAllocNONVIRTUALINLINE();
-        
         /// <param name='pRequests'></param>
         /// <param name='nRequests'></param>
         /// <param name='pszFile'></param>
@@ -332,7 +329,7 @@ namespace GSharp.Generated.NativeClasses {
         /// <param name='pFullPath'></param>
         /// <param name='buf'></param>
         /// <param name='bufSizeInBytes'></param>
-        bool GetFileTypeForFullPath(string pFullPath, System.IntPtr buf, uint bufSizeInBytes);
+        bool GetFileTypeForFullPath(string pFullPath, System.IntPtr buf, System.IntPtr bufSizeInBytes);
         
         /// <param name='hFile'></param>
         /// <param name='buf'></param>
@@ -345,8 +342,6 @@ namespace GSharp.Generated.NativeClasses {
         /// <param name='pSizeAlign'></param>
         /// <param name='pBufferAlign'></param>
         bool GetOptimalIOConstraints(System.IntPtr hFile, System.IntPtr pOffsetAlign, System.IntPtr pSizeAlign, System.IntPtr pBufferAlign);
-        
-        void GetOptimalReadSizeNONVIRTUALINLINE();
         
         /// <param name='hFile'></param>
         /// <param name='nSize'></param>

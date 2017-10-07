@@ -10,6 +10,7 @@
 
 namespace GSharp.Generated.NativeClasses {
     using System.ComponentModel;
+    using System.Runtime.InteropServices;
     using System;
     
     
@@ -145,7 +146,7 @@ namespace GSharp.Generated.NativeClasses {
         /// <param name='eStatus'></param>
         /// <param name='pCvarName'></param>
         /// <param name='pCvarValue'></param>
-        void OnQueryCvarValueFinished(int iCookie, System.IntPtr pPlayerEntity, System.IntPtr eStatus, string pCvarName, string pCvarValue);
+        void OnQueryCvarValueFinished(System.IntPtr iCookie, System.IntPtr pPlayerEntity, System.IntPtr eStatus, string pCvarName, string pCvarValue);
         
         void GameServerSteamAPIActivated();
         
