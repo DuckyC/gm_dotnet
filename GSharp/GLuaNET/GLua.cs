@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Linq.Expressions;
+using GSharp.Generated.NativeClasses;
 
 namespace GSharp.GLuaNET
 {
@@ -28,11 +29,11 @@ namespace GSharp.GLuaNET
             Marshals.Add(t, marshal);
         }
 
-        public lua_state State { get; protected set; }
+        public lua_State State { get; protected set; }
 
         public ILuaBase LuaBase { get; protected set; }
 
-        public GLua(lua_state luaState)
+        public GLua(lua_State luaState)
         {
             State = luaState;
             LuaBase = JIT.ConvertInstance<ILuaBase>(luaState.luabase);

@@ -22,10 +22,11 @@ namespace GSharpInterfaceGenerator.Native.Visitors
                 {
                     if (childCursor.Kind == CXCursorKind.CXCursor_CXXBaseSpecifier)
                     {
-                        if(!config.NativeInterfaces.Any(i=>i.Name == childCursor.Spelling))
+                        var definitionSpelling = childCursor.CursorDefinition.Spelling;
+                        if (!config.NativeInterfaces.Any(i=>i.Name == definitionSpelling))
                         {
                             config.NativeInterfaces.Add(new NativeInterface {
-                                Name = childCursor.Spelling,
+                                Name = definitionSpelling,
                             });
                         }
                     }

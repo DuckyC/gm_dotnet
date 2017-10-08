@@ -1,4 +1,5 @@
 ﻿using GSharp;
+using GSharp.Generated.NativeClasses;
 using GSharp.GLuaNET;
 using GSharp.Native;
 using GSharp.Native.Classes;
@@ -13,21 +14,12 @@ namespace sv_sandbox
     public unsafe static class Module
     {
         [DllExport("gmod13_open", CallingConvention = CallingConvention.Cdecl)]
-        public static int Open(lua_state L)
+        public static int Open(lua_State L)
         {
             var glua = new GLua(L);
             var file = new fileImpl(glua);
 
-            var rtn = file.Find("*", "GAME");
-            Console.WriteLine("Found: ");
-            foreach (var item in rtn.Directories)
-            {
-                Console.WriteLine(item);
-            }
-            foreach (var item in rtn.Files)
-            {
-                Console.WriteLine(item);
-            }
+            file.Find("*", "GAME");
 
             Console.WriteLine("DotNet loaded");
             return 0;

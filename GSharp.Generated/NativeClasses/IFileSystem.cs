@@ -14,7 +14,7 @@ namespace GSharp.Generated.NativeClasses {
     using System;
     
     
-    public interface IFileSystem {
+    public interface IFileSystem : IAppSystem, IBaseFileSystem {
         
         bool IsSteam();
         

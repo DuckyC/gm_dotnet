@@ -171,6 +171,12 @@ namespace GSharpInterfaceGenerator
             newType.IsInterface = true;
             newType.TypeAttributes = TypeAttributes.Interface | TypeAttributes.Public;
             //TODO: Attributes
+
+            foreach (var parent in declaration.Parents)
+            {
+                newType.BaseTypes.Add(new CodeTypeReference(parent));
+            }
+
             if (!string.IsNullOrWhiteSpace(declaration.Description))
             {
                 newType.Comments.Add(new CodeCommentStatement("<summary>", true));

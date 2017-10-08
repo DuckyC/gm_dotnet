@@ -39,6 +39,7 @@ namespace GSharpInterfaceGenerator.Native.Visitors
             public int NumArgs => clang.getNumArgTypes(Type);
 
             public VisitorCursor CursorReferenced => new VisitorCursor(clang.getCursorReferenced(Cursor));
+            public VisitorCursor CursorDefinition => new VisitorCursor(clang.getCursorDefinition(Cursor));
 
             public string GetArgSpelling(uint index)
             {

@@ -1,6 +1,7 @@
-﻿using GSharp.GLuaNET;
-using GSharp.LuaLibrary.Libraries;
+﻿using GSharp.Generated.LuaLibraries;
+using GSharp.GLuaNET;
 using System;
+using System.ComponentModel;
 
 namespace GSharp
 {
@@ -47,12 +48,11 @@ namespace GSharp
             throw new NotImplementedException();
         }
 
-        public void Exists(string name, string path)
+        public bool Exists(string name, string path)
         {
             throw new NotImplementedException();
         }
-
-        public IFileFindReturnType Find(string name, string path, string sorting = "nameasc")
+        public void Find(string name, string path, string sorting = "nameasc")
         {
             GLua.LuaBase.GetField(GLua.LUA_GLOBALSINDEX, "file");
             GLua.LuaBase.GetField(-1, "Find");
@@ -60,20 +60,20 @@ namespace GSharp
             GLua.Push(path);
             GLua.Push(sorting);
             GLua.PCall(3, 2, 0);
-            return GLua.GetReturnType<IFileFindReturnType>();
+            //return GLua.GetReturnType<IFileFindReturnType>();
         }
 
-        public void IsDir(string name, string path)
+        public bool IsDir(string fileName, string path)
         {
             throw new NotImplementedException();
         }
 
-        public void Open(string fileName, string fileMode, string path)
+        public object Open(string fileName, string fileMode, string path)
         {
             throw new NotImplementedException();
         }
 
-        public void Read(string fileName, string path = "DATA")
+        public string Read(string fileName, [DefaultValue(null)] string path)
         {
             throw new NotImplementedException();
         }
@@ -83,7 +83,7 @@ namespace GSharp
             throw new NotImplementedException();
         }
 
-        public void Time(string path, string gamePath)
+        public double Time(string path, string gamePath)
         {
             throw new NotImplementedException();
         }

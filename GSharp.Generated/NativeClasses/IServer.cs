@@ -14,7 +14,7 @@ namespace GSharp.Generated.NativeClasses {
     using System;
     
     
-    public interface IServer {
+    public interface IServer : IConnectionlessPacketHandler {
         
         void dtorIServer();
         

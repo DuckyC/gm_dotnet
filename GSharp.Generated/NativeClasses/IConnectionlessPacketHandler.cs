@@ -14,6 +14,11 @@ namespace GSharp.Generated.NativeClasses {
     using System;
     
     
-    [System.Runtime.InteropServices.UnmanagedFunctionPointerAttribute(System.Runtime.InteropServices.CallingConvention.Cdecl, CharSet=System.Runtime.InteropServices.CharSet.Ansi)]
-    public delegate System.IntPtr CreateInterfaceFn(string pName, System.IntPtr pReturnCode);
+    public interface IConnectionlessPacketHandler {
+        
+        void dtorIConnectionlessPacketHandler();
+        
+        /// <param name='packet'></param>
+        bool ProcessConnectionlessPacket(System.IntPtr packet);
+    }
 }

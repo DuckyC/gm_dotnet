@@ -18,7 +18,7 @@ namespace GSharpInterfaceGenerator.Native.Visitors
         {
             if (cursor.Kind == CXCursorKind.CXCursor_TypedefDecl)
             {
-                if (!config.NativeDelegates.Any(i => i.Name == cursor.Spelling))
+                if (config.NativeDelegates.Any(i => i.Name == cursor.Spelling) && !info.Delegates.Any(i => i.Name == cursor.Spelling))
                 {
                     CXType type = clang.getCanonicalType(clang.getTypedefDeclUnderlyingType(cursor.Cursor));
                     var pointee = clang.getPointeeType(type);

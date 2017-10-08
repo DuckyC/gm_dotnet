@@ -1,4 +1,5 @@
 ﻿using GSharp;
+using GSharp.Generated.NativeClasses;
 using GSharp.Native;
 using GSharp.Native.Classes;
 using GSharp.Native.StringTable;
@@ -23,7 +24,7 @@ namespace gm_csluaview
         }
 
         [DllExport("gmod13_open", CallingConvention = CallingConvention.Cdecl)]
-        public static int Open(lua_state L)
+        public static int Open(lua_State L)
         {
             ClientConsole.RerouteConsole();
             ClientConsole.Color = new Color(0, 150, 255);

@@ -9,13 +9,14 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using GSharp.Generated.NativeClasses;
 
 namespace cl_sandbox
 {
 	public class CSharpSandbox
 	{
 		[DllExport("gmod13_open", CallingConvention = CallingConvention.Cdecl)]
-		public static int Open(lua_state L)
+		public static int Open(lua_State L)
 		{
 			ClientConsole.RerouteConsole();
 
@@ -25,7 +26,7 @@ namespace cl_sandbox
 		}
 
 		[DllExport("gmod13_close", CallingConvention = CallingConvention.Cdecl)]
-		public static int Close(lua_state L)
+		public static int Close(lua_State L)
 		{
 			return 0;
 		}

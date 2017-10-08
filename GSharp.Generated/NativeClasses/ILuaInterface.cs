@@ -14,7 +14,7 @@ namespace GSharp.Generated.NativeClasses {
     using System;
     
     
-    public interface ILuaInterface {
+    public interface ILuaInterface : ILuaBase {
         
         /// <param name='param0'></param>
         /// <param name='param1'></param>

@@ -62,6 +62,12 @@ namespace GSharpInterfaceGenerator.Native.Visitors
                             classInfo.Methods.Add(methodInfo);
                         }
                     }
+
+                    if(methodCursor.Kind == CXCursorKind.CXCursor_CXXBaseSpecifier)
+                    {
+                        var definitionSpelling = methodCursor.CursorDefinition.Spelling;
+                        classInfo.Parents.Add(definitionSpelling);
+                    }
                 });
 
                 this.info.Interfaces.Add(classInfo);

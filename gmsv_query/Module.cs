@@ -18,7 +18,7 @@ namespace gmsv_query
         static byte[] staticPlayerPacket;
 
         [DllExport("gmod13_open", CallingConvention = CallingConvention.Cdecl)]
-        public static int Open(lua_state L)
+        public static int Open(lua_State L)
         {
             VCR_t* VCR = (VCR_t*)NativeInterface.LoadVariable<VCR_t>("tier0.dll", "g_pVCR");
             OHook_recvfrom = NativeInterface.OverwriteVCRHook(VCR, new_Hook_recvfrom = Hook_recvfrom_detour);
@@ -31,9 +31,9 @@ namespace gmsv_query
             var engineServer = NativeInterface.Load<IVEngineServer>();
 
             var description = gamedll.GetGameDescription();
-            
 
 
+            var steamID = engineServer.GetGameServerSteamID();
             var infoPacket = new ReplyInfoPacket
             {
                 AmountBots = 0,
@@ -50,7 +50,7 @@ namespace gmsv_query
                 Secure = false,
                 Server = ReplyInfoPacket.ServerType.Dedicated,
                 UDPPort = (short)netsock->nPort,
-                SteamID = engineServer.GetGameServerSteamID(),
+                SteamID = 0,
                 Tags = "ayyy"
 
             };

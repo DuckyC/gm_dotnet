@@ -5,6 +5,7 @@ using GSharp.Native.Classes;
 using GSharp.Attributes;
 using System.Linq;
 using Libraria.Native;
+using GSharp.Generated.NativeClasses;
 
 namespace GSharp.Native
 {
@@ -35,7 +36,7 @@ namespace GSharp.Native
             return handle;
         }
 
-        private static CreateInterfaceDelegate LoadCreateInterface(string dllPath)
+        private static CreateInterfaceFn LoadCreateInterface(string dllPath)
         {
             var hModule = LoadLibrary(dllPath);
 			if (hModule == IntPtr.Zero)
@@ -45,10 +46,10 @@ namespace GSharp.Native
 			if (functionAddress == IntPtr.Zero)
 				return null;
 
-            return (CreateInterfaceDelegate)Marshal.GetDelegateForFunctionPointer(functionAddress, typeof(CreateInterfaceDelegate));
+            return (CreateInterfaceFn)Marshal.GetDelegateForFunctionPointer(functionAddress, typeof(CreateInterfaceFn));
         }
 
-        public static TClass GetFromFactory<TClass>(CreateInterfaceDelegate factory) where TClass : class
+        public static TClass GetFromFactory<TClass>(CreateInterfaceFn factory) where TClass : class
         {
             if (factory == null)
             {
