@@ -70,14 +70,12 @@ namespace GSharpInterfaceGenerator.Native.Visitors
 
             public VToken[] GetTokens()
             {
-                var pointer = IntPtr.Zero;
-                uint numPointers = 0;
-                clang.tokenize(TranslationUnit, Extent, out pointer, out numPointers);
-
+                clang.tokenize(TranslationUnit, Extent, out IntPtr pointer, out uint numPointers);
                 var tokens = new VToken[numPointers];
+                var sizeInBytes = Marshal.SizeOf(typeof(CXToken));
                 for (int i = 0; i < numPointers; i++)
                 {
-                    var ptr = pointer + (i * IntPtr.Size);
+                    var ptr = pointer + (i * sizeInBytes);
                     tokens[i] = new VToken(this, Marshal.PtrToStructure<CXToken>(ptr));
                 }
                 return tokens;
@@ -113,6 +111,11 @@ namespace GSharpInterfaceGenerator.Native.Visitors
 
             public string Spelling => clang.getTokenSpelling(Parent.TranslationUnit, Token).ToString();
             public CXTokenKind Kind => clang.getTokenKind(Token);
+
+            public override string ToString()
+            {
+                return Spelling + " - " + Kind;
+            }
         }
 
         protected VirtualClassListInfo info;

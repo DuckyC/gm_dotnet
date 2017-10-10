@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 
 namespace GSharpInterfaceGenerator
 {
@@ -147,9 +148,11 @@ namespace GSharpInterfaceGenerator
 
         private CodeTypeDeclaration GenerateStruct(IDescribeStruct declaration)
         {
-            var newType = new CodeTypeDeclaration(declaration.Name);
-            newType.IsStruct = true;
-            newType.TypeAttributes = TypeAttributes.SequentialLayout | TypeAttributes.Public;
+            var newType = new CodeTypeDeclaration(declaration.Name)
+            {
+                IsStruct = true,
+                TypeAttributes = TypeAttributes.SequentialLayout | TypeAttributes.Public
+            };
             //TODO: Comments, we have none yet
             newType.CustomAttributes.AddRange(declaration.Attributes.ToArray());
 
@@ -167,9 +170,11 @@ namespace GSharpInterfaceGenerator
 
         private CodeTypeDeclaration GenerateInterface(IDescribeInterface declaration)
         {
-            var newType = new CodeTypeDeclaration(CleanInterfaceName(declaration.Name));
-            newType.IsInterface = true;
-            newType.TypeAttributes = TypeAttributes.Interface | TypeAttributes.Public;
+            var newType = new CodeTypeDeclaration(CleanInterfaceName(declaration.Name))
+            {
+                IsInterface = true,
+                TypeAttributes = TypeAttributes.Interface | TypeAttributes.Public
+            };
             newType.CustomAttributes.AddRange(declaration.Attributes.ToArray());
 
 
@@ -196,8 +201,10 @@ namespace GSharpInterfaceGenerator
 
             foreach (var methodDeclaration in declaration.Methods)
             {
-                var newMethod = new CodeMemberMethod();
-                newMethod.Name = methodDeclaration.Name;
+                var newMethod = new CodeMemberMethod
+                {
+                    Name = methodDeclaration.Name
+                };
 
                 if (!string.IsNullOrWhiteSpace(methodDeclaration.Description))
                 {
@@ -224,10 +231,11 @@ namespace GSharpInterfaceGenerator
                     var param = new CodeParameterDeclarationExpression(arg.Type, arg.Name);
                     if (!string.IsNullOrWhiteSpace(arg.Default))
                     {
-                        param.CustomAttributes.Add(new CodeAttributeDeclaration(nameof(DefaultValueAttribute), new CodeAttributeArgument(new CodePrimitiveExpression(arg.Default))));
+                        param.CustomAttributes.Add(new CodeAttributeDeclaration(nameof(OptionalAttribute)));
+                        param.CustomAttributes.Add(new CodeAttributeDeclaration(nameof(DefaultValueAttribute), new CodeAttributeArgument(new CodeSnippetExpression(arg.Default))));
                     }
+                    param.CustomAttributes.AddRange(arg.Attributes.ToArray());
                     newMethod.Parameters.Add(param);
-                    newMethod.CustomAttributes.AddRange(arg.Attributes.ToArray());
 
 
                     var comment = "";

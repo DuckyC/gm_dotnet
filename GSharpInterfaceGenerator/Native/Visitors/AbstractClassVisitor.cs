@@ -57,6 +57,24 @@ namespace GSharpInterfaceGenerator.Native.Visitors
                                     Name = paramSpelling
                                 };
 
+
+                                var tokens = methodCursor.GetArgCursor(index).GetTokens();
+                                var foundEquals = false;
+                                for (int i = 0; i < tokens.Length-1; i++)
+                                {
+                                    var token = tokens[i];
+                                    if (token.Kind == CXTokenKind.CXToken_Punctuation && token.Spelling == "="){
+                                        foundEquals = true;
+                                        continue;
+                                    }
+                                    if(foundEquals && token.Kind == CXTokenKind.CXToken_Identifier) { info.Default = ""; break; } //probably an enum dont support this(yet(maybe))
+                                    if (foundEquals )
+                                    {
+                                        info.Default+= token.Spelling;
+                                    }
+                                }
+
+
                                 methodInfo.Arguments.Add(info);
                             }
                             classInfo.Methods.Add(methodInfo);

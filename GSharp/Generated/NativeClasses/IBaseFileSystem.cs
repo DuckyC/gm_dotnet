@@ -28,8 +28,8 @@ namespace GSharp.Generated.NativeClasses {
         
         /// <param name='pFileName'></param>
         /// <param name='pOptions'></param>
-        /// <param name='pathID'></param>
-        System.IntPtr Open(string pFileName, string pOptions, string pathID);
+        /// <param name='pathID'>Default: 0</param>
+        System.IntPtr Open(string pFileName, string pOptions, [OptionalAttribute()] [DefaultValueAttribute(0)] string pathID);
         
         /// <param name='file'></param>
         void Close(System.IntPtr file);
@@ -46,40 +46,40 @@ namespace GSharp.Generated.NativeClasses {
         uint Size(System.IntPtr file);
         
         /// <param name='pFileName'></param>
-        /// <param name='pPathID'></param>
-        uint Size(string pFileName, string pPathID);
+        /// <param name='pPathID'>Default: 0</param>
+        uint Size(string pFileName, [OptionalAttribute()] [DefaultValueAttribute(0)] string pPathID);
         
         /// <param name='file'></param>
         void Flush(System.IntPtr file);
         
         /// <param name='pFileName'></param>
-        /// <param name='pPathID'></param>
-        bool Precache(string pFileName, string pPathID);
+        /// <param name='pPathID'>Default: 0</param>
+        bool Precache(string pFileName, [OptionalAttribute()] [DefaultValueAttribute(0)] string pPathID);
         
         /// <param name='pFileName'></param>
-        /// <param name='pPathID'></param>
-        bool FileExists(string pFileName, string pPathID);
+        /// <param name='pPathID'>Default: 0</param>
+        bool FileExists(string pFileName, [OptionalAttribute()] [DefaultValueAttribute(0)] string pPathID);
         
         /// <param name='pFileName'></param>
-        /// <param name='pPathID'></param>
-        bool IsFileWritable(string pFileName, string pPathID);
+        /// <param name='pPathID'>Default: 0</param>
+        bool IsFileWritable(string pFileName, [OptionalAttribute()] [DefaultValueAttribute(0)] string pPathID);
         
         /// <param name='pFileName'></param>
         /// <param name='writable'></param>
-        /// <param name='pPathID'></param>
-        bool SetFileWritable(string pFileName, bool writable, string pPathID);
+        /// <param name='pPathID'>Default: 0</param>
+        bool SetFileWritable(string pFileName, bool writable, [OptionalAttribute()] [DefaultValueAttribute(0)] string pPathID);
         
         /// <param name='pFileName'></param>
-        /// <param name='pPathID'></param>
-        int GetFileTime(string pFileName, string pPathID);
+        /// <param name='pPathID'>Default: 0</param>
+        int GetFileTime(string pFileName, [OptionalAttribute()] [DefaultValueAttribute(0)] string pPathID);
         
         /// <param name='pFileName'></param>
         /// <param name='pPath'></param>
         /// <param name='buf'></param>
-        /// <param name='nMaxBytes'></param>
-        /// <param name='nStartingByte'></param>
+        /// <param name='nMaxBytes'>Default: 0</param>
+        /// <param name='nStartingByte'>Default: 0</param>
         /// <param name='pfnAlloc'></param>
-        bool ReadFile(string pFileName, string pPath, System.IntPtr buf, int nMaxBytes, int nStartingByte, System.IntPtr pfnAlloc);
+        bool ReadFile(string pFileName, string pPath, System.IntPtr buf, [OptionalAttribute()] [DefaultValueAttribute(0)] int nMaxBytes, [OptionalAttribute()] [DefaultValueAttribute(0)] int nStartingByte, System.IntPtr pfnAlloc);
         
         /// <param name='pFileName'></param>
         /// <param name='pPath'></param>

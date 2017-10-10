@@ -47,14 +47,16 @@ namespace GSharpInterfaceGenerator.Models
 
         public static Configuration CreateDefault()
         {
-            var def = new Configuration();
-            def.OutputFolder = "./NativeClasses";
-            def.AlwaysOverwrite = false;
-            //def.WantedTypes = new List<WantedType> {
-            //    new WantedType { Name = "NameOfVirtualClass", HeaderFile = "PathToFile/WhereVirtualClassIs.h", InterfaceVersion = "INTERFACEVERSION001", ModuleName = "server" },
-            //    new WantedType { Name = "file", LuaLibraryLocation = "file"},
-            //};
-            def.Includes = new List<string> { "./sourcesdk-minimal/public" };
+            var def = new Configuration
+            {
+                OutputFolder = "./NativeClasses",
+                AlwaysOverwrite = false,
+                //def.WantedTypes = new List<WantedType> {
+                //    new WantedType { Name = "NameOfVirtualClass", HeaderFile = "PathToFile/WhereVirtualClassIs.h", InterfaceVersion = "INTERFACEVERSION001", ModuleName = "server" },
+                //    new WantedType { Name = "file", LuaLibraryLocation = "file"},
+                //};
+                Includes = new List<string> { "./sourcesdk-minimal/public" }
+            };
             return def;
         }
 

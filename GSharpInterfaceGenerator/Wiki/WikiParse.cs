@@ -25,9 +25,11 @@ namespace GSharpInterfaceGenerator.Wiki
                         }
                         else if (child.Name == "part")
                         {
-                            var part = new XPart();
-                            part.Name = child.FirstChild.InnerText; // sorry
-                            part.Value = child.LastChild.InnerText;
+                            var part = new XPart
+                            {
+                                Name = child.FirstChild.InnerText, // sorry
+                                Value = child.LastChild.InnerText
+                            };
                             template.Parts.Add(part);
                         }
                     }

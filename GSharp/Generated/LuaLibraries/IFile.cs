@@ -62,8 +62,8 @@ namespace GSharp.Generated.LuaLibraries {
         /// </summary>
         /// <param name='name'>The wildcard to search for. "models/*.mdl" will list .mdl files in the models/ folder.</param>
         /// <param name='path'>The path to look for the files and directories in. See [[File_Search_Paths|this list]] for a list of valid paths.</param>
-        /// <param name='sorting'>The sorting to be used, optional.* "nameasc" sort the files ascending by name* "namedesc" sort the files descending by name* "dateasc" sort the files ascending by date* "datedesc" sort the files descending by date - Default: "nameasc"</param>
-        void Find(string name, string path, [DefaultValueAttribute(null)] string sorting);
+        /// <param name='sorting'>The sorting to be used, optional.* "nameasc" sort the files ascending by name* "namedesc" sort the files descending by name* "dateasc" sort the files ascending by date* "datedesc" sort the files descending by date</param>
+        void Find(string name, string path, [OptionalAttribute()] string sorting);
         
         /// <summary>
         /// Returns if the given file is a directory.
@@ -94,8 +94,8 @@ namespace GSharp.Generated.LuaLibraries {
         /// </summary>
         /// <returns>Type: System.String - The data from the file as a string, or nil if the file isn't found</returns>
         /// <param name='fileName'>The name of the file.</param>
-        /// <param name='path'>The path used to look up the file.* "GAME" Structured like base folder (garrysmod/), searches all the mounted content (main folder, addons, mounted games etc)* "LUA" or "lsv" - All Lua folders (lua/) including gamesmodes and addons* "DATA" Data folder (garrysmod/data)* "MOD" Strictly the game folder (garrysmod/), ignores mounting.It can also be a boolean:* true = "GAME"* false = "DATA" - Default: "DATA"</param>
-        string Read(string fileName, [DefaultValueAttribute(null)] string path);
+        /// <param name='path'>The path used to look up the file.* "GAME" Structured like base folder (garrysmod/), searches all the mounted content (main folder, addons, mounted games etc)* "LUA" or "lsv" - All Lua folders (lua/) including gamesmodes and addons* "DATA" Data folder (garrysmod/data)* "MOD" Strictly the game folder (garrysmod/), ignores mounting.It can also be a boolean:* true = "GAME"* false = "DATA"</param>
+        string Read(string fileName, [OptionalAttribute()] string path);
         
         /// <summary>
         /// Returns when the file or folder was lasted modified in Unix time.

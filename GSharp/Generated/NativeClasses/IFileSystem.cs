@@ -18,8 +18,8 @@ namespace GSharp.Generated.NativeClasses {
         
         bool IsSteam();
         
-        /// <param name='nExtraAppId'></param>
-        System.IntPtr MountSteamContent(int nExtraAppId);
+        /// <param name='nExtraAppId'>Default: -1</param>
+        System.IntPtr MountSteamContent([OptionalAttribute()] [DefaultValueAttribute(-1)] int nExtraAppId);
         
         /// <param name='pPath'></param>
         /// <param name='pathID'></param>
@@ -27,8 +27,8 @@ namespace GSharp.Generated.NativeClasses {
         void AddSearchPath(string pPath, string pathID, System.IntPtr addType);
         
         /// <param name='pPath'></param>
-        /// <param name='pathID'></param>
-        bool RemoveSearchPath(string pPath, string pathID);
+        /// <param name='pathID'>Default: 0</param>
+        bool RemoveSearchPath(string pPath, [OptionalAttribute()] [DefaultValueAttribute(0)] string pathID);
         
         void RemoveAllSearchPaths();
         
@@ -58,21 +58,21 @@ namespace GSharp.Generated.NativeClasses {
         bool AddPackFile(string fullpath, string pathID);
         
         /// <param name='pRelativePath'></param>
-        /// <param name='pathID'></param>
-        void RemoveFile(string pRelativePath, string pathID);
+        /// <param name='pathID'>Default: 0</param>
+        void RemoveFile(string pRelativePath, [OptionalAttribute()] [DefaultValueAttribute(0)] string pathID);
         
         /// <param name='pOldPath'></param>
         /// <param name='pNewPath'></param>
-        /// <param name='pathID'></param>
-        bool RenameFile(string pOldPath, string pNewPath, string pathID);
+        /// <param name='pathID'>Default: 0</param>
+        bool RenameFile(string pOldPath, string pNewPath, [OptionalAttribute()] [DefaultValueAttribute(0)] string pathID);
         
         /// <param name='path'></param>
-        /// <param name='pathID'></param>
-        void CreateDirHierarchy(string path, string pathID);
+        /// <param name='pathID'>Default: 0</param>
+        void CreateDirHierarchy(string path, [OptionalAttribute()] [DefaultValueAttribute(0)] string pathID);
         
         /// <param name='pFileName'></param>
-        /// <param name='pathID'></param>
-        bool IsDirectory(string pFileName, string pathID);
+        /// <param name='pathID'>Default: 0</param>
+        bool IsDirectory(string pFileName, [OptionalAttribute()] [DefaultValueAttribute(0)] string pathID);
         
         /// <param name='pStrip'></param>
         /// <param name='maxCharsIncludingTerminator'></param>
@@ -99,9 +99,9 @@ namespace GSharp.Generated.NativeClasses {
         int FPrintf(System.IntPtr file, string pFormat);
         
         /// <param name='pFileName'></param>
-        /// <param name='pPathID'></param>
-        /// <param name='bValidatedDllOnly'></param>
-        System.IntPtr LoadModule(string pFileName, string pPathID, bool bValidatedDllOnly);
+        /// <param name='pPathID'>Default: 0</param>
+        /// <param name='bValidatedDllOnly'>Default: true</param>
+        System.IntPtr LoadModule(string pFileName, [OptionalAttribute()] [DefaultValueAttribute(0)] string pPathID, [OptionalAttribute()] [DefaultValueAttribute(true)] bool bValidatedDllOnly);
         
         /// <param name='pModule'></param>
         void UnloadModule(System.IntPtr pModule);
@@ -163,8 +163,8 @@ namespace GSharp.Generated.NativeClasses {
         /// <param name='pControl'></param>
         System.IntPtr AsyncAppendFile(string pAppendToFileName, string pAppendFromFileName, System.IntPtr pControl);
         
-        /// <param name='iToPriority'></param>
-        void AsyncFinishAll(int iToPriority);
+        /// <param name='iToPriority'>Default: 0</param>
+        void AsyncFinishAll([OptionalAttribute()] [DefaultValueAttribute(0)] int iToPriority);
         
         void AsyncFinishAllWrites();
         
@@ -188,8 +188,8 @@ namespace GSharp.Generated.NativeClasses {
         System.IntPtr AsyncEndRead(System.IntPtr hFile);
         
         /// <param name='hControl'></param>
-        /// <param name='wait'></param>
-        System.IntPtr AsyncFinish(System.IntPtr hControl, bool wait);
+        /// <param name='wait'>Default: true</param>
+        System.IntPtr AsyncFinish(System.IntPtr hControl, [OptionalAttribute()] [DefaultValueAttribute(true)] bool wait);
         
         /// <param name='hControl'></param>
         /// <param name='ppData'></param>
@@ -253,10 +253,10 @@ namespace GSharp.Generated.NativeClasses {
         
         /// <param name='pFileName'></param>
         /// <param name='pOptions'></param>
-        /// <param name='flags'></param>
-        /// <param name='pathID'></param>
+        /// <param name='flags'>Default: 0</param>
+        /// <param name='pathID'>Default: 0</param>
         /// <param name='ppszResolvedFilename'></param>
-        System.IntPtr OpenEx(string pFileName, string pOptions, uint flags, string pathID, System.IntPtr ppszResolvedFilename);
+        System.IntPtr OpenEx(string pFileName, string pOptions, [OptionalAttribute()] [DefaultValueAttribute(0)] uint flags, [OptionalAttribute()] [DefaultValueAttribute(0)] string pathID, System.IntPtr ppszResolvedFilename);
         
         /// <param name='pOutput'></param>
         /// <param name='sizeDest'></param>
@@ -267,12 +267,12 @@ namespace GSharp.Generated.NativeClasses {
         /// <param name='pFileName'></param>
         /// <param name='pPath'></param>
         /// <param name='ppBuf'></param>
-        /// <param name='bNullTerminate'></param>
-        /// <param name='bOptimalAlloc'></param>
-        /// <param name='nMaxBytes'></param>
-        /// <param name='nStartingByte'></param>
+        /// <param name='bNullTerminate'>Default: false</param>
+        /// <param name='bOptimalAlloc'>Default: false</param>
+        /// <param name='nMaxBytes'>Default: 0</param>
+        /// <param name='nStartingByte'>Default: 0</param>
         /// <param name='pfnAlloc'></param>
-        int ReadFileEx(string pFileName, string pPath, System.IntPtr ppBuf, bool bNullTerminate, bool bOptimalAlloc, int nMaxBytes, int nStartingByte, System.IntPtr pfnAlloc);
+        int ReadFileEx(string pFileName, string pPath, System.IntPtr ppBuf, [OptionalAttribute()] [DefaultValueAttribute(false)] bool bNullTerminate, [OptionalAttribute()] [DefaultValueAttribute(false)] bool bOptimalAlloc, [OptionalAttribute()] [DefaultValueAttribute(0)] int nMaxBytes, [OptionalAttribute()] [DefaultValueAttribute(0)] int nStartingByte, System.IntPtr pfnAlloc);
         
         /// <param name='pFileName'></param>
         System.IntPtr FindFileName(string pFileName);
@@ -287,37 +287,37 @@ namespace GSharp.Generated.NativeClasses {
         
         /// <param name='type'></param>
         /// <param name='filename'></param>
-        /// <param name='pPathID'></param>
-        System.IntPtr LoadKeyValues(System.IntPtr type, string filename, string pPathID);
+        /// <param name='pPathID'>Default: 0</param>
+        System.IntPtr LoadKeyValues(System.IntPtr type, string filename, [OptionalAttribute()] [DefaultValueAttribute(0)] string pPathID);
         
         /// <param name='head'></param>
         /// <param name='type'></param>
         /// <param name='filename'></param>
-        /// <param name='pPathID'></param>
-        bool LoadKeyValues(System.IntPtr head, System.IntPtr type, string filename, string pPathID);
+        /// <param name='pPathID'>Default: 0</param>
+        bool LoadKeyValues(System.IntPtr head, System.IntPtr type, string filename, [OptionalAttribute()] [DefaultValueAttribute(0)] string pPathID);
         
         /// <param name='type'></param>
         /// <param name='outbuf'></param>
         /// <param name='bufsize'></param>
         /// <param name='filename'></param>
-        /// <param name='pPathID'></param>
-        bool ExtractRootKeyName(System.IntPtr type, System.IntPtr outbuf, System.IntPtr bufsize, string filename, string pPathID);
+        /// <param name='pPathID'>Default: 0</param>
+        bool ExtractRootKeyName(System.IntPtr type, System.IntPtr outbuf, System.IntPtr bufsize, string filename, [OptionalAttribute()] [DefaultValueAttribute(0)] string pPathID);
         
         /// <param name='pFileName'></param>
         /// <param name='pSrc'></param>
         /// <param name='nSrcBytes'></param>
         /// <param name='bFreeMemory'></param>
-        /// <param name='bAppend'></param>
+        /// <param name='bAppend'>Default: false</param>
         /// <param name='pControl'></param>
-        System.IntPtr AsyncWrite(string pFileName, System.IntPtr pSrc, int nSrcBytes, bool bFreeMemory, bool bAppend, System.IntPtr pControl);
+        System.IntPtr AsyncWrite(string pFileName, System.IntPtr pSrc, int nSrcBytes, bool bFreeMemory, [OptionalAttribute()] [DefaultValueAttribute(false)] bool bAppend, System.IntPtr pControl);
         
         /// <param name='pFileName'></param>
         /// <param name='pSrc'></param>
         /// <param name='nSrcBytes'></param>
         /// <param name='bFreeMemory'></param>
-        /// <param name='bAppend'></param>
+        /// <param name='bAppend'>Default: false</param>
         /// <param name='pControl'></param>
-        System.IntPtr AsyncWriteFile(string pFileName, System.IntPtr pSrc, int nSrcBytes, bool bFreeMemory, bool bAppend, System.IntPtr pControl);
+        System.IntPtr AsyncWriteFile(string pFileName, System.IntPtr pSrc, int nSrcBytes, bool bFreeMemory, [OptionalAttribute()] [DefaultValueAttribute(false)] bool bAppend, System.IntPtr pControl);
         
         /// <param name='pRequests'></param>
         /// <param name='nRequests'></param>
@@ -333,9 +333,9 @@ namespace GSharp.Generated.NativeClasses {
         
         /// <param name='hFile'></param>
         /// <param name='buf'></param>
-        /// <param name='nMaxBytes'></param>
+        /// <param name='nMaxBytes'>Default: 0</param>
         /// <param name='pfnAlloc'></param>
-        bool ReadToBuffer(System.IntPtr hFile, System.IntPtr buf, int nMaxBytes, System.IntPtr pfnAlloc);
+        bool ReadToBuffer(System.IntPtr hFile, System.IntPtr buf, [OptionalAttribute()] [DefaultValueAttribute(0)] int nMaxBytes, System.IntPtr pfnAlloc);
         
         /// <param name='hFile'></param>
         /// <param name='pOffsetAlign'></param>
@@ -344,9 +344,9 @@ namespace GSharp.Generated.NativeClasses {
         bool GetOptimalIOConstraints(System.IntPtr hFile, System.IntPtr pOffsetAlign, System.IntPtr pSizeAlign, System.IntPtr pBufferAlign);
         
         /// <param name='hFile'></param>
-        /// <param name='nSize'></param>
-        /// <param name='nOffset'></param>
-        System.IntPtr AllocOptimalReadBuffer(System.IntPtr hFile, uint nSize, uint nOffset);
+        /// <param name='nSize'>Default: 0</param>
+        /// <param name='nOffset'>Default: 0</param>
+        System.IntPtr AllocOptimalReadBuffer(System.IntPtr hFile, [OptionalAttribute()] [DefaultValueAttribute(0)] uint nSize, [OptionalAttribute()] [DefaultValueAttribute(0)] uint nOffset);
         
         /// <param name='param0'></param>
         void FreeOptimalReadBuffer(System.IntPtr param0);

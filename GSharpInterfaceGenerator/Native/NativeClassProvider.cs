@@ -38,9 +38,7 @@ namespace GSharpInterfaceGenerator.Native
             foreach (var file in files)
             {
                 Console.WriteLine($"Parsing: {Path.GetFileName(file)}");
-                CXTranslationUnit translationUnit;
-                CXUnsavedFile unsavedFile;
-                var translationUnitError = clang.parseTranslationUnit2(createIndex, file, arr, 3, out unsavedFile, 0, 0, out translationUnit);
+                var translationUnitError = clang.parseTranslationUnit2(createIndex, file, arr, 3, out CXUnsavedFile unsavedFile, 0, 0, out CXTranslationUnit translationUnit);
 
                 if (translationUnitError != CXErrorCode.CXError_Success)
                 {

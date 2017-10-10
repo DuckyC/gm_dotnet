@@ -99,8 +99,8 @@ namespace GSharp.Generated.NativeClasses {
         /// <param name='maxlength'></param>
         /// <param name='flMinutes'></param>
         /// <param name='flSeconds'></param>
-        /// <param name='bNoTime'></param>
-        void GetSaveComment(System.IntPtr comment, int maxlength, float flMinutes, float flSeconds, bool bNoTime);
+        /// <param name='bNoTime'>Default: false</param>
+        void GetSaveComment(System.IntPtr comment, int maxlength, float flMinutes, float flSeconds, [OptionalAttribute()] [DefaultValueAttribute(false)] bool bNoTime);
         
         /// <param name='param0'></param>
         void WriteSaveHeaders(System.IntPtr param0);

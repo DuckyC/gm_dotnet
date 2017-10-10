@@ -13,7 +13,7 @@ namespace GSharp.GLuaNET.TypeMarshals
         {
             if (GLua.IsType(-1, LuaType.String))
             {
-                return GLua.LuaBase.GetString();
+                return GLua.LuaBase.GetString(-1, IntPtr.Zero);
             }
             return null;
         }

@@ -21,8 +21,8 @@ namespace GSharp.Generated.NativeClasses {
         /// <param name='iStackPos'></param>
         void Push(int iStackPos);
         
-        /// <param name='iAmt'></param>
-        void Pop(int iAmt);
+        /// <param name='iAmt'>Default: 1</param>
+        void Pop([OptionalAttribute()] [DefaultValueAttribute(1)] int iAmt);
         
         /// <param name='iStackPos'></param>
         void GetTable(int iStackPos);
@@ -92,27 +92,27 @@ namespace GSharp.Generated.NativeClasses {
         /// <param name='iStackPos'></param>
         void RawSet(int iStackPos);
         
-        /// <param name='iStackPos'></param>
+        /// <param name='iStackPos'>Default: -1</param>
         /// <param name='iOutLen'></param>
-        string GetString(int iStackPos, System.IntPtr iOutLen);
+        string GetString([OptionalAttribute()] [DefaultValueAttribute(-1)] int iStackPos, System.IntPtr iOutLen);
         
-        /// <param name='iStackPos'></param>
-        double GetNumber(int iStackPos);
+        /// <param name='iStackPos'>Default: -1</param>
+        double GetNumber([OptionalAttribute()] [DefaultValueAttribute(-1)] int iStackPos);
         
-        /// <param name='iStackPos'></param>
-        bool GetBool(int iStackPos);
+        /// <param name='iStackPos'>Default: -1</param>
+        bool GetBool([OptionalAttribute()] [DefaultValueAttribute(-1)] int iStackPos);
         
-        /// <param name='iStackPos'></param>
-        System.IntPtr GetCFunction(int iStackPos = -1);
+        /// <param name='iStackPos'>Default: -1</param>
+        System.IntPtr GetCFunction([OptionalAttribute()] [DefaultValueAttribute(-1)] int iStackPos);
         
-        /// <param name='iStackPos'></param>
-        System.IntPtr GetUserdata(int iStackPos = -1);
+        /// <param name='iStackPos'>Default: -1</param>
+        System.IntPtr GetUserdata([OptionalAttribute()] [DefaultValueAttribute(-1)] int iStackPos);
         
         void PushNil();
         
         /// <param name='val'></param>
-        /// <param name='iLen'></param>
-        void PushString(string val, uint iLen);
+        /// <param name='iLen'>Default: 0</param>
+        void PushString(string val, [OptionalAttribute()] [DefaultValueAttribute(0)] uint iLen);
         
         /// <param name='val'></param>
         void PushNumber(double val);
@@ -155,20 +155,20 @@ namespace GSharp.Generated.NativeClasses {
         /// <param name='iType'></param>
         void CreateMetaTableType(string strName, int iType);
         
-        /// <param name='iStackPos'></param>
-        string CheckString(int iStackPos);
+        /// <param name='iStackPos'>Default: -1</param>
+        string CheckString([OptionalAttribute()] [DefaultValueAttribute(-1)] int iStackPos);
         
-        /// <param name='iStackPos'></param>
-        double CheckNumber(int iStackPos);
+        /// <param name='iStackPos'>Default: -1</param>
+        double CheckNumber([OptionalAttribute()] [DefaultValueAttribute(-1)] int iStackPos);
         
-        /// <param name='iStackPos'></param>
-        int ObjLen(int iStackPos);
+        /// <param name='iStackPos'>Default: -1</param>
+        int ObjLen([OptionalAttribute()] [DefaultValueAttribute(-1)] int iStackPos);
         
-        /// <param name='iStackPos'></param>
-        System.IntPtr GetAngle(int iStackPos);
+        /// <param name='iStackPos'>Default: -1</param>
+        System.IntPtr GetAngle([OptionalAttribute()] [DefaultValueAttribute(-1)] int iStackPos);
         
-        /// <param name='iStackPos'></param>
-        System.IntPtr GetVector(int iStackPos);
+        /// <param name='iStackPos'>Default: -1</param>
+        System.IntPtr GetVector([OptionalAttribute()] [DefaultValueAttribute(-1)] int iStackPos);
         
         /// <param name='val'></param>
         void PushAngle(System.IntPtr val);

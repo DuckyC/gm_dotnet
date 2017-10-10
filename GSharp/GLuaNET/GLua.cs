@@ -102,8 +102,7 @@ namespace GSharp.GLuaNET
             var pops = new PropertyInfo[properties.Count()];
             foreach (var prop in properties)
             {
-                var attr = prop.GetCustomAttribute(typeof(ReturnIndexAttribute)) as ReturnIndexAttribute;
-                if (attr != null)
+                if (prop.GetCustomAttribute(typeof(ReturnIndexAttribute)) is ReturnIndexAttribute attr)
                 {
                     pops[attr.ReturnIndex] = prop;
                 }

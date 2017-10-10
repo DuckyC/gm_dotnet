@@ -70,12 +70,7 @@ namespace GSharpInterfaceGenerator.Native
         public static string GetFullCursorLocation(this CXCursor cursor)
         {
             var loc = clang.getCursorLocation(cursor);
-            var file = new CXFile();
-            uint line;
-            uint column;
-            uint offset;
-
-            clang.getSpellingLocation(loc, out file, out line, out column, out offset);
+            clang.getSpellingLocation(loc, out CXFile file, out uint line, out uint column, out uint offset);
             var fileName = clang.getFileName(file);
 
             return $"{fileName} Line: {line} Column:{column}";
@@ -84,12 +79,7 @@ namespace GSharpInterfaceGenerator.Native
         public static string GetCursorLocation(this CXCursor cursor)
         {
             var loc = clang.getCursorLocation(cursor);
-            var file = new CXFile();
-            uint line;
-            uint column;
-            uint offset;
-
-            clang.getSpellingLocation(loc, out file, out line, out column, out offset);
+            clang.getSpellingLocation(loc, out CXFile file, out uint line, out uint column, out uint offset);
             var fileName = clang.getFileName(file).ToString();
             fileName = Path.GetFileName(fileName);
 

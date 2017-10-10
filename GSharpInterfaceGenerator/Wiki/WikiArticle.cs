@@ -5,6 +5,7 @@ using System.CodeDom;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Xml;
 
@@ -14,7 +15,7 @@ namespace GSharpInterfaceGenerator.Wiki
     public class LuaLibraryList : IDescribeInterfaceList
     {
         public override TypeSource Source => TypeSource.Wiki;
-        public override List<string> Namespaces { get; set; } =  new List<string> { "System" };
+        public override List<string> Namespaces { get; set; } = new List<string> { "System" };
 
     }
 
@@ -196,7 +197,10 @@ namespace GSharpInterfaceGenerator.Wiki
                 else if (translated is ArgTemplate arg)
                 {
                     var argumentDeclaration = new IDescribeArgument { Name = arg.Name, Type = TranslateType(arg.Type), Description = arg.Desc };
-                    argumentDeclaration.Attributes.Add(new CodeAttributeDeclaration(nameof(DefaultValueAttribute), new CodeAttributeArgument(new CodePrimitiveExpression(null))));
+                    if (!string.IsNullOrWhiteSpace(arg.Default))
+                    {
+                        argumentDeclaration.Attributes.Add(new CodeAttributeDeclaration(nameof(OptionalAttribute)));
+                    }
                     info.Arguments.Add(argumentDeclaration);
                 }
                 else if (translated is RetTemplate ret)

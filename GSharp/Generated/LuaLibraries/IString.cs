@@ -30,9 +30,9 @@ namespace GSharp.Generated.LuaLibraries {
         /// </summary>
         /// <returns>Type: System.Object - Numerical bytes</returns>
         /// <param name='string'>The string to get the chars from.</param>
-        /// <param name='startPos'>The first character of the string to get the byte of. - Default: 1</param>
-        /// <param name='endPos'>The last character of the string to get the byte of. - Default: startPos</param>
-        object @byte(string @string, [DefaultValueAttribute(null)] double startPos, [DefaultValueAttribute(null)] double endPos);
+        /// <param name='startPos'>The first character of the string to get the byte of.</param>
+        /// <param name='endPos'>The last character of the string to get the byte of.</param>
+        object @byte(string @string, [OptionalAttribute()] double startPos, [OptionalAttribute()] double endPos);
         
         /// <summary>
         /// Takes the given numerical bytes and converts them to a string.
@@ -70,17 +70,17 @@ namespace GSharp.Generated.LuaLibraries {
         /// </summary>
         /// <param name='haystack'>The string to search in.</param>
         /// <param name='needle'>The string to find, can contain patterns if enabled.</param>
-        /// <param name='startPos'>The position to start the search from, can be negative start position will be relative to the end position. - Default: 1</param>
-        /// <param name='noPatterns'>Disable patterns. - Default: false</param>
-        void find(string haystack, string needle, [DefaultValueAttribute(null)] double startPos, [DefaultValueAttribute(null)] bool noPatterns);
+        /// <param name='startPos'>The position to start the search from, can be negative start position will be relative to the end position.</param>
+        /// <param name='noPatterns'>Disable patterns.</param>
+        void find(string haystack, string needle, [OptionalAttribute()] double startPos, [OptionalAttribute()] bool noPatterns);
         
         /// <summary>
         /// Returns the time as a formatted string or as a table if no format is given.
         /// </summary>
         /// <returns>Type: System.String - Returns the time as a formatted string only if a format was specified.Returns a table only if no format was specified. The table will contain these fields:<br/>FuncArgnumbermsmilliseconds<br/>FuncArgnumbersseconds<br/>FuncArgnumbermminutes<br/>FuncArgnumberhhours<br/><br/></returns>
         /// <param name='float'>The time in seconds to format.</param>
-        /// <param name='format'>An optional formatting to use. If no format it specified, a table will be returned instead. - Default: nil</param>
-        string FormattedTime(double @float, [DefaultValueAttribute(null)] string format);
+        /// <param name='format'>An optional formatting to use. If no format it specified, a table will be returned instead.</param>
+        string FormattedTime(double @float, [OptionalAttribute()] string format);
         
         /// <summary>
         /// Formats the specified values into the string given.
@@ -140,16 +140,16 @@ namespace GSharp.Generated.LuaLibraries {
         /// <param name='string'>String which should be modified.</param>
         /// <param name='pattern'>The pattern that defines what should be matched and eventually be replaced.</param>
         /// <param name='replacement'>In case of a string the matches sequence will be replaced with it.In case of a table, the matched sequence will be used as key and the table will tested for the key, if a value exists it will be used as replacement.In case of a function all matches will be passed as parameters to the function, the return value(s) of the function will then be used as replacement.</param>
-        /// <param name='maxReplaces'>Maximum number of replacements to be made. - Default: nil</param>
-        void gsub(string @string, string pattern, string replacement, [DefaultValueAttribute(null)] double maxReplaces);
+        /// <param name='maxReplaces'>Maximum number of replacements to be made.</param>
+        void gsub(string @string, string pattern, string replacement, [OptionalAttribute()] double maxReplaces);
         
         /// <summary>
         /// Joins the values of a table together to form a string.This is the reverse of LibraryFunctionstringExplode and is functionally identical to LibraryFunctiontableconcat, but with less features.
         /// </summary>
         /// <returns>Type: System.String - Imploded pieces</returns>
-        /// <param name='separator'>The separator to insert between each piece. - Default: ""</param>
+        /// <param name='separator'>The separator to insert between each piece.</param>
         /// <param name='pieces'>The table of pieces to concatenate. The keys for these must be numeric and sequential.</param>
-        string Implode([DefaultValueAttribute(null)] string separator, object[] pieces);
+        string Implode([OptionalAttribute()] string separator, object[] pieces);
         
         /// <summary>
         /// Escapes special characters for JavaScript in a string, making the string safe for inclusion in to JavaScript strings.
@@ -186,8 +186,8 @@ namespace GSharp.Generated.LuaLibraries {
         /// <returns>Type: System.Object - Matched text(s)</returns>
         /// <param name='string'>String which should be searched in for matches.</param>
         /// <param name='pattern'>The pattern that defines what should be matched.</param>
-        /// <param name='startPosition'>The start index to start the matching from, can be negative to start the match from a position relative to the end. - Default: 1</param>
-        object match(string @string, string pattern, [DefaultValueAttribute(null)] double startPosition);
+        /// <param name='startPosition'>The start index to start the matching from, can be negative to start the match from a position relative to the end.</param>
+        object match(string @string, string pattern, [OptionalAttribute()] double startPosition);
         
         /// <summary>
         /// Converts a digital filesize to human-readable text.
@@ -218,8 +218,8 @@ namespace GSharp.Generated.LuaLibraries {
         /// <returns>Type: System.String - Repeated string.</returns>
         /// <param name='str'>The string to convert.</param>
         /// <param name='repetitions'>Timer to repeat, this values gets rounded internally.</param>
-        /// <param name='separator'>String that will separate the repeated piece. Notice that it doesn't add this string to the start or the end of the result, only between the repeated parts. - Default: ""</param>
-        string rep(string str, double repetitions, [DefaultValueAttribute(null)] string separator);
+        /// <param name='separator'>String that will separate the repeated piece. Notice that it doesn't add this string to the start or the end of the result, only between the repeated parts.</param>
+        string rep(string str, double repetitions, [OptionalAttribute()] string separator);
         
         /// <summary>
         /// Reverses a string.
@@ -274,8 +274,8 @@ namespace GSharp.Generated.LuaLibraries {
         /// <returns>Type: System.String - The substring.</returns>
         /// <param name='string'>The string you'll take a sub-string out of.</param>
         /// <param name='StartPos'>The position of the first character that will be included in the sub-string.</param>
-        /// <param name='EndPos'>The position of the last character to be included in the sub-string. It can be negative to count from the end. - Default: nil</param>
-        string sub(string @string, double StartPos, [DefaultValueAttribute(null)] double EndPos);
+        /// <param name='EndPos'>The position of the last character to be included in the sub-string. It can be negative to count from the end.</param>
+        string sub(string @string, double StartPos, [OptionalAttribute()] double EndPos);
         
         /// <summary>
         /// Fetches a Color type from a string.
@@ -309,24 +309,24 @@ namespace GSharp.Generated.LuaLibraries {
         /// </summary>
         /// <returns>Type: System.String - Trimmed string</returns>
         /// <param name='str'>String to trim</param>
-        /// <param name='char'>Custom character to remove - Default: " "</param>
-        string TrimLeft(string str, [DefaultValueAttribute(null)] string @char);
+        /// <param name='char'>Custom character to remove</param>
+        string TrimLeft(string str, [OptionalAttribute()] string @char);
         
         /// <summary>
         /// Removes trailing spaces/passed character from a string.
         /// </summary>
         /// <returns>Type: System.String - Trimmed string</returns>
         /// <param name='str'>String to remove from</param>
-        /// <param name='char'>Custom character to remove, default is a space - Default: " "</param>
-        string TrimRight(string str, [DefaultValueAttribute(null)] string @char);
+        /// <param name='char'>Custom character to remove, default is a space</param>
+        string TrimRight(string str, [OptionalAttribute()] string @char);
         
         /// <summary>
         /// Removes leading and trailing matches of a string.
         /// </summary>
         /// <returns>Type: System.String - Modified string</returns>
         /// <param name='Inputstring'>The string to trim.</param>
-        /// <param name='Char'>String to match. - Default: " "</param>
-        string Trim(string Inputstring, [DefaultValueAttribute(null)] string Char);
+        /// <param name='Char'>String to match.</param>
+        string Trim(string Inputstring, [OptionalAttribute()] string Char);
         
         /// <summary>
         /// Changes any lower-case letters in a string to upper-case letters.
@@ -348,8 +348,8 @@ namespace GSharp.Generated.LuaLibraries {
         /// </summary>
         /// <returns>Type: System.String - Bytecode</returns>
         /// <param name='func'>The function to get the bytecode of</param>
-        /// <param name='stripDebugInfo'>True to strip the debug data, false to keep it - Default: false</param>
-        string dump(object func, [DefaultValueAttribute(null)] bool stripDebugInfo);
+        /// <param name='stripDebugInfo'>True to strip the debug data, false to keep it</param>
+        string dump(object func, [OptionalAttribute()] bool stripDebugInfo);
         
         /// <summary>
         /// Escapes all special characters within a string, making the string safe for inclusion in a Lua pattern.

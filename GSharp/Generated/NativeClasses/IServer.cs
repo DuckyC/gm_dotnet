@@ -84,9 +84,9 @@ namespace GSharp.Generated.NativeClasses {
         void SetPassword(string password);
         
         /// <param name='msg'></param>
-        /// <param name='onlyActive'></param>
-        /// <param name='reliable'></param>
-        void BroadcastMessage(System.IntPtr msg, bool onlyActive, bool reliable);
+        /// <param name='onlyActive'>Default: false</param>
+        /// <param name='reliable'>Default: false</param>
+        void BroadcastMessage(System.IntPtr msg, [OptionalAttribute()] [DefaultValueAttribute(false)] bool onlyActive, [OptionalAttribute()] [DefaultValueAttribute(false)] bool reliable);
         
         /// <param name='msg'></param>
         /// <param name='filter'></param>

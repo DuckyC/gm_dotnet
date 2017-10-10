@@ -28,20 +28,20 @@ namespace GSharp.Generated.NativeClasses {
         int IsInEditMode();
         
         /// <param name='s'></param>
-        /// <param name='preload'></param>
-        int PrecacheModel(string s, bool preload);
+        /// <param name='preload'>Default: false</param>
+        int PrecacheModel(string s, [OptionalAttribute()] [DefaultValueAttribute(false)] bool preload);
         
         /// <param name='s'></param>
-        /// <param name='preload'></param>
-        int PrecacheSentenceFile(string s, bool preload);
+        /// <param name='preload'>Default: false</param>
+        int PrecacheSentenceFile(string s, [OptionalAttribute()] [DefaultValueAttribute(false)] bool preload);
         
         /// <param name='name'></param>
-        /// <param name='preload'></param>
-        int PrecacheDecal(string name, bool preload);
+        /// <param name='preload'>Default: false</param>
+        int PrecacheDecal(string name, [OptionalAttribute()] [DefaultValueAttribute(false)] bool preload);
         
         /// <param name='s'></param>
-        /// <param name='preload'></param>
-        int PrecacheGeneric(string s, bool preload);
+        /// <param name='preload'>Default: false</param>
+        int PrecacheGeneric(string s, [OptionalAttribute()] [DefaultValueAttribute(false)] bool preload);
         
         /// <param name='s'></param>
         bool IsModelPrecached(string s);
@@ -88,8 +88,8 @@ namespace GSharp.Generated.NativeClasses {
         /// <param name='playerIndex'></param>
         System.IntPtr GetPlayerNetInfo(int playerIndex);
         
-        /// <param name='iForceEdictIndex'></param>
-        System.IntPtr CreateEdict(int iForceEdictIndex);
+        /// <param name='iForceEdictIndex'>Default: -1</param>
+        System.IntPtr CreateEdict([OptionalAttribute()] [DefaultValueAttribute(-1)] int iForceEdictIndex);
         
         /// <param name='e'></param>
         void RemoveEdict(System.IntPtr e);
@@ -114,8 +114,8 @@ namespace GSharp.Generated.NativeClasses {
         /// <param name='soundlevel'></param>
         /// <param name='fFlags'></param>
         /// <param name='pitch'></param>
-        /// <param name='delay'></param>
-        void EmitAmbientSound(int entindex, System.IntPtr pos, string samp, float vol, System.IntPtr soundlevel, int fFlags, int pitch, float delay);
+        /// <param name='delay'>Default: 0.0f</param>
+        void EmitAmbientSound(int entindex, System.IntPtr pos, string samp, float vol, System.IntPtr soundlevel, int fFlags, int pitch, [OptionalAttribute()] [DefaultValueAttribute(0.0f)] float delay);
         
         /// <param name='pEdict'></param>
         /// <param name='fadePercent'></param>
@@ -428,8 +428,8 @@ namespace GSharp.Generated.NativeClasses {
         int GetAllClusterBounds(System.IntPtr pBBoxList, int maxBBox);
         
         /// <param name='netname'></param>
-        /// <param name='bReportFakeClient'></param>
-        System.IntPtr CreateFakeClientEx(string netname, bool bReportFakeClient);
+        /// <param name='bReportFakeClient'>Default: true</param>
+        System.IntPtr CreateFakeClientEx(string netname, [OptionalAttribute()] [DefaultValueAttribute(true)] bool bReportFakeClient);
         
         int GetServerVersion();
         

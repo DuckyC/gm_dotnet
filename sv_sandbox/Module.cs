@@ -4,6 +4,7 @@ using GSharp.GLuaNET;
 using GSharp.Native;
 using GSharp.Native.Classes;
 using GSharp.Native.Classes.VCR;
+using Libraria.Native;
 using RGiesecke.DllExport;
 using System;
 using System.Diagnostics;
@@ -16,10 +17,8 @@ namespace sv_sandbox
         [DllExport("gmod13_open", CallingConvention = CallingConvention.Cdecl)]
         public static int Open(lua_State L)
         {
-            var glua = new GLua(L);
-            var file = new fileImpl(glua);
-
-            file.Find("*", "GAME");
+            var luabase = JIT.ConvertInstance<ILuaBase>(L.luabase);
+            luabase.ThrowError("error throwing");
 
             Console.WriteLine("DotNet loaded");
             return 0;

@@ -217,8 +217,8 @@ namespace GSharp.Generated.LuaLibraries {
         /// </summary>
         /// <returns>Type: System.Double - Logarithm of x to the given base</returns>
         /// <param name='x'>The value to get the base from exponent from.</param>
-        /// <param name='base'>Default: math.exp(1)</param>
-        double log(double x, [DefaultValueAttribute(null)] double @base);
+        /// <param name='base'></param>
+        double log(double x, [OptionalAttribute()] double @base);
         
         /// <summary>
         /// Returns the largest value of all arguments.
@@ -289,8 +289,8 @@ namespace GSharp.Generated.LuaLibraries {
         /// </summary>
         /// <returns>Type: System.Double - The rounded value.</returns>
         /// <param name='value'>The value to round.</param>
-        /// <param name='decimals'>The decimal places to round to. - Default: 0</param>
-        double Round(double value, [DefaultValueAttribute(null)] double decimals);
+        /// <param name='decimals'>The decimal places to round to.</param>
+        double Round(double value, [OptionalAttribute()] double decimals);
         
         /// <summary>
         /// Returns hyperbolic sine of the given number.
