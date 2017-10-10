@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Collections;
 using System.Runtime.InteropServices;
+using Libraria.Native;
 
 namespace GSharp.Native.StringTable
 {

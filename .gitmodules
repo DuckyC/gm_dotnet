@@ -1,12 +1,12 @@
 [submodule "Libraria"]
-	path = Libraria
+	path = GSharp/Libraria
 	url = https://github.com/cartman300/Libraria.git
 [submodule "Require/coreclr"]
 	path = Require/coreclr
 	url = https://github.com/dotnet/coreclr
 [submodule "GSharp.Generated/sourcesdk-minimal"]
-	path = GSharp.Generated/sourcesdk-minimal
+	path = GSharp/Generated/sourcesdk-minimal
 	url = https://github.com/danielga/sourcesdk-minimal.git
 [submodule "GSharp.Generated/garrysmod_common"]
-	path = GSharp.Generated/garrysmod_common
+	path = GSharp/Generated/garrysmod_common
 	url = https://github.com/danielga/garrysmod_common.git

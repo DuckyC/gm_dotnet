@@ -103,10 +103,10 @@ namespace GSharp.Generated.NativeClasses {
         bool GetBool(int iStackPos);
         
         /// <param name='iStackPos'></param>
-        System.IntPtr GetCFunction(int iStackPos);
+        System.IntPtr GetCFunction(int iStackPos = -1);
         
         /// <param name='iStackPos'></param>
-        System.IntPtr GetUserdata(int iStackPos);
+        System.IntPtr GetUserdata(int iStackPos = -1);
         
         void PushNil();
         

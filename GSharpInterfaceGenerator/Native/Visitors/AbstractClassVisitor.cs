@@ -45,6 +45,7 @@ namespace GSharpInterfaceGenerator.Native.Visitors
                             for (uint index = 0; index < methodCursor.NumArgs; ++index)
                             {
                                 var paramSpelling = methodCursor.GetArgSpelling(index);
+
                                 if (string.IsNullOrEmpty(paramSpelling))
                                 {
                                     paramSpelling = "param" + index;
@@ -58,12 +59,11 @@ namespace GSharpInterfaceGenerator.Native.Visitors
 
                                 methodInfo.Arguments.Add(info);
                             }
-
                             classInfo.Methods.Add(methodInfo);
                         }
                     }
 
-                    if(methodCursor.Kind == CXCursorKind.CXCursor_CXXBaseSpecifier)
+                    if (methodCursor.Kind == CXCursorKind.CXCursor_CXXBaseSpecifier)
                     {
                         var definitionSpelling = methodCursor.CursorDefinition.Spelling;
                         classInfo.Parents.Add(definitionSpelling);

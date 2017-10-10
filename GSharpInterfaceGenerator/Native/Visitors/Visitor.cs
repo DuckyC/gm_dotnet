@@ -3,6 +3,7 @@ using GSharpInterfaceGenerator.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -37,6 +38,8 @@ namespace GSharpInterfaceGenerator.Native.Visitors
             public CXType ReturnType => clang.getCursorResultType(Cursor);
             public Type ReturnTypeCSharp => ReturnType.ToPlainType();
             public int NumArgs => clang.getNumArgTypes(Type);
+            public CXTranslationUnit TranslationUnit => clang.Cursor_getTranslationUnit(Cursor);
+            public CXSourceRange Extent => clang.getCursorExtent(Cursor);
 
             public VisitorCursor CursorReferenced => new VisitorCursor(clang.getCursorReferenced(Cursor));
             public VisitorCursor CursorDefinition => new VisitorCursor(clang.getCursorDefinition(Cursor));
@@ -51,6 +54,11 @@ namespace GSharpInterfaceGenerator.Native.Visitors
                 return clang.getArgType(Type, index).ToPlainType();
             }
 
+            public VisitorCursor GetArgCursor(uint index)
+            {
+                return new VisitorCursor(clang.Cursor_getArgument(Cursor, index));
+            }
+
             public void VisitChildren(CursorVisitor visitor)
             {
                 clang.visitChildren(Cursor, (CXCursor cursor, CXCursor parent, IntPtr data) =>
@@ -59,6 +67,22 @@ namespace GSharpInterfaceGenerator.Native.Visitors
                     return CXChildVisitResult.CXChildVisit_Recurse;
                 }, new CXClientData(IntPtr.Zero));
             }
+
+            public VToken[] GetTokens()
+            {
+                var pointer = IntPtr.Zero;
+                uint numPointers = 0;
+                clang.tokenize(TranslationUnit, Extent, out pointer, out numPointers);
+
+                var tokens = new VToken[numPointers];
+                for (int i = 0; i < numPointers; i++)
+                {
+                    var ptr = pointer + (i * IntPtr.Size);
+                    tokens[i] = new VToken(this, Marshal.PtrToStructure<CXToken>(ptr));
+                }
+                return tokens;
+            }
+
 
             public static implicit operator VisitorCursor(CXCursor d)
             {
@@ -76,9 +100,23 @@ namespace GSharpInterfaceGenerator.Native.Visitors
             }
         }
 
+        public class VToken
+        {
+            public CXToken Token { get; private set; }
+            public VisitorCursor Parent { get; private set; }
+
+            public VToken(VisitorCursor parent, CXToken token)
+            {
+                Parent = parent;
+                Token = token;
+            }
+
+            public string Spelling => clang.getTokenSpelling(Parent.TranslationUnit, Token).ToString();
+            public CXTokenKind Kind => clang.getTokenKind(Token);
+        }
+
         protected VirtualClassListInfo info;
         protected Configuration config;
-
 
         public Visitor(VirtualClassListInfo info, Configuration config)
         {

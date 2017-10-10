@@ -3,6 +3,7 @@ using GSharp.Generated.NativeClasses;
 using GSharp.Native;
 using GSharp.Native.Classes;
 using GSharp.Native.StringTable;
+using Libraria.Native;
 using RGiesecke.DllExport;
 using System;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace gm_csluaview
             var luaShared = NativeInterface.Load<ILuaShared>();
             var luaInterfacePointer = luaShared.GetLuaInterface(0);
             var luaInterface = JIT.ConvertInstance<ILuaInterface>(luaInterfacePointer);
-            luaInterface.RunStringEx("", "", code);
+            //luaInterface.RunStringEx("", "", code); fix this
         }
 
         [DllExport("gmod13_open", CallingConvention = CallingConvention.Cdecl)]

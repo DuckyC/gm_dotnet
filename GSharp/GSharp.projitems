@@ -9,6 +9,8 @@
     <Import_RootNamespace>GSharp</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Generated\NativeClasses\*.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Generated\LuaLibraries\*.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)7zip\Common\CommandLineParser.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)7zip\Common\CRC.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)7zip\Common\InBuffer.cs" />
@@ -40,6 +42,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)GLuaNET\TypeMarshals\NumberTypeMarshal.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GLuaNET\TypeMarshals\CFunctionTypeMarshal.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GLuaNET\TypeMarshals\StringTypeMarshal.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Libraria\Libraria.Collections\AdvancedStack.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Libraria\Libraria.Collections\Tree.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Libraria\LibrariaShared\ArrayListExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LuaLibrary\LuaLibrary.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LuaLibrary\ClassInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LuaLibrary\TemporaryClasses.cs" />
@@ -60,5 +65,19 @@
     <Compile Include="$(MSBuildThisFileDirectory)Symbols.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ValveBuffer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Wrapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Libraria\Libraria.Native\Asmblr.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Libraria\Libraria.Native\Enums.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Libraria\Libraria.Native\HookHandle.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Libraria\Libraria.Native\Kernel32.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Libraria\Libraria.Native\MachineCode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Libraria\Libraria.Native\MemoryManagement.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Libraria\Libraria.Native\NativeUtils.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Libraria\Libraria.Native\VTables\Attributes.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Libraria\Libraria.Native\VTables\InteropHelp.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Libraria\Libraria.Native\VTables\JIT.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Libraria\Libraria.Native\VTables\NativeClasses.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Generated\config.xml" />
   </ItemGroup>
 </Project>

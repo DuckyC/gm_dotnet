@@ -1,6 +1,7 @@
 ﻿using GSharp.Generated.NativeClasses;
 using GSharp.Native;
 using GSharp.Native.Classes;
+using Libraria.Native;
 using System.Runtime.InteropServices;
 
 namespace GSharp

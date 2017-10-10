@@ -170,7 +170,8 @@ namespace GSharpInterfaceGenerator
             var newType = new CodeTypeDeclaration(CleanInterfaceName(declaration.Name));
             newType.IsInterface = true;
             newType.TypeAttributes = TypeAttributes.Interface | TypeAttributes.Public;
-            //TODO: Attributes
+            newType.CustomAttributes.AddRange(declaration.Attributes.ToArray());
+
 
             foreach (var parent in declaration.Parents)
             {
@@ -223,9 +224,11 @@ namespace GSharpInterfaceGenerator
                     var param = new CodeParameterDeclarationExpression(arg.Type, arg.Name);
                     if (!string.IsNullOrWhiteSpace(arg.Default))
                     {
-                        param.CustomAttributes.Add(new CodeAttributeDeclaration(nameof(DefaultValueAttribute), new CodeAttributeArgument(new CodePrimitiveExpression(null))));
+                        param.CustomAttributes.Add(new CodeAttributeDeclaration(nameof(DefaultValueAttribute), new CodeAttributeArgument(new CodePrimitiveExpression(arg.Default))));
                     }
                     newMethod.Parameters.Add(param);
+                    newMethod.CustomAttributes.AddRange(arg.Attributes.ToArray());
+
 
                     var comment = "";
 

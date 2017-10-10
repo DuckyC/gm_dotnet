@@ -86,31 +86,5 @@ namespace GSharpInterfaceGenerator.Native
 
             return classListInfo;
         }
-
-        public Type TranslateType(string type) //BECAUSE WHY THE FUCK WOULD YOU CHECK A TYPE FOR KEYWORDS YOU FUCKING MONG https://referencesource.microsoft.com/#System/compmod/microsoft/csharp/csharpcodeprovider.cs,3295
-        {
-            switch (type.ToLowerInvariant())
-            {
-                case "void":
-                    return typeof(void);
-                case "bool":
-                    return typeof(bool);
-                case "int":
-                    return typeof(int);
-                case "intptr":
-                    return typeof(IntPtr);
-                case "float":
-                    return typeof(float);
-                case "string":
-                    return typeof(string);
-                case "uint":
-                    return typeof(uint);
-                case "ulong":
-                    return typeof(ulong);
-                default:
-                    Console.WriteLine("TranslateType default: " + type);
-                    return typeof(IntPtr);
-            }
-        }
     }
 }

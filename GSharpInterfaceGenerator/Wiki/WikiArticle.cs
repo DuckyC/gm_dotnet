@@ -1,7 +1,9 @@
 ﻿using GSharpInterfaceGenerator.Models;
 using RestSharp;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml;
@@ -193,7 +195,9 @@ namespace GSharpInterfaceGenerator.Wiki
                 }
                 else if (translated is ArgTemplate arg)
                 {
-                    info.Arguments.Add(new IDescribeArgument { Name = arg.Name, Type = TranslateType(arg.Type), Default = arg.Default, Description = arg.Desc });
+                    var argumentDeclaration = new IDescribeArgument { Name = arg.Name, Type = TranslateType(arg.Type), Description = arg.Desc };
+                    argumentDeclaration.Attributes.Add(new CodeAttributeDeclaration(nameof(DefaultValueAttribute), new CodeAttributeArgument(new CodePrimitiveExpression(null))));
+                    info.Arguments.Add(argumentDeclaration);
                 }
                 else if (translated is RetTemplate ret)
                 {
