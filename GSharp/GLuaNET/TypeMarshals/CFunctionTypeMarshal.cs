@@ -5,11 +5,11 @@ namespace GSharp.GLuaNET.TypeMarshals
 {
     public class CFunctionTypeMarshal : ILuaTypeMarshal
     {
-        public object Get(GLua GLua)
+        public object Get(GLua GLua, int stackPos = -1)
         {
-            if (GLua.IsType(-1, LuaType.Function))
+            if (GLua.IsType(stackPos, LuaType.Function))
             {
-                return GLua.LuaBase.GetCFunction();
+                return GLua.LuaBase.GetCFunction(stackPos);
             }
             return null;
         }

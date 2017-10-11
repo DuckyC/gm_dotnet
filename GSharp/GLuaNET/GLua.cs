@@ -65,9 +65,9 @@ namespace GSharp.GLuaNET
             LuaBase = JIT.ConvertInstance<ILuaBase>(luaState.luabase);
         }
 
-        public T Get<T>()
+        public T Get<T>(int stackPos = -1)
         {
-            return (T)Get(typeof(T));
+            return (T)Get(typeof(T), stackPos);
         }
 
         public void Push<T>(T obj)
@@ -75,12 +75,12 @@ namespace GSharp.GLuaNET
             Push(obj, typeof(T));
         }
 
-        public object Get(Type type)
+        public object Get(Type type, int stackPos = -1)
         {
             if (Marshals.ContainsKey(type))
             {
                 var marshal = Marshals[type] as ILuaTypeMarshal;
-                return Convert.ChangeType(marshal.Get(this), type);
+                return Convert.ChangeType(marshal.Get(this, stackPos), type);
             }
             return null;
         }
@@ -91,6 +91,13 @@ namespace GSharp.GLuaNET
             {
                 var marshal = Marshals[type] as ILuaTypeMarshal;
                 marshal.Push(this, obj);
+                return;
+            }
+
+            var backupMarshal = Marshals.Where(kv => type.IsCastableTo(kv.Key)).Select(kv=>kv.Value).FirstOrDefault();
+            if(backupMarshal != null)
+            {
+                backupMarshal.Push(this, obj);
             }
         }
 

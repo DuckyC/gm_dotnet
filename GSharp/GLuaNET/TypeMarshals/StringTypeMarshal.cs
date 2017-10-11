@@ -4,11 +4,11 @@ namespace GSharp.GLuaNET.TypeMarshals
 {
     public class StringTypeMarshal : ILuaTypeMarshal
     {
-        public object Get(GLua GLua)
+        public object Get(GLua GLua, int stackPos = -1)
         {
-            if (GLua.IsType(-1, LuaType.String))
+            if (GLua.IsType(stackPos, LuaType.String))
             {
-                return GLua.LuaBase.GetString(-1, IntPtr.Zero);
+                return GLua.LuaBase.GetString(stackPos, IntPtr.Zero);
             }
             return null;
         }

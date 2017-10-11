@@ -4,11 +4,11 @@ namespace GSharp.GLuaNET.TypeMarshals
 {
     public class BooleanTypeMarshal : ILuaTypeMarshal
     {
-        public object Get(GLua GLua)
+        public object Get(GLua GLua, int stackPos = -1)
         {
-            if (GLua.IsType(-1, LuaType.Boolean))
+            if (GLua.IsType(stackPos, LuaType.Boolean))
             {
-                return GLua.LuaBase.GetBool(-1);
+                return GLua.LuaBase.GetBool(stackPos);
             }
             return null;
         }
