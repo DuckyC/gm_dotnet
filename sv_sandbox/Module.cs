@@ -21,9 +21,8 @@ namespace sv_sandbox
         private static GLua GLua;
 
         [DllExport("gmod13_open", CallingConvention = CallingConvention.Cdecl)]
-        public static int Open(IntPtr L)
+        public static int Open(ref lua_State state)
         {
-            var state = Marshal.PtrToStructure<lua_State>(L);
             GLua = GLua.Get(state);
 
             GLua.CreateTable();
@@ -44,7 +43,7 @@ namespace sv_sandbox
         {
             return string.Concat(Enumerable.Repeat(str, num));
         }
-      
+
 
         [DllExport("gmod13_close", CallingConvention = CallingConvention.Cdecl)]
         public static int Close(IntPtr L)

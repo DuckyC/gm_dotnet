@@ -1,8 +1,6 @@
-﻿using GSharp.Native.Classes;
+﻿using GSharp.Generated.NativeClasses;
 using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace GSharp.Native.StringTable
 {

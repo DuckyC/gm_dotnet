@@ -1,13 +1,17 @@
-﻿using GSharp.Native.Classes;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Collections;
-using System.Runtime.InteropServices;
 using Libraria.Native;
+using GSharp.Generated.NativeClasses;
 
 namespace GSharp.Native.StringTable
 {
+    public static class StringTableInterfaceName
+    {
+        public const string SERVER = "VEngineServerStringTable001";
+        public const string CLIENT = "VEngineClientStringTable001";
+    }
+
     public class StringTable
     {
         static private INetworkStringTableContainer container;

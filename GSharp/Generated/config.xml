@@ -7,6 +7,7 @@
   <NativeFile Path="sourcesdk-minimal/public/filesystem.h"/>
   <NativeFile Path="sourcesdk-minimal/public/eiface.h"/>
   <NativeFile Path="sourcesdk-minimal/public/IServer.h"/>
+  <NativeFile Path="sourcesdk-minimal/public/networkstringtabledefs.h"/>
   <NativeFile Path="sourcesdk-minimal/public/tier1/interface.h"/>
   <NativeFile Path="garrysmod_common/include/GarrysMod/Lua/LuaInterface.h"/>
   <NativeFile Path="garrysmod_common/include/GarrysMod/Lua/LuaShared.h"/>
@@ -15,9 +16,12 @@
   <NativeInterface Name="IFileSystem" InterfaceVersion="VFileSystem022" ModuleName="FileSystem_Stdio" />
   <NativeInterface Name="IServerGameDLL" InterfaceVersion="ServerGameDLL008" ModuleName="server" />
   <NativeInterface Name="IVEngineServer" InterfaceVersion="VEngineServer021" ModuleName="engine" />
+  <NativeInterface Name="INetworkStringTableContainer" InterfaceVersion="VEngineClientStringTable001" ModuleName="engine" />
+  <NativeInterface Name="INetworkStringTable" />
   <NativeInterface Name="IServer" />
   <NativeDelegate Name="CreateInterfaceFn" />
   <NativeDelegate Name="CFunc" />
+  <NativeDelegate Name="pfnStringChanged" />
   
   <NativeInterface Name="ILuaInterface" />
   <NativeInterface Name="ILuaShared" InterfaceVersion="LUASHARED003" ModuleName="lua_shared" />

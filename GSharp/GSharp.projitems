@@ -50,8 +50,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)GLuaNET\ClassInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\Color.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\IGameConsole.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\INetworkStringTable.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\INetworkStringTableContainer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\CUtlVector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\NativeInterface.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\Classes\VCR_t.cs" />

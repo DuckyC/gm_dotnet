@@ -47,8 +47,8 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>./bin/Debug</OutDir>
     <TargetName>gmsv_cppsandbox_win32</TargetName>
-    <IncludePath>C:\Users\mj\source\repos\gm_dotnet\GSharp\Generated\sourcesdk-minimal\game\server;C:\Users\mj\source\repos\gm_dotnet\GSharp\Generated\sourcesdk-minimal\game\shared;C:\Users\mj\source\repos\gm_dotnet\GSharp\Generated\sourcesdk-minimal\common;C:\Users\mj\source\repos\gm_dotnet\GSharp\Generated\garrysmod_common\include;C:\Users\mj\source\repos\gm_dotnet\GSharp\Generated\sourcesdk-minimal\public;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\mj\source\repos\gm_dotnet\GSharp\Generated\sourcesdk-minimal\lib\public;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\GSharp\Generated\garrysmod_common\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -60,11 +60,13 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;CPP_SANDBOX_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BrowseInformation>true</BrowseInformation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
+      <AdditionalLibraryDirectories>..\GSharp\Generated\sourcesdk-minimal\lib\common;..\GSharp\Generated\sourcesdk-minimal\lib\public;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libz.lib;steam_api.lib;tier0.lib;tier2.lib;tier3.lib;vstdlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy /Y "$(TargetPath)" "%GarrysModDS%\garrysmod\lua\bin\$(TargetFileName)"</Command>
