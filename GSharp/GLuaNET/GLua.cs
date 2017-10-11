@@ -12,12 +12,21 @@ using Libraria.Native;
 
 namespace GSharp.GLuaNET
 {
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    public delegate int lua_CFunction(IntPtr State);
 
-    public class GLua
+    public partial class GLua
     {
-        static List<GCHandle> DelegateHandles;
+        private static List<GLua> Gluas = new List<GLua>();
+
+        public static GLua Get(lua_State luaState)
+        {
+            var g = Gluas.Where(l => l.State.luabase.Equals(luaState.luabase)).FirstOrDefault();
+            if (g == null)
+            {
+                g = new GLua(luaState);
+                Gluas.Add(g);
+            }
+            return g;
+        }
 
         public const int LUA_REGISTRYINDEX = -10000;
         public const int LUA_ENVIRONINDEX = -10001;
@@ -30,11 +39,27 @@ namespace GSharp.GLuaNET
             Marshals.Add(t, marshal);
         }
 
+        static GLua()
+        {
+            RegisterMarshal(typeof(string[]), new ArrayTypeMarshal<string>());
+            RegisterMarshal(typeof(CFunc), new CFunctionTypeMarshal());
+            RegisterMarshal(typeof(Delegate), new DelegateTypeMarshal());
+            RegisterMarshal(typeof(string), new StringTypeMarshal());
+            RegisterMarshal(typeof(bool), new BooleanTypeMarshal());
+
+            RegisterMarshal(typeof(double), new NumberTypeMarshal());
+            RegisterMarshal(typeof(float), new NumberTypeMarshal());
+            RegisterMarshal(typeof(int), new NumberTypeMarshal());
+            RegisterMarshal(typeof(long), new NumberTypeMarshal());
+
+            InitJIT();
+        }
+
         public lua_State State { get; protected set; }
 
         public ILuaBase LuaBase { get; protected set; }
 
-        public GLua(lua_State luaState)
+        private GLua(lua_State luaState)
         {
             State = luaState;
             LuaBase = JIT.ConvertInstance<ILuaBase>(luaState.luabase);
@@ -137,7 +162,7 @@ namespace GSharp.GLuaNET
         /// <param name="action"></param>
         public void ForEach(Action action)
         {
-            if(!IsType(-1, LuaType.Table)) { return; }
+            if (!IsType(-1, LuaType.Table)) { return; }
             PushNil();
             while (Next(-2) != 0)
             {
@@ -149,7 +174,7 @@ namespace GSharp.GLuaNET
 
 
         #region ILuaBase Passthrough(Some of it)
-        public void PushCFunction(lua_CFunction val)
+        public void PushCFunction(CFunc val)
         {
             var ptr = Marshal.GetFunctionPointerForDelegate(val);
             LuaBase.PushCFunction(ptr);

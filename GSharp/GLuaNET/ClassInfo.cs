@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using GSharp.Attributes;
 
-namespace GSharp.LuaLibrary
+namespace GSharp.GLuaNET
 {
     public class MethodLuaJITInfo
     {

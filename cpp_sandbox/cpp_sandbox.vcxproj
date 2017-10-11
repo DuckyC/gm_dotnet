@@ -15,7 +15,7 @@
     <ProjectGuid>{3403F7DA-3C40-499E-9169-E35EA867BAB6}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>cpp_sandbox</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -47,6 +47,8 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>./bin/Debug</OutDir>
     <TargetName>gmsv_cppsandbox_win32</TargetName>
+    <IncludePath>C:\Users\mj\source\repos\gm_dotnet\GSharp\Generated\sourcesdk-minimal\game\server;C:\Users\mj\source\repos\gm_dotnet\GSharp\Generated\sourcesdk-minimal\game\shared;C:\Users\mj\source\repos\gm_dotnet\GSharp\Generated\sourcesdk-minimal\common;C:\Users\mj\source\repos\gm_dotnet\GSharp\Generated\garrysmod_common\include;C:\Users\mj\source\repos\gm_dotnet\GSharp\Generated\sourcesdk-minimal\public;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\mj\source\repos\gm_dotnet\GSharp\Generated\sourcesdk-minimal\lib\public;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -65,7 +67,7 @@
       <SubSystem>Windows</SubSystem>
     </Link>
     <PostBuildEvent>
-      <Command>copy /Y "$(TargetPath)" %GarrysMod%"\garrysmod\lua\bin\${AssemblyName}.dll"</Command>
+      <Command>copy /Y "$(TargetPath)" "%GarrysModDS%\garrysmod\lua\bin\$(TargetFileName)"</Command>
     </PostBuildEvent>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>

@@ -16,4 +16,7 @@ namespace GSharp.Generated.NativeClasses {
     
     [System.Runtime.InteropServices.UnmanagedFunctionPointerAttribute(System.Runtime.InteropServices.CallingConvention.Cdecl, CharSet=System.Runtime.InteropServices.CharSet.Ansi)]
     public delegate System.IntPtr CreateInterfaceFn(string pName, System.IntPtr pReturnCode);
+    
+    [System.Runtime.InteropServices.UnmanagedFunctionPointerAttribute(System.Runtime.InteropServices.CallingConvention.Cdecl)]
+    public delegate int CFunc(System.IntPtr L);
 }

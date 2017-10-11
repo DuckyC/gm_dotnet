@@ -1,4 +1,4 @@
-﻿namespace GSharp.GLuaNET.TypeMarshals
+﻿namespace GSharp.GLuaNET
 {
     public interface ILuaTypeMarshal
     {

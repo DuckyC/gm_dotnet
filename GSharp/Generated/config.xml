@@ -17,6 +17,7 @@
   <NativeInterface Name="IVEngineServer" InterfaceVersion="VEngineServer021" ModuleName="engine" />
   <NativeInterface Name="IServer" />
   <NativeDelegate Name="CreateInterfaceFn" />
+  <NativeDelegate Name="CFunc" />
   
   <NativeInterface Name="ILuaInterface" />
   <NativeInterface Name="ILuaShared" InterfaceVersion="LUASHARED003" ModuleName="lua_shared" />

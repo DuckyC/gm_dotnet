@@ -4,11 +4,6 @@ namespace GSharp.GLuaNET.TypeMarshals
 {
     public class StringTypeMarshal : ILuaTypeMarshal
     {
-        static StringTypeMarshal()
-        {
-            GLua.RegisterMarshal(typeof(string), new StringTypeMarshal());
-        }
-
         public object Get(GLua GLua)
         {
             if (GLua.IsType(-1, LuaType.String))

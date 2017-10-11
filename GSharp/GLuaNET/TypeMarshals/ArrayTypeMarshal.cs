@@ -2,11 +2,6 @@
 {
     public class ArrayTypeMarshal<T> : ILuaTypeMarshal where T : class
     {
-        static ArrayTypeMarshal()
-        {
-            GLua.RegisterMarshal(typeof(string[]), new ArrayTypeMarshal<string>());
-        }
-
         public object Get(GLua GLua)
         {
             GLua.GetArray<T>();
